@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          clients:
+            - graphql
+          scalars:
+            Uuid:
+              type: String
+            Long:
+              type: int

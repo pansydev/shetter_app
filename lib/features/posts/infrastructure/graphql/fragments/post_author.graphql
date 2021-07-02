@@ -1,0 +1,5 @@
+fragment PostAuthor on User {
+  id
+  username
+  isBot
+}

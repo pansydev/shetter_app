@@ -1,0 +1,10 @@
+{
+  "home_page_title": "Shetter",
+  "post_form_action": "Создать пост",
+  "try_again_action": "Попробовать снова",
+  "error_message": "Ошибка: {1}",
+  "unknown_author": "Неизвестно",
+  "server_failure_message": "Произошла ошибка при обращении к серверу",
+  "cache_failure_message": "Устройство не подключено к интернету, данные не могут быть отображены",
+  "unknown_failure": "Неизвестная ошибка"
+}

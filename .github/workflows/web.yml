@@ -1,0 +1,36 @@
+name: web
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ignore]')"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Code generation
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Passing tests
+        run: flutter test
+
+      - name: Building web
+        run: flutter build web
+
+      - name: Deploy to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          source: "build/web"
+          target: ${{ secrets.SSH_TARGET_PATH }}
+          strip_components: 2

@@ -1,0 +1,211 @@
+"""
+The `@defer` directive may be provided for fragment spreads and inline fragments
+to inform the executor to delay the execution of the current fragment to
+indicate deprioritization of the current fragment. A query with `@defer`
+directive will cause the request to potentially return multiple responses, where
+non-deferred data is delivered in the initial response and data deferred is
+delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`.
+"""
+directive @defer(
+  """
+  If this argument label has a value other than null, it will be passed on to
+  the result of this defer directive. This label is intended to give client
+  applications a way to identify to which fragment a deferred result belongs to.
+  """
+  label: String
+
+  """
+  Deferred when true.
+  """
+  if: Boolean
+) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+The `@stream` directive may be provided for a field of `List` type so that the
+backend can leverage technology such as asynchronous iterators to provide a
+partial list in the initial response, and additional list items in subsequent
+responses. `@include` and `@skip` take precedence over `@stream`.
+"""
+directive @stream(
+  """
+  If this argument label has a value other than null, it will be passed on to
+  the result of this stream directive. This label is intended to give client
+  applications a way to identify to which fragment a streamed result belongs to.
+  """
+  label: String
+
+  """
+  The initial elements that shall be send down to the consumer.
+  """
+  initialCount: Int!
+
+  """
+  Streamed when true.
+  """
+  if: Boolean!
+) on FIELD
+
+directive @authorize(
+  """
+  The name of the authorization policy that determines access to the annotated resource.
+  """
+  policy: String
+
+  """
+  Roles that are allowed to access the annotated resource.
+  """
+  roles: [String!]
+
+  """
+  Defines when when the resolver shall be executed.By default the resolver is
+  executed after the policy has determined that the current user is allowed to
+  access the field.
+  """
+  apply: ApplyPolicy! = BEFORE_RESOLVER
+) on SCHEMA | OBJECT | FIELD_DEFINITION
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+}
+
+type AuthenticationFailureResult {
+  code: String!
+}
+
+union AuthenticationResult =
+    AuthenticationSuccessResult
+  | AuthenticationFailureResult
+
+type AuthenticationSuccessResult {
+  tokens: TokenPairDto!
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole 64-bit numeric
+values. Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createPost(input: PostInput!): Post!
+  auth(username: String!, password: String!): AuthenticationResult!
+  refresh(refreshToken: String!): RefreshResult!
+  register(username: String!, password: String!): RegistrationResult!
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  Indicates whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Indicates whether more edges exist prior the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+}
+
+type Post {
+  text: String!
+  creationTime: Long!
+  author: User
+  mentionedUsers: [User!]!
+  id: Uuid!
+}
+
+"""
+A connection to a list of items.
+"""
+type PostConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [PostEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [Post!]
+  totalCount: Int!
+}
+
+"""
+An edge in a connection.
+"""
+type PostEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Post!
+}
+
+input PostInput {
+  text: String!
+}
+
+type Query {
+  posts(first: Int, after: String, last: Int, before: String): PostConnection
+  user(id: Uuid!): User
+}
+
+type RefreshFailureResult {
+  code: String!
+}
+
+union RefreshResult = RefreshSuccessResult | RefreshFailureResult
+
+type RefreshSuccessResult {
+  tokens: TokenPairDto!
+}
+
+type RegistrationFailureResult {
+  code: String!
+}
+
+union RegistrationResult = RegistrationSuccessResult | RegistrationFailureResult
+
+type RegistrationSuccessResult {
+  tokens: TokenPairDto!
+}
+
+type Subscription {
+  postCreated: Post!
+}
+
+type TokenPairDto {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type User {
+  posts(first: Int, after: String, last: Int, before: String): PostConnection
+  username: String!
+  isBot: Boolean!
+  id: Uuid!
+}
+
+scalar Uuid

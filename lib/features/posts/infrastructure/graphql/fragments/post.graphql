@@ -1,0 +1,11 @@
+fragment Post on Post {
+  id
+  text
+  creationTime
+  author {
+    ...PostAuthor
+  }
+  mentionedUsers {
+    ...PostAuthor
+  }
+}

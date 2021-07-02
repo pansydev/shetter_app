@@ -1,0 +1,10 @@
+query Posts($after: String, $pageSize: Int!) {
+  posts(first: $pageSize, after: $after) {
+    nodes {
+      ...Post
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}

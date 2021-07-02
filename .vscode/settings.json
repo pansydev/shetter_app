@@ -1,0 +1,17 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+
+    "**/*.freezed.dart": true,
+    "**/*.graphql.dart": true,
+    "**/*.graphql.g.dart": true,
+    "**/*.al.dart": true,
+    "**/*.gr.dart": true,
+    "**/service_provider.config.dart": true,
+    "**/generated_plugin_registrant.dart": true
+  }
+}

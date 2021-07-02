@@ -1,0 +1,10 @@
+{
+  "home_page_title": "Shetter",
+  "post_form_action": "Create post",
+  "try_again_action": "Try again",
+  "error_message": "Error: {1}",
+  "unknown_author": "Unknown",
+  "server_failure_message": "An error occurred while requesting the server",
+  "cache_failure_message": "The device is offline and the data cannot be displayed",
+  "unknown_failure": "Unknown failure"
+}

@@ -1,0 +1,120 @@
+analyzer:
+  plugins:
+    # - dart_code_metrics
+
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.graphql.dart"
+    - "**/*.graphql.g.dart"
+    - "**/service_provider.config.dart"
+    - "**/generated"
+    - "**/*.gr.dart"
+    - "**/*.al.dart"
+
+linter:
+  rules:
+    escape_empty_else: true
+    use_key_in_widget_constructors: true
+    avoid_annotating_with_dynamic: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_double_and_int_checks: true
+    avoid_escaping_inner_quotes: true
+    avoid_field_initializers_in_const_classes: true
+    avoid_implementing_value_types: true
+    avoid_catches_without_on_clauses: true
+    avoid_catching_errors: true
+    avoid_equals_and_hash_code_on_mutable_classes: true
+    avoid_function_literals_in_foreach_calls: true
+    avoid_js_rounded_ints: true
+    avoid_multiple_declarations_per_line: true
+    avoid_private_typedef_functions: true
+    avoid_returning_null: true
+    avoid_returning_null_for_void: true
+    avoid_returning_this: true
+    avoid_types_on_closure_parameters: true
+    avoid_unnecessary_containers: true
+    avoid_unused_constructor_parameters: true
+    escape_void_async: true
+    cascade_invocations: true
+    cast_nullable_to_non_nullable: true
+    constant_identifier_names: true
+    deprecated_consistency: true
+    directives_ordering: true
+    do_not_use_environment: true
+    exhaustive_cases: true
+    file_names: true
+    join_return_with_assignment: true
+    leading_newlines_in_multiline_strings: true
+    lines_longer_than_80_chars: true
+    missing_whitespace_between_adjacent_strings: true
+    no_default_cases: true
+    null_check_on_nullable_type_parameter: true
+    #one_member_abstracts: true
+    only_throw_errors: true
+    sort_unnamed_constructors_first: true
+    tighten_type_of_initializing_formals: true
+    unnecessary_await_in_return: true
+    unnecessary_lambdas: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_null_checks: true
+    unnecessary_overrides: true
+    unnecessary_parenthesis: true
+    unnecessary_raw_strings: true
+    unnecessary_string_escapes: true
+    unnecessary_string_interpolations: true
+    use_if_null_to_convert_nulls_to_bools: true
+    use_is_even_rather_than_modulo: true
+    use_late_for_private_fields_and_variables: true
+    use_named_constants: true
+    use_raw_strings: true
+    use_string_buffers: true
+    use_to_and_as_if_applicable: true
+    package_names: true
+    prefer_asserts_in_initializer_lists: true
+    #prefer_asserts_with_message: true
+    prefer_const_declarations: true
+    prefer_constructors_over_static_methods: true
+    prefer_final_in_for_each: true
+    prefer_if_elements_to_conditional_expressions: true
+    prefer_initializing_formals: true
+    prefer_int_literals: true
+    prefer_is_not_operator: true
+    prefer_mixin: true
+    prefer_null_aware_operators: true
+    prefer_typing_uninitialized_variables: true
+    provide_deprecation_message: true
+    #public_member_api_docs: true
+    sized_box_for_whitespace: true
+    sort_constructors_first: true
+
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 4
+    source-lines-of-code: 50
+  metrics-exclude:
+    - test/**
+  rules:
+    #  - avoid-non-null-assertion
+    - avoid-unused-parameters
+    - binary-expression-operand-order
+    - double-literal-format
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    #  - no-magic-number
+    - no-object-declaration
+    - prefer-trailing-comma
+    - always-remove-listener
+    #  - avoid-returning-widgets
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - prefer-extracting-callbacks
+    - prefer-intl-name
+    - provide-correct-intl-args
