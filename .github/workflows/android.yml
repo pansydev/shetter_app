@@ -22,8 +22,8 @@ jobs:
       - name: Code generation
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Passing tests
-        run: flutter test
+      # - name: Passing tests
+      #   run: flutter test
 
       - name: Building APK
         run: flutter build apk --release --bundle-sksl-path android.sksl.json
