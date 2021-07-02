@@ -26,7 +26,7 @@ jobs:
       #   run: flutter test
 
       - name: Building APK
-        run: flutter build apk --release --bundle-sksl-path android.sksl.json
+        run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
 
       - if: "!contains(github.event.head_commit.message, '[publish]')"
         name: Uploading artifacts
