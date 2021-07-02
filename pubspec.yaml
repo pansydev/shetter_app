@@ -13,7 +13,6 @@ dependencies:
   dartz: ^0.10.0-nullsafety.2
   normalize: "0.5.2"
 
-  cupertino_icons:
   freezed_annotation:
   flutter_bloc:
   graphql:
