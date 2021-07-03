@@ -16,7 +16,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
 
   final PostRepository _postRepository;
 
-  static const int _pageSize = 10;
+  static const int _pageSize = 35;
 
   @override
   Stream<PostListState> mapEventToState(PostListEvent event) {
