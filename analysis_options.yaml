@@ -50,7 +50,7 @@ linter:
     missing_whitespace_between_adjacent_strings: true
     no_default_cases: true
     null_check_on_nullable_type_parameter: true
-    #one_member_abstracts: true
+    one_member_abstracts: true
     only_throw_errors: true
     sort_unnamed_constructors_first: true
     tighten_type_of_initializing_formals: true
@@ -72,7 +72,7 @@ linter:
     use_to_and_as_if_applicable: true
     package_names: true
     prefer_asserts_in_initializer_lists: true
-    #prefer_asserts_with_message: true
+    prefer_asserts_with_message: true
     prefer_const_declarations: true
     prefer_constructors_over_static_methods: true
     prefer_final_in_for_each: true
@@ -87,6 +87,8 @@ linter:
     #public_member_api_docs: true
     sized_box_for_whitespace: true
     sort_constructors_first: true
+    prefer_const_constructors_in_immutables: true
+    unnecessary_const: true
 
 dart_code_metrics:
   anti-patterns:

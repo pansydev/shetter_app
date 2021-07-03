@@ -62,8 +62,8 @@ class PostRepositoryImpl implements PostRepository {
       if (event.hasException) {
         return Left(ServerFailure());
       }
-
       final result = SubscriptionPostCreated.fromJson(event.data!);
+
       return Right(result.postCreated.toEntity());
     });
   }

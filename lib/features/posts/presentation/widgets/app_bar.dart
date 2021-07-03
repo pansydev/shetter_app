@@ -44,7 +44,7 @@ class UAppBar extends SliverPersistentHeaderDelegate {
 }
 
 class _UAppBarBody extends StatefulWidget {
-  _UAppBarBody({
+  const _UAppBarBody({
     Key? key,
     required this.value,
     this.onScrollToUp,

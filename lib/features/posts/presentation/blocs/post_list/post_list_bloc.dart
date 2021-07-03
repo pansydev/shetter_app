@@ -45,13 +45,11 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
 
   void retry() {
     if (state is PostListStateEmpty) {
-      add(PostListEvent.fetchPosts());
-      return;
+      return add(PostListEvent.fetchPosts());
     }
 
     if (state is PostListStateLoaded) {
-      add(PostListEvent.fetchMorePosts());
-      return;
+      return add(PostListEvent.fetchMorePosts());
     }
   }
 

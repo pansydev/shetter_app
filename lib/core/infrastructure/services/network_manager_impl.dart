@@ -21,6 +21,7 @@ class NetworkManagerImpl implements NetworkManager {
   static Future<NetworkManager> create() async {
     final networkManager = NetworkManagerImpl();
     await networkManager.init();
+
     return networkManager;
   }
 }

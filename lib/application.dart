@@ -3,7 +3,7 @@ import 'package:shetter_app/core/presentation/presentation.dart';
 import 'package:shetter_app/router.dart';
 
 class Application extends StatelessWidget {
-  const Application(this.router) : super(key: const Key("Application"));
+  Application(this.router) : super(key: Key("Application"));
   final AppRouter router;
 
   @override
@@ -18,7 +18,7 @@ class Application extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        ...context.localizationsDelegates
+        ...context.localizationsDelegates,
       ],
       locale: Locale('ru'),
       theme: lightThemeData,

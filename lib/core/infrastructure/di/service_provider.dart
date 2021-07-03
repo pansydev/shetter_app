@@ -20,6 +20,7 @@ class ServiceProvider {
   static Future<ServiceProvider> create() async {
     final provider = ServiceProvider._();
     await provider._container.allReady();
+
     return provider;
   }
 }
