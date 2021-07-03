@@ -77,11 +77,11 @@ class _HomePageState extends State<HomePage> {
   }) {
     return state.when(
       empty: (failure) => failure != null
-          ? Preloader(failure: failure).sliverBox
-          : Preloader().sliverBox,
+          ? UPreloader(failure: failure).sliverBox
+          : UPreloader().sliverBox,
       loaded: (connection, failure) => builder(connection, failure),
       loading: (connection) =>
-          connection != null ? builder(connection) : Preloader().sliverBox,
+          connection != null ? builder(connection) : UPreloader().sliverBox,
       loadingMore: (connection) => builder(connection),
     );
   }

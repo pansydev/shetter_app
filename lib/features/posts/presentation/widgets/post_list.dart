@@ -21,7 +21,7 @@ class UPostList extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 UPost(connection.nodes[index].toNullable()!),
-                Preloader(
+                UPreloader(
                   visible: connection.pageInfo.hasNextPage,
                   failure: failure,
                 ),

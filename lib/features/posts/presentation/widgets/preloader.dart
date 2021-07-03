@@ -1,8 +1,8 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class Preloader extends StatelessWidget {
-  const Preloader({
+class UPreloader extends StatelessWidget {
+  const UPreloader({
     Key? key,
     this.visible = false,
     this.failure,
