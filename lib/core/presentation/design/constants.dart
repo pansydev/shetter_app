@@ -16,6 +16,11 @@ class DesignConstants {
     bottomLeft: borderRadiusValue,
     bottomRight: borderRadiusValue,
   );
+
+  static Radius borderRadiusCircleValue = Radius.circular(Get.width);
+  static BorderRadius borderRadiusCircle = BorderRadius.all(
+    borderRadiusCircleValue,
+  );
   // #endregion borderRadius
 
   // #region padding
@@ -26,6 +31,12 @@ class DesignConstants {
   static const EdgeInsets paddingAlt = EdgeInsets.symmetric(
     horizontal: paddingValue,
     vertical: paddingAltValue,
+  );
+
+  static const double paddingMiniValue = 10;
+  static const EdgeInsets paddingMini = EdgeInsets.symmetric(
+    horizontal: paddingValue,
+    vertical: paddingMiniValue,
   );
 
   static const EdgeInsets paddingButton = EdgeInsets.symmetric(

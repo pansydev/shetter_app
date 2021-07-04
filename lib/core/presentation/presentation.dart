@@ -16,4 +16,5 @@ export 'localization/strings.dart';
 export 'pages/not_found_page.dart';
 export 'widgets/button.dart';
 export 'widgets/card.dart';
+export 'widgets/chip.dart';
 export 'widgets/pressable.dart';
