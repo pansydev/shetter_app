@@ -1,15 +1,15 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shetter_app/features/auth/infrastructure/infrastructure.dart';
 
 @module
 abstract class GraphQLClientFactory {
-  @preResolve
-  @singleton
-  Future<GraphQLClient> createClient(
+  @Singleton(dependsOn: [AuthLinkFactory])
+  GraphQLClient createClient(
     AuthLinkFactory linkFactory,
     Box box,
-  ) async {
+  ) {
     final httpLink = HttpLink(InfrastructureConstants.httpApiUrl);
     final wsLink = WebSocketLink(InfrastructureConstants.wsApiUrl);
 
