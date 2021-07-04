@@ -6,5 +6,6 @@
   "unknown_author": "Неизвестно",
   "server_failure_message": "Произошла ошибка при обращении к серверу",
   "cache_failure_message": "Устройство не подключено к интернету, данные не могут быть отображены",
-  "unknown_failure": "Неизвестная ошибка"
+  "unknown_failure": "Неизвестная ошибка",
+  "unsupported_attachment": "неподдерживаемое вложение"
 }

@@ -49,6 +49,7 @@ class UPost extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     return MarkdownBody(
       data: post.text.trim(),
+      imageBuilder: _imageBuilder,
       styleSheet: MarkdownStyleSheet(
         blockquoteDecoration: BoxDecoration(
           color: context.theme.primaryColorDark,
@@ -72,5 +73,17 @@ class UPost extends StatelessWidget {
       ),
     );
   }
+
+  Widget _imageBuilder(uri, _, __) {
+    return Image.network(
+      uri.toString(),
+      errorBuilder: (_, __, ___) => Opacity(
+        opacity: 0.5,
+        child: UChip.outline(
+          style: UChipStyle(margin: EdgeInsets.only(top: 10)),
+          child: Text(Strings.unsupportedAttachment.get()),
+        ),
+      ),
+    );
   }
 }

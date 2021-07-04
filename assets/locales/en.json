@@ -6,5 +6,6 @@
   "unknown_author": "Unknown",
   "server_failure_message": "An error occurred while requesting the server",
   "cache_failure_message": "The device is offline and the data cannot be displayed",
-  "unknown_failure": "Unknown failure"
+  "unknown_failure": "Unknown failure",
+  "unsupported_attachment": "unsupported attachment"
 }
