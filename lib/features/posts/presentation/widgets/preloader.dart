@@ -4,7 +4,7 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 class UPreloader extends StatelessWidget {
   const UPreloader({
     Key? key,
-    this.visible = false,
+    this.visible = true,
     this.failure,
   }) : super(key: key);
 
