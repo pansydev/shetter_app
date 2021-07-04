@@ -1,5 +1,5 @@
-export 'package:get/route_manager.dart' hide Transition;
-export 'package:get/utils.dart';
+export 'package:get/get.dart'
+    show GetNavigation, ContextExtensionss, WidgetSliverBoxX, Get;
 export 'package:flutter/material.dart' hide RefreshCallback;
 export 'package:flutter/cupertino.dart';
 export 'package:supercharged/supercharged.dart';
