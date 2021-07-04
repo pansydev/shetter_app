@@ -4,20 +4,25 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 @module
 abstract class GraphQLClientFactory {
+  @preResolve
   @singleton
-  Future<GraphQLClient> createClient() async {
+  Future<GraphQLClient> createClient(
+    AuthLinkFactory linkFactory,
+    Box box,
+  ) async {
     final httpLink = HttpLink(InfrastructureConstants.httpApiUrl);
     final wsLink = WebSocketLink(InfrastructureConstants.wsApiUrl);
 
-    final link = Link.split(
+    final transportLink = Link.split(
       (request) => request.isSubscription,
       wsLink,
       httpLink,
     );
 
-    await Hive.initFlutter();
+    final authLink = linkFactory.createAuthLink();
 
-    final box = await Hive.openBox(InfrastructureConstants.appId);
+    final link = Link.from([transportLink, authLink]);
+
     final store = HiveStore(box);
     final cache = GraphQLCache(store: store);
 

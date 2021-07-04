@@ -101,3 +101,7 @@ index_generator:
     - path: lib/features/posts/domain
     - path: lib/features/posts/infrastructure
     - path: lib/features/posts/presentation
+
+    - path: lib/features/auth/domain
+    - path: lib/features/auth/infrastructure
+    - path: lib/features/auth/presentation

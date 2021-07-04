@@ -2,7 +2,9 @@
 
 library domain;
 
+export 'entities/failure.dart';
+export 'entities/pagination/connection.dart';
+export 'entities/pagination/page_info.dart';
+export 'entities/user_info.dart';
 export 'exports.dart';
-export 'models/failure.dart';
-export 'models/pagination/connection.dart';
-export 'models/pagination/page_info.dart';
+export 'services/user_info_provider.dart';

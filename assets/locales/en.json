@@ -7,5 +7,8 @@
   "server_failure_message": "An error occurred while requesting the server",
   "cache_failure_message": "The device is offline and the data cannot be displayed",
   "unknown_failure": "Unknown failure",
-  "unsupported_attachment": "unsupported attachment"
+  "unsupported_attachment": "unsupported attachment",
+  "authentication_invalid_credentials": "Incorrect login or password",
+  "refresh_invalid_refresh_token": "Session expired",
+  "registration_user_already_exists": "A user with the same name already exists"
 }

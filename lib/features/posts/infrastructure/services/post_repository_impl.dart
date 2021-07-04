@@ -12,13 +12,13 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<Either<Failure, Post>> createPost(PostInput input) async {
-    final result = await _client.mutateCreatePost(
-      GQLOptionsMutationCreatePost(
-        variables: VariablesMutationCreatePost(
-          input: PostInputMapper.postInputToDto(input),
-        ),
+    final options = GQLOptionsMutationCreatePost(
+      variables: VariablesMutationCreatePost(
+        input: PostInputMapper.postInputToDto(input),
       ),
     );
+
+    final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
       return Left(ServerFailure());
@@ -32,12 +32,12 @@ class PostRepositoryImpl implements PostRepository {
     required int pageSize,
     String? after,
   }) async {
-    final result = await _client.queryPosts(
-      GQLOptionsQueryPosts(
-        variables: VariablesQueryPosts(pageSize: pageSize, after: after),
-        fetchPolicy: _fetchPolicyProvider.fetchPolicy,
-      ),
+    final options = GQLOptionsQueryPosts(
+      variables: VariablesQueryPosts(pageSize: pageSize, after: after),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
+
+    final result = await _client.queryPosts(options);
 
     if (result.hasException) {
       developer.log("Post fetching failed", error: result.exception);
@@ -54,9 +54,11 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Stream<Either<Failure, Post>> subsribeToPosts() {
-    final stream = _client.subscribe(
-      SubscriptionOptions(document: SUBSCRIPTION_POST_CREATED),
+    final options = SubscriptionOptions(
+      document: SUBSCRIPTION_POST_CREATED,
     );
+
+    final stream = _client.subscribe(options);
 
     return stream.map((event) {
       if (event.hasException) {

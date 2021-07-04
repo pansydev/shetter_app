@@ -50,4 +50,5 @@ app.*.map.json
 *.graphql.g.dart
 *.al.dart
 *.gr.dart
+*.g.dart
 service_provider.config.dart
