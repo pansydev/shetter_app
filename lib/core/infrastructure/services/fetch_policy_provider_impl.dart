@@ -8,6 +8,6 @@ class FetchPolicyProviderImpl implements FetchPolicyProvider {
   final NetworkManager _networkManager;
 
   FetchPolicy get fetchPolicy => _networkManager.isOnline
-      ? FetchPolicy.networkOnly
+      ? FetchPolicy.cacheAndNetwork
       : FetchPolicy.cacheOnly;
 }
