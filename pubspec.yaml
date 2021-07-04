@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc:
   graphql:
   auto_localized:
+  url_launcher:
   get_it:
   injectable:
   connectivity_plus:

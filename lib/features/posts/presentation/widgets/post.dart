@@ -2,6 +2,7 @@ import 'package:shetter_app/core/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class UPost extends StatelessWidget {
   const UPost(
@@ -71,6 +72,7 @@ class UPost extends StatelessWidget {
           ),
         ),
       ),
+      onTapLink: _onTapLink,
     );
   }
 
@@ -85,5 +87,9 @@ class UPost extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _onTapLink(_, url, __) async {
+    await launch(url);
   }
 }
