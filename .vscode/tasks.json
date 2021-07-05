@@ -11,6 +11,17 @@
       },
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": "Generate code",
+      "command": "flutter pub run build_runner build --delete-conflicting-outputs",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
