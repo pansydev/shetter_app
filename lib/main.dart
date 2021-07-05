@@ -5,7 +5,6 @@ import 'package:shetter_app/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  PostsPresentationLayer.ensureInitialized();
 
   final router = AppRouter();
   final application = Application(router);
