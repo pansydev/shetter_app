@@ -1,11 +1,10 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shetter_app/features/auth/infrastructure/infrastructure.dart';
 
 @module
 abstract class GraphQLClientFactory {
-  @Singleton(dependsOn: [AuthLinkFactory])
+  @lazySingleton
   GraphQLClient createClient(
     AuthLinkFactory linkFactory,
     Box box,
