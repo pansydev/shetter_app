@@ -17,4 +17,3 @@ export 'services/auth_repository_impl.dart';
 export 'services/refresh_manager.dart';
 export 'services/refresh_manager_impl.dart';
 export 'services/token_manager_impl.dart';
-export 'services/user_info_provider_impl.dart';
