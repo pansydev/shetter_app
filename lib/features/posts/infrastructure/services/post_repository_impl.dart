@@ -28,28 +28,31 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, Connection<Post>>> getPosts({
+  Stream<Either<Failure, Connection<Post>>> getPosts({
     required int pageSize,
     String? after,
-  }) async {
-    final result = await _client.queryPosts(
-      GQLOptionsQueryPosts(
+  }) {
+    final result = _client.watchQueryPosts(
+      GQLWatchOptionsQueryPosts(
+        fetchResults: true,
         variables: VariablesQueryPosts(pageSize: pageSize, after: after),
         fetchPolicy: _fetchPolicyProvider.fetchPolicy,
       ),
     );
 
-    if (result.hasException) {
-      developer.log("Post fetching failed", error: result.exception);
+    return result.stream.map((event) {
+      if (event.hasException) {
+        developer.log("Post fetching failed", error: event.exception);
 
-      if (result.exception!.linkException is CacheMissException) {
-        return Left(CacheFailure());
+        if (event.exception!.linkException is CacheMissException) {
+          return Left(CacheFailure());
+        }
+
+        return Left(ServerFailure());
       }
 
-      return Left(ServerFailure());
-    }
-
-    return Right(result.parsedDataQueryPosts!.posts!.toEntity());
+      return Right(event.parsedDataQueryPosts!.posts!.toEntity());
+    });
   }
 
   @override
