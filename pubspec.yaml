@@ -13,6 +13,7 @@ dependencies:
   dartz: ^0.10.0-nullsafety.2
   normalize: 0.5.2
 
+  intl:
   freezed_annotation:
   flutter_bloc:
   graphql:
@@ -24,7 +25,6 @@ dependencies:
   hive_flutter:
   get:
   simple_animations:
-  timeago:
   flutter_markdown:
   flutter_scale_tap:
   auto_route:

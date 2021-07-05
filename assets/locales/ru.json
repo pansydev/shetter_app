@@ -7,5 +7,8 @@
   "server_failure_message": "Произошла ошибка при обращении к серверу",
   "cache_failure_message": "Устройство не подключено к интернету, данные не могут быть отображены",
   "unknown_failure": "Неизвестная ошибка",
-  "unsupported_attachment": "неподдерживаемое вложение"
+  "unsupported_attachment": "неподдерживаемое вложение",
+  "time_at": ", в {1}",
+  "time_today_at": "сегодня, в {1}",
+  "time_yesterday_at": "вчера, в {1}"
 }
