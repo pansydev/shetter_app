@@ -24,7 +24,7 @@ class RefreshManagerImpl implements RefreshManager {
   }
 
   Future<Option<Failure>> refresh() async {
-    assert(_tokenManager.authenticated);
+    assert(_tokenManager.authenticated, "User is not authenticated");
 
     final options = GQLOptionsMutationRefresh(
       variables: VariablesMutationRefresh(
