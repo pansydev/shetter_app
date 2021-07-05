@@ -2,20 +2,20 @@
   "core-domain": {
     "scope": "dart",
     "prefix": "core-domain",
-    "body": ["import 'package:shetter_app/features/core/domain/domain.dart';"]
+    "body": ["import 'package:shetter_app/core/domain/domain.dart';"]
   },
   "core-infrastructure": {
     "scope": "dart",
     "prefix": "core-infrastructure",
     "body": [
-      "import 'package:shetter_app/features/core/infrastructure/infrastructure.dart';"
+      "import 'package:shetter_app/core/infrastructure/infrastructure.dart';"
     ]
   },
   "core-presentation": {
     "scope": "dart",
     "prefix": "core-presentation",
     "body": [
-      "import 'package:shetter_app/features/core/presentation/presentation.dart';"
+      "import 'package:shetter_app/core/presentation/presentation.dart';"
     ]
   },
 
