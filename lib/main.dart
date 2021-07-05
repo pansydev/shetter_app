@@ -16,6 +16,7 @@ void main() async {
     child: application,
     providers: [
       provider.createBlocProvider<PostListBloc>(),
+      provider.createBlocProvider<AppBarBloc>()
     ],
   );
 

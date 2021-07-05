@@ -10,5 +10,5 @@ export 'exports.dart';
 export 'services/auth_manager.dart';
 export 'services/auth_manager_impl.dart';
 export 'services/auth_repository.dart';
+export 'services/authentication_state_provider_impl.dart';
 export 'services/token_manager.dart';
-export 'services/user_info_provider_impl.dart';

@@ -5,7 +5,9 @@ abstract class TokenManager {
   bool get expired;
 
   TokenPair get tokens;
-  UserInfo get userInfo;
+
+  AuthenticationState get state;
+  Stream<AuthenticationState> subscribe();
 
   Future<void> setTokens(TokenPair tokenPair);
 }

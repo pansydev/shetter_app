@@ -1,4 +1,44 @@
 {
+  "core-domain": {
+    "scope": "dart",
+    "prefix": "core-domain",
+    "body": ["import 'package:shetter_app/features/core/domain/domain.dart';"]
+  },
+  "core-infrastructure": {
+    "scope": "dart",
+    "prefix": "core-infrastructure",
+    "body": [
+      "import 'package:shetter_app/features/core/infrastructure/infrastructure.dart';"
+    ]
+  },
+  "core-presentation": {
+    "scope": "dart",
+    "prefix": "core-presentation",
+    "body": [
+      "import 'package:shetter_app/features/core/presentation/presentation.dart';"
+    ]
+  },
+
+  "posts-domain": {
+    "scope": "dart",
+    "prefix": "posts-domain",
+    "body": ["import 'package:shetter_app/features/posts/domain/domain.dart';"]
+  },
+  "posts-infrastructure": {
+    "scope": "dart",
+    "prefix": "posts-infrastructure",
+    "body": [
+      "import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';"
+    ]
+  },
+  "posts-presentation": {
+    "scope": "dart",
+    "prefix": "posts-presentation",
+    "body": [
+      "import 'package:shetter_app/features/posts/presentation/presentation.dart';"
+    ]
+  },
+
   "auth-domain": {
     "scope": "dart",
     "prefix": "auth-domain",

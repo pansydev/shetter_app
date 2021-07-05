@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shetter_app/features/auth/domain/domain.dart';
 import 'package:shetter_app/features/auth/infrastructure/infrastructure.dart';
 
@@ -8,7 +10,6 @@ class TokenManagerImpl implements TokenManager {
   final Box _box;
 
   TokenPair? _tokens;
-  UserInfo? _userInfo;
 
   @override
   bool get authenticated => _tokens != null;
@@ -27,18 +28,9 @@ class TokenManagerImpl implements TokenManager {
   }
 
   @override
-  UserInfo get userInfo {
-    if (_userInfo == null) {
-      throw Exception("User is not authenticated");
-    }
-
-    return _userInfo!;
-  }
-
-  @override
   Future<void> setTokens(TokenPair tokenPair) async {
     _tokens = tokenPair;
-    _updateUserInfo();
+    _updateAuthenticationState();
 
     await _box.putAll({
       "access_token": tokenPair.accessToken.value,
@@ -59,16 +51,41 @@ class TokenManagerImpl implements TokenManager {
       refreshToken: refreshToken,
     );
 
-    _updateUserInfo();
+    _updateAuthenticationState();
   }
 
-  void _updateUserInfo() {
+  void _updateAuthenticationState() {
+    _authenticationState = AuthenticationState(
+      authenticated: authenticated,
+      userInfo: _buildUserInfo(),
+    );
+
+    _stateController.add(_authenticationState);
+  }
+
+  UserInfo? _buildUserInfo() {
+    if (!authenticated) return null;
+
     final payload = tokens.accessToken.payload;
 
-    _userInfo = UserInfo(
+    return UserInfo(
       id: payload.userId,
       username: payload.username,
     );
+  }
+
+  final StreamController<AuthenticationState> _stateController =
+      StreamController();
+
+  AuthenticationState _authenticationState =
+      AuthenticationState(authenticated: false);
+
+  @override
+  AuthenticationState get state => _authenticationState;
+
+  @override
+  Stream<AuthenticationState> subscribe() {
+    return _stateController.stream.asBroadcastStream();
   }
 
   @factoryMethod

@@ -25,9 +25,12 @@ class UAppBar extends SliverPersistentHeaderDelegate {
     return SafeArea(
       child: Align(
         alignment: Alignment.topRight,
-        child: _UAppBarBody(
-          value: offset,
-          onScrollToUp: onScrollToUp,
+        child: BlocBuilder<AppBarBloc, AppBarState>(
+          builder: (context, state) => _UAppBarBody(
+            state: state,
+            value: offset,
+            onScrollToUp: onScrollToUp,
+          ),
         ),
       ),
     );
@@ -46,10 +49,12 @@ class UAppBar extends SliverPersistentHeaderDelegate {
 class _UAppBarBody extends StatefulWidget {
   const _UAppBarBody({
     Key? key,
+    required this.state,
     required this.value,
     this.onScrollToUp,
   }) : super(key: key);
 
+  final AppBarState state;
   final double value;
   final VoidCallback? onScrollToUp;
 
@@ -132,7 +137,10 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
               ),
               SizedBox(height: 2),
               Text(
-                "@username",
+                widget.state.when(
+                  authenticated: (userInfo) => "@${userInfo.username}",
+                  unauthenticated: () => "unauthenticated",
+                ),
                 style: context.textTheme.subtitle2?.copyWith(
                   fontSize: 13,
                   color: context.textTheme.subtitle2?.color?.withOpacity(0.7),
