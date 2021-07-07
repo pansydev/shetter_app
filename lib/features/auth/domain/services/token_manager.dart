@@ -10,4 +10,5 @@ abstract class TokenManager {
   Stream<AuthenticationState> subscribe();
 
   Future<void> setTokens(TokenPair tokenPair);
+  Future<void> clearTokens();
 }

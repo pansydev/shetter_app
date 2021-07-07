@@ -38,6 +38,14 @@ class TokenManagerImpl implements TokenManager {
     });
   }
 
+  @override
+  Future<void> clearTokens() async {
+    _tokens = null;
+    _updateAuthenticationState();
+
+    await _box.deleteAll(["access_token", "refresh_token"]);
+  }
+
   Future<void> load() async {
     final String? accessToken = _box.get("access_token");
     final String? refreshToken = _box.get("refresh_token");

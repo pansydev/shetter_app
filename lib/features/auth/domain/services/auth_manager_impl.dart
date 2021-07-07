@@ -21,6 +21,11 @@ class AuthManagerImpl implements AuthManager {
     return updateTokens(result);
   }
 
+  @override
+  Future<void> logout() async {
+    await _tokenManager.clearTokens();
+  }
+
   Future<Option<Failure>> updateTokens(
     Either<Failure, TokenPair> result,
   ) async {
