@@ -1,7 +1,6 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/core/presentation/presentation.dart';
-
-import 'app/app.dart';
+import 'package:shetter_app/app/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

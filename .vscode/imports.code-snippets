@@ -1,4 +1,10 @@
 {
+  "app": {
+    "scope": "dart",
+    "prefix": "app",
+    "body": ["import 'package:shetter_app/app/app.dart';"]
+  },
+
   "core-domain": {
     "scope": "dart",
     "prefix": "core-domain",
