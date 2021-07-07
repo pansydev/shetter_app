@@ -4,9 +4,9 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 @injectable
 class AppBarBloc extends Bloc<AppBarEvent, AppBarState> {
   AppBarBloc(
-    AuthenticationStateProvider stateProvider,
-  ) : super(_mapAuthenticationState(stateProvider.state)) {
-    stateProvider
+    AuthenticationStateManager stateManager,
+  ) : super(_mapAuthenticationState(stateManager.state)) {
+    stateManager
         .subscribe()
         .listen((event) => add(AppBarEvent.authenticationStateChanged(event)));
   }

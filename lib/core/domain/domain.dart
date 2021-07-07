@@ -8,4 +8,4 @@ export 'entities/pagination/connection.dart';
 export 'entities/pagination/page_info.dart';
 export 'entities/user_info.dart';
 export 'exports.dart';
-export 'services/authentication_state_provider.dart';
+export 'services/authentication_state_manager.dart';
