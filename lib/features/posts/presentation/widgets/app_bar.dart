@@ -25,12 +25,9 @@ class UAppBar extends SliverPersistentHeaderDelegate {
     return SafeArea(
       child: Align(
         alignment: Alignment.topRight,
-        child: BlocBuilder<AppBarBloc, AppBarState>(
-          builder: (context, state) => _UAppBarBody(
-            state: state,
-            value: offset,
-            onScrollToUp: onScrollToUp,
-          ),
+        child: _UAppBarBody(
+          value: offset,
+          onScrollToUp: onScrollToUp,
         ),
       ),
     );
@@ -49,12 +46,10 @@ class UAppBar extends SliverPersistentHeaderDelegate {
 class _UAppBarBody extends StatefulWidget {
   const _UAppBarBody({
     Key? key,
-    required this.state,
     required this.value,
     this.onScrollToUp,
   }) : super(key: key);
 
-  final AppBarState state;
   final double value;
   final VoidCallback? onScrollToUp;
 
@@ -127,6 +122,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
     return Padding(
       padding: DesignConstants.paddingAlt.copyWith(bottom: 0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,17 +132,33 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                 style: context.textTheme.headline6,
               ),
               SizedBox(height: 2),
-              Text(
-                widget.state.when(
-                  authenticated: (userInfo) => "@${userInfo.username}",
-                  unauthenticated: () => "unauthenticated",
-                ),
-                style: context.textTheme.subtitle2?.copyWith(
-                  fontSize: 13,
-                  color: context.textTheme.subtitle2?.color?.withOpacity(0.7),
+              BlocBuilder<AppBarBloc, AppBarState>(
+                builder: (context, state) => Text(
+                  state.when(
+                    authenticated: (userInfo) => "@${userInfo.username}",
+                    unauthenticated: () => Strings.unauthenticated.get(),
+                  ),
+                  style: context.textTheme.subtitle2?.copyWith(
+                    fontSize: 13,
+                    color: context.textTheme.subtitle2?.color?.withOpacity(0.7),
+                  ),
                 ),
               ),
             ],
+          ),
+          Spacer(),
+          BlocBuilder<AppBarBloc, AppBarState>(
+            builder: (context, state) => state.when(
+              authenticated: (userInfo) => UIconButton(
+                Icon(
+                  Icons.exit_to_app,
+                  size: 22,
+                ),
+                style: UIconButtonStyle(margin: EdgeInsets.zero),
+                onPressed: context.read<AppBarBloc>().logout,
+              ),
+              unauthenticated: () => Container(),
+            ),
           ),
         ],
       ),

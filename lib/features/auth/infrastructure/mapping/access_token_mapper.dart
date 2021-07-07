@@ -5,7 +5,9 @@ import 'package:shetter_app/features/auth/infrastructure/infrastructure.dart';
 
 abstract class AccessTokenMapper {
   static AccessToken toEntity(String accessToken) {
-    final payloadJson = utf8.decode(base64.decode(accessToken.split(".")[1]));
+    final payloadJson = utf8.decode(base64.decode(
+      base64.normalize(accessToken.split(".")[1]),
+    ));
     final payload = json.decode(payloadJson);
 
     return AccessToken(

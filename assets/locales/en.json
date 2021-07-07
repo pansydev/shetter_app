@@ -2,6 +2,7 @@
   "home_page_title": "Shetter",
   "post_form_action": "Create post",
   "try_again_action": "Try again",
+  "error": "Error",
   "error_message": "Error: {1}",
   "unknown_author": "Unknown",
   "server_failure_message": "An error occurred while requesting the server",
@@ -10,5 +11,12 @@
   "unsupported_attachment": "unsupported attachment",
   "authentication_invalid_credentials": "Incorrect login or password",
   "refresh_invalid_refresh_token": "Session expired",
-  "registration_user_already_exists": "A user with the same name already exists"
+  "registration_user_already_exists": "A user with the same name already exists",
+  "unauthenticated": "Unauthenticated",
+  "username": "Username",
+  "password": "Password",
+  "login": "Login",
+  "signin": "Sign in",
+  "password_visiblity": "Password visiblity",
+  "logout": "Log out"
 }

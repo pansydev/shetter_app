@@ -2,6 +2,7 @@
   "home_page_title": "Shetter",
   "post_form_action": "Создать пост",
   "try_again_action": "Попробовать снова",
+  "error": "Ошибка",
   "error_message": "Ошибка: {1}",
   "unknown_author": "Неизвестно",
   "server_failure_message": "Произошла ошибка при обращении к серверу",
@@ -10,5 +11,12 @@
   "unsupported_attachment": "неподдерживаемое вложение",
   "authentication_invalid_credentials": "Неправильный логин или пароль",
   "refresh_invalid_refresh_token": "Сессия завершена",
-  "registration_user_already_exists": "Пользователь с таким именем уже существует"
+  "registration_user_already_exists": "Пользователь с таким именем уже существует",
+  "unauthenticated": "Не авторизован",
+  "username": "Имя пользователя",
+  "password": "Пароль",
+  "login": "Войти",
+  "signin": "Зарегистрироваться",
+  "password_visiblity": "Видимость пароля",
+  "logout": "Выйти из аккаунта"
 }

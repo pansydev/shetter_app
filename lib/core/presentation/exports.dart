@@ -1,5 +1,10 @@
 export 'package:get/get.dart'
-    show GetNavigation, ContextExtensionss, WidgetSliverBoxX, Get;
+    show
+        GetNavigation,
+        ContextExtensionss,
+        WidgetSliverBoxX,
+        Get,
+        ExtensionSnackbar;
 export 'package:flutter/material.dart' hide RefreshCallback;
 export 'package:flutter/cupertino.dart';
 export 'package:supercharged/supercharged.dart';
