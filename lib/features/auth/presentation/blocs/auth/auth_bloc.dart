@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:shetter_app/features/auth/domain/domain.dart';
 import 'package:shetter_app/features/auth/presentation/presentation.dart';
 
@@ -9,6 +8,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           usernameController: TextEditingController(),
           passwordController: TextEditingController(),
         ));
+
   final AuthManager _authManager;
 
   @override
