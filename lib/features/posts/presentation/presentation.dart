@@ -9,6 +9,7 @@ export 'blocs/post_list/post_list_bloc.dart';
 export 'blocs/post_list/post_list_event.dart';
 export 'blocs/post_list/post_list_state.dart';
 export 'exports.dart';
+export 'pages/home_page.dart';
 export 'widgets/app_bar.dart';
 export 'widgets/post.dart';
 export 'widgets/post_list.dart';

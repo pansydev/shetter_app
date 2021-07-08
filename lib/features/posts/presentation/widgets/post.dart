@@ -1,7 +1,6 @@
 import 'package:shetter_app/core/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class UPost extends StatelessWidget {
@@ -36,7 +35,7 @@ class UPost extends StatelessWidget {
         style: context.textTheme.subtitle2,
         children: [
           TextSpan(
-            text: '  •  ' + timeago.format(post.creationTime, locale: 'ru'),
+            text: '  •  ' + post.creationTime.toFormatedString(),
             style: context.textTheme.subtitle2?.copyWith(
               fontSize: 13,
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),

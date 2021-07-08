@@ -10,6 +10,7 @@ export 'design/light_theme_data.dart';
 export 'design/text_theme.dart';
 export 'exports.dart';
 export 'helpers/bloc_helpers.dart';
+export 'helpers/date_time_helpers.dart';
 export 'localization/failure_localizer.dart';
 export 'localization/strings.al.dart';
 export 'localization/strings.dart';
