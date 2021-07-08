@@ -6,4 +6,4 @@ export 'blocs/auth/auth_bloc.dart';
 export 'blocs/auth/auth_event.dart';
 export 'blocs/auth/auth_state.dart';
 export 'exports.dart';
-export 'pages/auth_fragment.dart';
+export 'widgets/auth_fragment.dart';

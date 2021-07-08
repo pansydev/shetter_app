@@ -52,44 +52,11 @@ class _HomePageState extends State<HomePage> {
               onScrollToUp: _scrollController.scrollToUp,
             ),
           ),
-          CupertinoSliverRefreshControl(
-            onRefresh: context.read<PostListBloc>().refresh,
-          ),
-          BlocBuilder<AppBarBloc, AppBarState>(
-            builder: (context, state) => state.when(
-              authenticated: (_) => Container(),
-              unauthenticated: () => AuthFragment(),
-            ),
-          ).sliverBox,
-          SliverPadding(
-            padding: DesignConstants.padding.copyWith(top: 10),
-            sliver: _buildPreloader(
-              state,
-              builder: (connection, [failure]) {
-                return UPostList(
-                  connection: connection,
-                  failure: failure,
-                );
-              },
-            ),
-          ),
+          RefreshFragment(),
+          AuthFragment(),
+          PostListFragment()
         ],
       ),
-    );
-  }
-
-  Widget _buildPreloader(
-    PostListState state, {
-    required PostListBuilder builder,
-  }) {
-    return state.when(
-      empty: (failure) => failure != null
-          ? UPreloader(failure: failure).sliverBox
-          : UPreloader().sliverBox,
-      loaded: (connection, failure) => builder(connection, failure),
-      loading: (connection) =>
-          connection != null ? builder(connection) : UPreloader().sliverBox,
-      loadingMore: (connection) => builder(connection),
     );
   }
 }
