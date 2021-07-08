@@ -1,0 +1,126 @@
+import 'package:shetter_app/core/presentation/presentation.dart';
+
+part 'text_field.freezed.dart';
+
+class UTextField extends StatefulWidget {
+  UTextField({
+    Key? key,
+    this.hintText,
+    this.isPassword = false,
+    TextEditingController? controller,
+    this.style = const UTextFieldStyle(),
+    this.icon,
+  })  : controller = controller ?? TextEditingController(),
+        super(key: key);
+
+  final String? hintText;
+  final bool isPassword;
+  final TextEditingController controller;
+  final UTextFieldStyle style;
+  final Widget? icon;
+
+  @override
+  _UTextFieldState createState() => _UTextFieldState();
+}
+
+class _UTextFieldState extends State<UTextField> {
+  late bool obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    obscureText = widget.isPassword;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.centerRight,
+      children: [
+        TextField(
+          decoration: _InputDecoration(context, widget.style, widget.hintText),
+          obscureText: obscureText,
+          controller: widget.controller,
+          cursorColor: context.iconColor,
+          style: context.textTheme.button,
+          cursorWidth: 1.5,
+          cursorRadius: DesignConstants.borderRadius.bottomLeft,
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.isPassword)
+              UIconButton(
+                Icon(obscureText ? Icons.visibility : Icons.visibility_off),
+                tooltip: Strings.passwordVisiblity.get(),
+                onPressed: _switchObscure,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _switchObscure() {
+    setState(() {
+      obscureText = !obscureText;
+    });
+  }
+}
+
+class _InputDecoration extends InputDecoration {
+  _InputDecoration(
+    BuildContext context,
+    UTextFieldStyle style,
+    String? hintText,
+  ) : super(
+          hintText: hintText,
+          hintStyle: context.textTheme.button?.copyWith(
+            color: context.textTheme.button?.color?.withOpacity(0.5),
+          ),
+          border: _InputBorder(context, style),
+          enabledBorder: _InputBorder(context, style),
+          errorBorder: _InputBorder(context, style),
+          focusedBorder: _InputBorder(context, style, isFocused: true),
+          disabledBorder: _InputBorder(context, style),
+          focusedErrorBorder: _InputBorder(context, style),
+          contentPadding: DesignConstants.padding,
+          fillColor: style.backgroundColor ?? context.theme.primaryColor,
+          filled: true,
+          isCollapsed: true,
+        );
+}
+
+class _InputBorder extends OutlineInputBorder {
+  _InputBorder(
+    BuildContext context,
+    UTextFieldStyle style, {
+    bool isFocused = false,
+  }) : super(
+          borderRadius: style.borderRadius ?? DesignConstants.borderRadius,
+          borderSide: !isFocused
+              ? BorderSide(
+                  width: 2,
+                  color:
+                      style.borderColor ?? context.iconColor!.withOpacity(0.1),
+                )
+              : BorderSide(
+                  width: 2,
+                  color:
+                      style.borderColor ?? context.iconColor!.withOpacity(0.8),
+                ),
+        );
+}
+
+@freezed
+class UTextFieldStyle with _$UTextFieldStyle {
+  const factory UTextFieldStyle({
+    Color? backgroundColor,
+    Color? shadowColor,
+    double? elevation,
+    Color? borderColor,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+    BorderRadius? borderRadius,
+  }) = _UTextFieldStyle;
+}

@@ -16,6 +16,7 @@ class UCard extends StatelessWidget {
 
   factory UCard.outline({
     required Widget child,
+    Widget? title,
     UCardStyle style = const UCardStyle(),
     VoidCallback? onPressed,
     VoidCallback? onLongPress,
@@ -23,6 +24,7 @@ class UCard extends StatelessWidget {
   }) {
     return UCard(
       child: child,
+      title: title,
       style: style,
       onPressed: onPressed,
       onLongPress: onLongPress,

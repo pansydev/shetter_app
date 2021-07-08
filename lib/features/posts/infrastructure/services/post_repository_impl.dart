@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';
 
@@ -12,13 +10,13 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<Either<Failure, Post>> createPost(PostInput input) async {
-    final result = await _client.mutateCreatePost(
-      GQLOptionsMutationCreatePost(
-        variables: VariablesMutationCreatePost(
-          input: PostInputMapper.postInputToDto(input),
-        ),
+    final options = GQLOptionsMutationCreatePost(
+      variables: VariablesMutationCreatePost(
+        input: PostInputMapper.postInputToDto(input),
       ),
     );
+
+    final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
       return Left(ServerFailure());
@@ -32,18 +30,16 @@ class PostRepositoryImpl implements PostRepository {
     required int pageSize,
     String? after,
   }) {
-    final result = _client.watchQueryPosts(
-      GQLWatchOptionsQueryPosts(
-        fetchResults: true,
-        variables: VariablesQueryPosts(pageSize: pageSize, after: after),
-        fetchPolicy: _fetchPolicyProvider.fetchPolicy,
-      ),
+    final options = GQLWatchOptionsQueryPosts(
+      fetchResults: true,
+      variables: VariablesQueryPosts(pageSize: pageSize, after: after),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
+
+    final result = _client.watchQueryPosts(options);
 
     return result.stream.map((event) {
       if (event.hasException) {
-        developer.log("Post fetching failed", error: event.exception);
-
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }
@@ -57,9 +53,11 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Stream<Either<Failure, Post>> subsribeToPosts() {
-    final stream = _client.subscribe(
-      SubscriptionOptions(document: SUBSCRIPTION_POST_CREATED),
+    final options = SubscriptionOptions(
+      document: SUBSCRIPTION_POST_CREATED,
     );
+
+    final stream = _client.subscribe(options);
 
     return stream.map((event) {
       if (event.hasException) {

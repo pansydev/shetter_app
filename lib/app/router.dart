@@ -1,8 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-
-import 'features/posts/presentation/presentation.dart';
-
-export './router.gr.dart';
+import 'package:shetter_app/app/app.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',

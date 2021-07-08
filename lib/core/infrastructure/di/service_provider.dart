@@ -4,12 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'service_provider.config.dart';
 
 @injectableInit
-void _configureDependencies(GetIt container) => $initGetIt(container);
+Future<void> _configureDependencies(GetIt container) => $initGetIt(container);
 
 class ServiceProvider {
-  ServiceProvider._() {
-    _configureDependencies(_container);
-  }
+  ServiceProvider._() {}
 
   final GetIt _container = GetIt.asNewInstance();
 
@@ -19,6 +17,10 @@ class ServiceProvider {
 
   static Future<ServiceProvider> create() async {
     final provider = ServiceProvider._();
+
+    provider._container.registerSingleton(provider);
+
+    await _configureDependencies(provider._container);
     await provider._container.allReady();
 
     return provider;
