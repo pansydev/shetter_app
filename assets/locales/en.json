@@ -18,5 +18,8 @@
   "login": "Login",
   "signin": "Sign in",
   "password_visiblity": "Password visiblity",
-  "logout": "Log out"
+  "logout": "Log out",
+  "time_at": ", at {1}",
+  "time_today_at": "today, at {1}",
+  "time_yesterday_at": "yesterday, at {1}"
 }
