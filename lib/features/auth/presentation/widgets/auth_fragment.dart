@@ -15,51 +15,47 @@ class AuthFragment extends StatelessWidget {
               horizontal: DesignConstants.paddingValue,
             ).copyWith(top: DesignConstants.paddingMiniValue),
           ),
-          child: BlocBuilder<AuthFragmentBloc, AuthFragmentState>(
-            builder: (context, state) {
-              return UFrameLoader(
-                state: state.maybeMap(
-                  loading: (_) => UFrameLoaderState.loading(),
-                  orElse: () => UFrameLoaderState.initial(),
-                ),
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.end,
+          child: UFrameLoader(
+            state: state.maybeMap(
+              loading: (_) => UFrameLoaderState.loading(),
+              orElse: () => UFrameLoaderState.initial(),
+            ),
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        UTextField(
-                          hintText: Strings.username.get(),
-                          controller: state.usernameController,
-                          icon: Icon(Icons.ac_unit),
-                        ),
-                        SizedBox(height: 10),
-                        UTextField(
-                          hintText: Strings.password.get(),
-                          controller: state.passwordController,
-                          isPassword: true,
-                        ),
-                      ],
+                    UTextField(
+                      hintText: Strings.username.get(),
+                      controller: state.usernameController,
+                      icon: Icon(Icons.ac_unit),
                     ),
-                    UButton.outline(
-                      onPressed: context.read<AuthFragmentBloc>().auth,
-                      child: Text(
-                        Strings.login.get(),
-                      ),
-                    ),
-                    UButton(
-                      onPressed: context.read<AuthFragmentBloc>().register,
-                      child: Text(
-                        Strings.signin.get(),
-                      ),
+                    SizedBox(height: 10),
+                    UTextField(
+                      hintText: Strings.password.get(),
+                      controller: state.passwordController,
+                      isPassword: true,
                     ),
                   ],
                 ),
-              );
-            },
+                UButton.outline(
+                  onPressed: context.read<AuthFragmentBloc>().auth,
+                  child: Text(
+                    Strings.login.get(),
+                  ),
+                ),
+                UButton(
+                  onPressed: context.read<AuthFragmentBloc>().register,
+                  child: Text(
+                    Strings.signin.get(),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
