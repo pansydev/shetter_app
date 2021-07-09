@@ -18,8 +18,4 @@ class AuthFragmentState with _$AuthFragmentState {
     required TextEditingController passwordController,
     required Failure failure,
   }) = AuthFragmentStateError;
-  const factory AuthFragmentState.autheticated({
-    required TextEditingController usernameController,
-    required TextEditingController passwordController,
-  }) = AuthFragmentStateAuthenticated;
 }

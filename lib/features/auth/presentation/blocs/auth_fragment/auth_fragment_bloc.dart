@@ -53,7 +53,7 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     );
 
     yield result.fold(
-      () => AuthFragmentState.autheticated(
+      () => AuthFragmentState.initial(
         usernameController: usernameController,
         passwordController: passwordController,
       ),
@@ -85,7 +85,7 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     );
 
     yield result.fold(
-      () => AuthFragmentState.autheticated(
+      () => AuthFragmentState.initial(
         usernameController: usernameController,
         passwordController: passwordController,
       ),
