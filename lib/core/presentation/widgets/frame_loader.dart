@@ -25,7 +25,7 @@ class UFrameLoader extends StatelessWidget {
           AnimatedOpacity(
             opacity: state is UFrameLoaderStateInitial ? 1 : 0.5,
             duration: duration,
-            child: AnimatedScale(
+            child: UAnimatedScale(
               scale: state is UFrameLoaderStateInitial ? 1 : 0.95,
               duration: duration,
               child: child,

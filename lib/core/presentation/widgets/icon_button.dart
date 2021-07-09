@@ -54,7 +54,7 @@ class _UIconButtonState extends State<UIconButton> {
               duration: _animationDuration,
               curve: _animationCurve,
               opacity: pressabled ? 1 : 0,
-              child: AnimatedScale(
+              child: UAnimatedScale(
                 duration: _animationDuration,
                 curve: _animationCurve,
                 scale: pressabled ? 0.95 : 1,
