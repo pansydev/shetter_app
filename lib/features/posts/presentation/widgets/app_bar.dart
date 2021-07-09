@@ -1,3 +1,4 @@
+import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 87.0;
@@ -132,7 +133,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                 style: context.textTheme.headline6,
               ),
               SizedBox(height: 2),
-              BlocBuilder<AppBarBloc, AppBarState>(
+              BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) => Text(
                   state.when(
                     authenticated: (userInfo) => "@${userInfo.username}",
@@ -147,7 +148,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
             ],
           ),
           Spacer(),
-          BlocBuilder<AppBarBloc, AppBarState>(
+          BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) => state.when(
               authenticated: (userInfo) => UIconButton(
                 Icon(
@@ -155,7 +156,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                   size: 22,
                 ),
                 style: UIconButtonStyle(margin: EdgeInsets.zero),
-                onPressed: context.read<AppBarBloc>().logout,
+                onPressed: context.read<AuthBloc>().logout,
               ),
               unauthenticated: () => Container(),
             ),

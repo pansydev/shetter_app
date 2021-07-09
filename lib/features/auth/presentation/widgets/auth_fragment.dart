@@ -5,9 +5,9 @@ class AuthFragment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocBuilder<AuthFragmentBloc, AuthFragmentState>(
       builder: (context, state) {
-        if (state is AuthStateAuthenticated) return Container();
+        if (state is AuthFragmentStateAuthenticated) return Container();
 
         return UCard.outline(
           style: UCardStyle(
@@ -15,7 +15,7 @@ class AuthFragment extends StatelessWidget {
               horizontal: DesignConstants.paddingValue,
             ).copyWith(top: DesignConstants.paddingMiniValue),
           ),
-          child: BlocBuilder<AuthBloc, AuthState>(
+          child: BlocBuilder<AuthFragmentBloc, AuthFragmentState>(
             builder: (context, state) {
               return UFrameLoader(
                 state: state.maybeMap(
@@ -45,13 +45,13 @@ class AuthFragment extends StatelessWidget {
                       ],
                     ),
                     UButton.outline(
-                      onPressed: context.read<AuthBloc>().auth,
+                      onPressed: context.read<AuthFragmentBloc>().auth,
                       child: Text(
                         Strings.login.get(),
                       ),
                     ),
                     UButton(
-                      onPressed: context.read<AuthBloc>().register,
+                      onPressed: context.read<AuthFragmentBloc>().register,
                       child: Text(
                         Strings.signin.get(),
                       ),

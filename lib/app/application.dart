@@ -22,9 +22,9 @@ class Application extends StatelessWidget {
     return MultiBlocProvider(
       child: _buildMaterialApp(context),
       providers: [
-        provider.createBlocProvider<AuthBloc>(),
+        provider.createBlocProvider<AuthFragmentBloc>(),
         provider.createBlocProvider<PostListBloc>(),
-        provider.createBlocProvider<AppBarBloc>()
+        provider.createBlocProvider<AuthBloc>()
       ],
     );
   }

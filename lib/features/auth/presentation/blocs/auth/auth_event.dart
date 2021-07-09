@@ -1,9 +1,9 @@
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
+import 'package:shetter_app/features/posts/domain/domain.dart';
 
 part 'auth_event.freezed.dart';
 
 @freezed
 class AuthEvent with _$AuthEvent {
-  const factory AuthEvent.authetication() = AuthEventAuthetication;
-  const factory AuthEvent.registration() = AuthEventRegistration;
+  factory AuthEvent.authenticationStateChanged(AuthenticationState state) =
+      AuthEventAuthenticationStateChanged;
 }
