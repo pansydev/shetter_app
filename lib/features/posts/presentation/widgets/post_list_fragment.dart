@@ -7,12 +7,16 @@ class PostListFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: DesignConstants.padding.copyWith(top: 10),
-      sliver: _buildPreloader(
-        context.read<PostListBloc>().state,
-        builder: (connection, [failure]) {
-          return UPostList(
-            connection: connection,
-            failure: failure,
+      sliver: BlocBuilder<PostListBloc, PostListState>(
+        builder: (context, state) {
+          return _buildPreloader(
+            state,
+            builder: (connection, [failure]) {
+              return UPostList(
+                connection: connection,
+                failure: failure,
+              );
+            },
           );
         },
       ),
