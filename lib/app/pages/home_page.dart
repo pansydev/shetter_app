@@ -41,22 +41,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBody() {
-    return BlocBuilder<PostListBloc, PostListState>(
-      builder: (context, state) => CustomScrollView(
-        controller: _scrollController,
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: UAppBar(
-              onScrollToUp: _scrollController.scrollToUp,
-            ),
+    return CustomScrollView(
+      controller: _scrollController,
+      physics: BouncingScrollPhysics(),
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: UAppBar(
+            onScrollToUp: _scrollController.scrollToUp,
           ),
-          RefreshFragment(),
-          AuthFragment(),
-          PostListFragment()
-        ],
-      ),
+        ),
+        RefreshFragment(),
+        AuthFragment(),
+        PostListFragment()
+      ],
     );
   }
 }
