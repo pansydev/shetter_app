@@ -20,31 +20,27 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      child: _buildMaterialApp(context),
       providers: [
         provider.createBlocProvider<AuthFragmentBloc>(),
         provider.createBlocProvider<PostListBloc>(),
         provider.createBlocProvider<AuthBloc>()
       ],
-    );
-  }
-
-  MaterialApp _buildMaterialApp(BuildContext context) {
-    return MaterialApp.router(
-      routerDelegate: router.delegate(),
-      routeInformationParser: router.defaultRouteParser(),
-      debugShowCheckedModeBanner: false,
-      title: PresentationConstants.appName,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: [
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        ...context.localizationsDelegates,
-      ],
-      locale: Locale('ru'),
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
+      child: GetMaterialApp.router(
+        routerDelegate: router.delegate(),
+        routeInformationParser: router.defaultRouteParser(),
+        debugShowCheckedModeBanner: false,
+        title: PresentationConstants.appName,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          ...context.localizationsDelegates,
+        ],
+        locale: Locale('ru'),
+        theme: lightThemeData,
+        darkTheme: darkThemeData,
+      ),
     );
   }
 }
