@@ -16,6 +16,7 @@ export 'localization/strings.al.dart';
 export 'localization/strings.dart';
 export 'pages/not_found_page.dart';
 export 'widgets/animated_scale.dart';
+export 'widgets/animated_visibility.dart';
 export 'widgets/button.dart';
 export 'widgets/card.dart';
 export 'widgets/chip.dart';

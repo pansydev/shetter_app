@@ -122,46 +122,51 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: DesignConstants.paddingAlt.copyWith(bottom: 0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                Strings.homePageTitle.get(),
-                style: context.textTheme.headline6,
-              ),
-              SizedBox(height: 2),
-              BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) => Text(
-                  state.when(
-                    authenticated: (userInfo) => "@${userInfo.username}",
-                    unauthenticated: () => Strings.unauthenticated.get(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Strings.homePageTitle.get(),
+                    style: context.textTheme.headline6,
                   ),
-                  style: context.textTheme.subtitle2?.copyWith(
-                    fontSize: 13,
-                    color: context.textTheme.subtitle2?.color?.withOpacity(0.7),
+                  SizedBox(height: 2),
+                  Text(
+                    state.when(
+                      authenticated: (userInfo) => "@${userInfo.username}",
+                      unauthenticated: () => Strings.unauthenticated.get(),
+                    ),
+                    style: context.textTheme.subtitle2?.copyWith(
+                      fontSize: 13,
+                      color:
+                          context.textTheme.subtitle2?.color?.withOpacity(0.7),
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              SizedBox(
+                width: 35,
+                height: 35,
+                child: UAnimatedVisibility(
+                  visible: state is AuthStateAuthenticated,
+                  child: UIconButton(
+                    Icon(
+                      Icons.exit_to_app,
+                      size: 22,
+                    ),
+                    style: UIconButtonStyle(margin: EdgeInsets.zero),
+                    onPressed: context.read<AuthBloc>().logout,
                   ),
                 ),
               ),
             ],
-          ),
-          Spacer(),
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) => state.when(
-              authenticated: (userInfo) => UIconButton(
-                Icon(
-                  Icons.exit_to_app,
-                  size: 22,
-                ),
-                style: UIconButtonStyle(margin: EdgeInsets.zero),
-                onPressed: context.read<AuthBloc>().logout,
-              ),
-              unauthenticated: () => Container(),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

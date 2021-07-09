@@ -7,59 +7,60 @@ class AuthFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        if (state is AuthStateAuthenticated) return Container();
-
-        return UCard.outline(
-          style: UCardStyle(
-            margin: EdgeInsets.symmetric(
-              horizontal: DesignConstants.paddingValue,
-            ).copyWith(top: DesignConstants.paddingMiniValue),
-          ),
-          child: BlocBuilder<AuthFragmentBloc, AuthFragmentState>(
-            builder: (context, state) {
-              return UFrameLoader(
-                state: state.maybeMap(
-                  loading: (_) => UFrameLoaderState.loading(),
-                  orElse: () => UFrameLoaderState.initial(),
-                ),
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        UTextField(
-                          hintText: Strings.username.get(),
-                          controller: state.usernameController,
-                          icon: Icon(Icons.ac_unit),
-                        ),
-                        SizedBox(height: 10),
-                        UTextField(
-                          hintText: Strings.password.get(),
-                          controller: state.passwordController,
-                          isPassword: true,
-                        ),
-                      ],
-                    ),
-                    UButton.outline(
-                      onPressed: context.read<AuthFragmentBloc>().auth,
-                      child: Text(
-                        Strings.login.get(),
+        return UAnimatedVisibility(
+          visible: state is AuthStateUnauthenticated,
+          child: UCard.outline(
+            style: UCardStyle(
+              margin: EdgeInsets.symmetric(
+                horizontal: DesignConstants.paddingValue,
+              ).copyWith(top: DesignConstants.paddingMiniValue),
+            ),
+            child: BlocBuilder<AuthFragmentBloc, AuthFragmentState>(
+              builder: (context, state) {
+                return UFrameLoader(
+                  state: state.maybeMap(
+                    loading: (_) => UFrameLoaderState.loading(),
+                    orElse: () => UFrameLoaderState.initial(),
+                  ),
+                  child: Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.end,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          UTextField(
+                            hintText: Strings.username.get(),
+                            controller: state.usernameController,
+                            icon: Icon(Icons.ac_unit),
+                          ),
+                          SizedBox(height: 10),
+                          UTextField(
+                            hintText: Strings.password.get(),
+                            controller: state.passwordController,
+                            isPassword: true,
+                          ),
+                        ],
                       ),
-                    ),
-                    UButton(
-                      onPressed: context.read<AuthFragmentBloc>().register,
-                      child: Text(
-                        Strings.signin.get(),
+                      UButton.outline(
+                        onPressed: context.read<AuthFragmentBloc>().auth,
+                        child: Text(
+                          Strings.login.get(),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                      UButton(
+                        onPressed: context.read<AuthFragmentBloc>().register,
+                        child: Text(
+                          Strings.signin.get(),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
