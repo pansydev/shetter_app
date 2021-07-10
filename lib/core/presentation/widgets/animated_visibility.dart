@@ -8,10 +8,12 @@ class UAnimatedVisibility extends StatefulWidget {
     Key? key,
     required this.child,
     required this.visible,
+    this.lazySize = true,
   }) : super(key: key);
 
   final Widget child;
   final bool visible;
+  final bool lazySize;
 
   @override
   _UAnimatedVisibilityState createState() => _UAnimatedVisibilityState();
@@ -33,6 +35,8 @@ class _UAnimatedVisibilityState extends State<UAnimatedVisibility>
   @override
   void didUpdateWidget(UAnimatedVisibility oldWidget) {
     super.didUpdateWidget(oldWidget);
+    final duration = widget.lazySize ? 200.milliseconds : Duration.zero;
+
     if (widget.visible != _visible) {
       setState(() => _closeInProcessing = false);
 
@@ -43,7 +47,7 @@ class _UAnimatedVisibilityState extends State<UAnimatedVisibility>
         });
 
         if (_closeInProcessing == true) {
-          Future.delayed(200.milliseconds).then((_) {
+          Future.delayed(duration).then((_) {
             setState(() => _visible = true);
           });
         } else {
@@ -55,7 +59,7 @@ class _UAnimatedVisibilityState extends State<UAnimatedVisibility>
           _closeInProcessing = true;
         });
 
-        Future.delayed(200.milliseconds).then((_) {
+        Future.delayed(duration).then((_) {
           if (_closeInProcessing == true) {
             setState(() => _close = true);
           }
