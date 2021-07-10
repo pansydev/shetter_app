@@ -159,6 +159,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                       Icons.exit_to_app,
                       size: 22,
                     ),
+                    tooltip: Strings.logout.get(),
                     style: UIconButtonStyle(margin: EdgeInsets.zero),
                     onPressed: context.read<AuthBloc>().logout,
                   ),
