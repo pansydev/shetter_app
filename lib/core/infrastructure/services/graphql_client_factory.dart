@@ -20,7 +20,7 @@ abstract class GraphQLClientFactory {
 
     final authLink = linkFactory.createAuthLink();
 
-    final link = Link.from([transportLink, authLink]);
+    final link = Link.from([authLink, transportLink]);
 
     final store = HiveStore(box);
     final cache = GraphQLCache(store: store);

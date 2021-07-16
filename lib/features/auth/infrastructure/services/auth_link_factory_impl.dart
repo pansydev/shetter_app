@@ -1,5 +1,6 @@
 import 'package:shetter_app/features/auth/domain/domain.dart';
 import 'package:shetter_app/features/auth/infrastructure/infrastructure.dart';
+import 'package:gql/ast.dart';
 
 @Singleton(as: AuthLinkFactory, dependsOn: [TokenManager])
 class AuthLinkFactoryImpl implements AuthLinkFactory {
@@ -37,12 +38,20 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
 
   Link _buildRefreshLink() {
     return Link.function((request, [forward]) async* {
-      if (request.operation.operationName != "Refresh") {
+      final definition = request.operation.document.definitions[0];
+
+      if (definition is! OperationDefinitionNode) {
+        throw Exception("Failed to get operation definition");
+      }
+
+      final operationName = definition.name!.value;
+
+      if (operationName != "Refresh") {
         await _refreshManager.ensureRefreshed();
       }
 
       if (forward != null) {
-        yield* forward(request);
+        yield* forward(_updateRequest(request));
       }
     });
   }
@@ -64,7 +73,16 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
   ) async* {
     await _refreshManager.ensureRefreshed(force: true);
 
-    final updatedRequest = request.updateContextEntry<HttpLinkHeaders>(
+    yield* forward(_updateRequest(request));
+  }
+
+  String _getAccessToken() {
+    final accessToken = _tokenManager.tokens.accessToken.value;
+    return "Bearer ${accessToken}";
+  }
+
+  Request _updateRequest(Request request) {
+    return request.updateContextEntry<HttpLinkHeaders>(
       (headers) => HttpLinkHeaders(
         headers: <String, String>{
           ...headers?.headers ?? <String, String>{},
@@ -72,12 +90,5 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
         },
       ),
     );
-
-    yield* forward(updatedRequest);
-  }
-
-  String _getAccessToken() {
-    final accessToken = _tokenManager.tokens.accessToken.value;
-    return "Bearer ${accessToken}";
   }
 }

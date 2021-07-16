@@ -11,16 +11,23 @@ class RefreshManagerImpl implements RefreshManager {
   Future<Option<Failure>>? _runningRefresh;
 
   @override
-  Future<Option<Failure>> ensureRefreshed({bool force = false}) {
+  Future<Option<Failure>> ensureRefreshed({bool force = false}) async {
     if (_runningRefresh != null) {
       return _runningRefresh!;
     }
 
+    return _runningRefresh = _ensureRefreshed(force).then((value) {
+      _runningRefresh = null;
+      return value;
+    });
+  }
+
+  Future<Option<Failure>> _ensureRefreshed(bool force) async {
     if (_tokenManager.expired || force) {
-      return _runningRefresh = refresh();
+      return refresh();
     }
 
-    return Future.value(None());
+    return None();
   }
 
   Future<Option<Failure>> refresh() async {
