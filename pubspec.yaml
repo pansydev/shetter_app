@@ -26,7 +26,6 @@ dependencies:
   get:
   simple_animations:
   flutter_markdown:
-  flutter_scale_tap:
   auto_route:
   flutter_localizations:
     sdk: flutter

@@ -11,7 +11,6 @@ export 'package:flutter/material.dart' hide RefreshCallback;
 export 'package:flutter/cupertino.dart';
 export 'package:supercharged/supercharged.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
-export 'package:flutter_scale_tap/flutter_scale_tap.dart';
 export 'package:simple_animations/simple_animations.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:dartz/dartz.dart' hide State, id;
