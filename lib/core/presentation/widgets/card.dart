@@ -49,6 +49,7 @@ class UCard extends StatelessWidget {
       cardChild = child;
     } else {
       cardChild = Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DefaultTextStyle(
