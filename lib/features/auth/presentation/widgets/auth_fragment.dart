@@ -45,13 +45,15 @@ class AuthFragment extends StatelessWidget {
                         ],
                       ),
                       UButton.outline(
-                        onPressed: context.read<AuthFragmentBloc>().auth,
+                        onPressed: () =>
+                            context.read<AuthFragmentBloc>().auth(context),
                         child: Text(
                           Strings.login.get(),
                         ),
                       ),
                       UButton(
-                        onPressed: context.read<AuthFragmentBloc>().register,
+                        onPressed: () =>
+                            context.read<AuthFragmentBloc>().register(context),
                         child: Text(
                           Strings.signin.get(),
                         ),

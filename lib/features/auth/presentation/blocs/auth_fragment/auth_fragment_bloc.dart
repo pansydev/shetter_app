@@ -27,12 +27,14 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     );
   }
 
-  void auth() {
+  void auth(BuildContext context) {
+    FocusScope.of(context).unfocus();
     if (state is AuthFragmentStateLoading) return;
     add(AuthFragmentEvent.authetication());
   }
 
-  void register() {
+  void register(BuildContext context) {
+    FocusScope.of(context).unfocus();
     if (state is AuthFragmentStateLoading) return;
     add(AuthFragmentEvent.registration());
   }
@@ -53,10 +55,14 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     );
 
     yield result.fold(
-      () => AuthFragmentState.initial(
-        usernameController: usernameController,
-        passwordController: passwordController,
-      ),
+      () {
+        usernameController.clear();
+        passwordController.clear();
+        return AuthFragmentState.initial(
+          usernameController: usernameController,
+          passwordController: passwordController,
+        );
+      },
       (r) {
         passwordController.clear();
         Get.snackbar(Strings.error.get(), r.toString());
@@ -85,10 +91,14 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     );
 
     yield result.fold(
-      () => AuthFragmentState.initial(
-        usernameController: usernameController,
-        passwordController: passwordController,
-      ),
+      () {
+        usernameController.clear();
+        passwordController.clear();
+        return AuthFragmentState.initial(
+          usernameController: usernameController,
+          passwordController: passwordController,
+        );
+      },
       (r) {
         passwordController.clear();
         Get.snackbar(Strings.error.get(), r.toString());
