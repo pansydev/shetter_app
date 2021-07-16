@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         ),
         RefreshFragment(),
         AuthFragment(),
+        CreatePostFragment(),
         PostListFragment()
       ],
     );

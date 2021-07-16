@@ -23,6 +23,7 @@ class Application extends StatelessWidget {
       providers: [
         provider.createBlocProvider<AuthFragmentBloc>(),
         provider.createBlocProvider<PostListBloc>(),
+        provider.createBlocProvider<PostFormBloc>(),
         provider.createBlocProvider<AuthBloc>()
       ],
       child: GetMaterialApp.router(

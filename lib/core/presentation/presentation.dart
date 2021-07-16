@@ -20,6 +20,7 @@ export 'widgets/animated_visibility.dart';
 export 'widgets/button.dart';
 export 'widgets/card.dart';
 export 'widgets/chip.dart';
+export 'widgets/dialog.dart';
 export 'widgets/frame_loader.dart';
 export 'widgets/icon_button.dart';
 export 'widgets/pressable.dart';
