@@ -26,4 +26,8 @@ get darkThemeData => ThemeData.dark().copyWith(
         selectionColor: _accentColor.withOpacity(0.5),
         selectionHandleColor: _accentColor,
       ),
+      iconTheme: IconThemeData(
+        color: _fontColor,
+        size: 17,
+      ),
     );

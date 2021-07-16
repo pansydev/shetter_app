@@ -11,6 +11,7 @@ const _fontColor = Colors.black;
 get lightThemeData => ThemeData.light().copyWith(
       scaffoldBackgroundColor: _backgroundColor,
       colorScheme: ColorScheme.light().copyWith(
+        primary: _primaryColor,
         secondary: Colors.grey,
       ),
       textTheme: textTheme.apply(
@@ -24,5 +25,9 @@ get lightThemeData => ThemeData.light().copyWith(
         cursorColor: _accentColor,
         selectionColor: _accentColor.withOpacity(0.5),
         selectionHandleColor: _accentColor,
+      ),
+      iconTheme: IconThemeData(
+        color: _fontColor,
+        size: 17,
       ),
     );
