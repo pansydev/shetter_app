@@ -1,7 +1,7 @@
 import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 87.0;
+final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 89.0;
 final minHeight = (Get.statusBarHeight / Get.pixelRatio) + 60.0;
 
 class UAppBar extends SliverPersistentHeaderDelegate {
@@ -149,20 +149,16 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                 ],
               ),
               Spacer(),
-              SizedBox(
-                width: 35,
-                height: 35,
-                child: UAnimatedVisibility(
-                  visible: state is AuthStateAuthenticated,
-                  child: UIconButton(
-                    Icon(
-                      Icons.exit_to_app,
-                      size: 22,
-                    ),
-                    tooltip: Strings.logout.get(),
-                    style: UIconButtonStyle(margin: EdgeInsets.zero),
-                    onPressed: context.read<AuthBloc>().logout,
+              UAnimatedVisibility(
+                visible: state is AuthStateAuthenticated,
+                child: UIconButton(
+                  Icon(
+                    Icons.exit_to_app,
+                    size: 22,
                   ),
+                  style: UIconButtonStyle(padding: DesignConstants.padding5),
+                  tooltip: Strings.logout.get(),
+                  onPressed: context.read<AuthBloc>().logout,
                 ),
               ),
             ],
