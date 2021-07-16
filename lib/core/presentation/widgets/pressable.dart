@@ -44,7 +44,7 @@ class _UPressableState extends State<UPressable> {
 
     return Listener(
       onPointerDown: isTapEnabled ? _onTapDown : null,
-      onPointerUp: isTapEnabled ? _onTapUp : null,
+      onPointerUp: _onTapUp,
       child: GestureDetector(
         onTap: isTapEnabled
             ? () {
