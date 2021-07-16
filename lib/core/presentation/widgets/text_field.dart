@@ -10,6 +10,9 @@ class UTextField extends StatefulWidget {
     TextEditingController? controller,
     this.style = const UTextFieldStyle(),
     this.icon,
+    this.minLines,
+    this.maxLines = 1,
+    this.autofocus = false,
   })  : controller = controller ?? TextEditingController(),
         super(key: key);
 
@@ -18,6 +21,9 @@ class UTextField extends StatefulWidget {
   final TextEditingController controller;
   final UTextFieldStyle style;
   final Widget? icon;
+  final int? minLines;
+  final int maxLines;
+  final bool autofocus;
 
   @override
   _UTextFieldState createState() => _UTextFieldState();
@@ -45,6 +51,9 @@ class _UTextFieldState extends State<UTextField> {
           style: context.textTheme.button,
           cursorWidth: 1.5,
           cursorRadius: DesignConstants.borderRadius.bottomLeft,
+          minLines: widget.minLines,
+          maxLines: widget.maxLines,
+          autofocus: widget.autofocus,
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -52,6 +61,7 @@ class _UTextFieldState extends State<UTextField> {
             if (widget.isPassword)
               UIconButton(
                 Icon(obscureText ? Icons.visibility : Icons.visibility_off),
+                style: UIconButtonStyle(margin: DesignConstants.padding7),
                 tooltip: Strings.passwordVisiblity.get(),
                 onPressed: _switchObscure,
               ),
