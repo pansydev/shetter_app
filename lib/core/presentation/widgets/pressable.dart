@@ -35,6 +35,7 @@ class UPressable extends StatefulWidget {
 }
 
 class _UPressableState extends State<UPressable> {
+  GlobalKey _key = GlobalKey();
   bool pressabled = false;
 
   @override
@@ -45,6 +46,7 @@ class _UPressableState extends State<UPressable> {
     return Listener(
       onPointerDown: isTapEnabled ? _onTapDown : null,
       onPointerUp: _onTapUp,
+      onPointerCancel: _onTapUp,
       child: GestureDetector(
         onTap: isTapEnabled
             ? () {
@@ -55,46 +57,55 @@ class _UPressableState extends State<UPressable> {
               }
             : null,
         onLongPress: widget.onLongPress,
-        child: UAnimatedScale(
+        child: AnimatedContainer(
+          key: _key,
           duration: _animationDuration,
           curve: _animationCurve,
-          scale: pressabled ? 0.95 : 1,
-          child: AnimatedContainer(
+          decoration: !pressabled || !widget.showBorder
+              ? BoxDecoration(
+                  borderRadius:
+                      widget.style.borderRadius ?? DesignConstants.borderRadius,
+                  border: Border.all(color: Colors.transparent),
+                )
+              : BoxDecoration(
+                  color: widget.style.backgroundColor ??
+                      context.theme.primaryColorDark,
+                  borderRadius:
+                      widget.style.borderRadius ?? DesignConstants.borderRadius,
+                  border: Border.all(
+                    color:
+                        widget.style.borderColor ?? context.theme.dividerColor,
+                  ),
+                ),
+          margin: widget.style.margin ?? EdgeInsets.zero,
+          padding: widget.style.padding ?? EdgeInsets.zero,
+          child: AnimatedOpacity(
             duration: _animationDuration,
             curve: _animationCurve,
-            decoration: !pressabled || !widget.showBorder
-                ? BoxDecoration(
-                    borderRadius: widget.style.borderRadius ??
-                        DesignConstants.borderRadius,
-                    border: Border.all(color: Colors.transparent),
-                  )
-                : BoxDecoration(
-                    color: widget.style.backgroundColor ??
-                        context.theme.primaryColorDark,
-                    borderRadius: widget.style.borderRadius ??
-                        DesignConstants.borderRadius,
-                    border: Border.all(
-                      color: widget.style.borderColor ??
-                          context.theme.dividerColor,
-                    ),
-                  ),
-            margin: widget.style.margin ?? EdgeInsets.zero,
-            padding: widget.style.padding ?? EdgeInsets.zero,
-            child: AnimatedOpacity(
+            opacity: widget.isTransparent && pressabled ? 0.5 : 1,
+            child: UAnimatedScale(
               duration: _animationDuration,
               curve: _animationCurve,
-              opacity: widget.isTransparent && pressabled ? 0.5 : 1,
-              child: UAnimatedScale(
-                duration: _animationDuration,
-                curve: _animationCurve,
-                scale: pressabled ? 0.8 : 1,
-                child: widget.child,
-              ),
+              scale: pressabled ? _getScale() : 1,
+              child: widget.child,
             ),
           ),
         ),
       ),
     );
+  }
+
+  double _getScale() {
+    if (_getAspectRatio() > 5) {
+      return 0.92;
+    } else {
+      return 0.8;
+    }
+  }
+
+  double _getAspectRatio() {
+    final renderBox = _key.currentContext!.findRenderObject() as RenderBox?;
+    return renderBox!.size.aspectRatio;
   }
 
   void _onTapDown(_) {
