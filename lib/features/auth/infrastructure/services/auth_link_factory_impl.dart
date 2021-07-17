@@ -38,6 +38,11 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
 
   Link _buildRefreshLink() {
     return Link.function((request, [forward]) async* {
+      if (!_tokenManager.authenticated) {
+        if (forward != null) yield* forward(request);
+        return;
+      }
+
       final definition = request.operation.document.definitions[0];
 
       if (definition is! OperationDefinitionNode) {
