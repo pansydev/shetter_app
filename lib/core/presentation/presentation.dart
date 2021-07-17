@@ -14,7 +14,6 @@ export 'helpers/date_time_helpers.dart';
 export 'localization/failure_localizer.dart';
 export 'localization/strings.al.dart';
 export 'localization/strings.dart';
-export 'pages/not_found_page.dart';
 export 'widgets/animated_scale.dart';
 export 'widgets/animated_visibility.dart';
 export 'widgets/button.dart';
