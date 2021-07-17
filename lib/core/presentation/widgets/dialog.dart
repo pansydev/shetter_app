@@ -9,7 +9,7 @@ abstract class UDialogWidget extends StatelessWidget {
   final String? title;
 
   Future<T?> show<T>(BuildContext context) {
-    if (context.isDesktop) {
+    if (!context.isDesktop) {
       return showCupertinoModalPopup<T>(
         context: context,
         barrierColor: Colors.black45,

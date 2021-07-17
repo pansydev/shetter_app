@@ -3,6 +3,7 @@ import 'package:shetter_app/core/presentation/presentation.dart';
 class DesignConstants {
   // #region sizes
   static const double maxWindowWidth = 600;
+  static const double minListTileHeight = 50;
   // #endregion sizes
 
   // #region borderRadius

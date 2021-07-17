@@ -23,5 +23,6 @@ export 'widgets/chip.dart';
 export 'widgets/dialog.dart';
 export 'widgets/frame_loader.dart';
 export 'widgets/icon_button.dart';
+export 'widgets/list_tile.dart';
 export 'widgets/pressable.dart';
 export 'widgets/text_field.dart';

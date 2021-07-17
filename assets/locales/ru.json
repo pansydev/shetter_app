@@ -22,5 +22,7 @@
   "time_at": ", в {1}",
   "time_today_at": "сегодня, в {1}",
   "time_yesterday_at": "вчера, в {1}",
-  "write_a_message": "Введите сообщение..."
+  "write_a_message": "Введите сообщение...",
+  "actions": "Действия",
+  "copy_text": "Скопировать текст"
 }
