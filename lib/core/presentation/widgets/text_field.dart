@@ -117,7 +117,7 @@ class _InputBorder extends OutlineInputBorder {
               : BorderSide(
                   width: 2,
                   color:
-                      style.borderColor ?? context.iconColor!.withOpacity(0.8),
+                      style.borderColor ?? context.iconColor!.withOpacity(0.3),
                 ),
         );
 }

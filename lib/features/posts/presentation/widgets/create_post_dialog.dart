@@ -5,7 +5,7 @@ class CreatePostDialog extends UDialogWidget {
       : super(key: key, title: Strings.postFormAction.get());
 
   @override
-  Widget body(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocBuilder<PostFormBloc, PostFormState>(
       builder: (context, state) {
         return UFrameLoader(
