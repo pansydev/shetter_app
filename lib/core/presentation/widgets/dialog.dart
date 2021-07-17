@@ -9,7 +9,7 @@ abstract class UDialogWidget extends StatelessWidget {
   final String? title;
 
   Future<T?> show<T>(BuildContext context) {
-    if (context.width < DesignConstants.maxWindowWidth) {
+    if (context.isDesktop) {
       return showCupertinoModalPopup<T>(
         context: context,
         barrierColor: Colors.black45,
@@ -33,14 +33,13 @@ abstract class UDialogWidget extends StatelessWidget {
 
 class _UDialogWidgetBodyForPhone extends StatelessWidget {
   const _UDialogWidgetBodyForPhone({
+    Key? key,
     this.title,
     required this.body,
-    Key? key,
   }) : super(key: key);
 
   final String? title;
   final Widget body;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,9 +80,9 @@ class _UDialogWidgetBodyForPhone extends StatelessWidget {
 
 class _UDialogWidgetBodyForDesktop extends StatelessWidget {
   const _UDialogWidgetBodyForDesktop({
+    Key? key,
     this.title,
     required this.body,
-    Key? key,
   }) : super(key: key);
 
   final String? title;
