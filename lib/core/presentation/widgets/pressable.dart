@@ -56,7 +56,12 @@ class _UPressableState extends State<UPressable> {
                 widget.onPressed?.call();
               }
             : null,
-        onLongPress: widget.onLongPress,
+        onLongPress: widget.onLongPress == null
+            ? null
+            : () {
+                widget.onLongPress!();
+                _onTapUp(null);
+              },
         child: AnimatedContainer(
           key: _key,
           duration: _animationDuration,
