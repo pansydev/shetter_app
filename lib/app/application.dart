@@ -26,7 +26,7 @@ class Application extends StatelessWidget {
         provider.createBlocProvider<PostFormBloc>(),
         provider.createBlocProvider<AuthBloc>()
       ],
-      child: GetMaterialApp.router(
+      child: MaterialApp.router(
         routerDelegate: router.delegate(),
         routeInformationParser: router.defaultRouteParser(),
         debugShowCheckedModeBanner: false,
@@ -39,8 +39,7 @@ class Application extends StatelessWidget {
           ...context.localizationsDelegates,
         ],
         locale: Locale('ru'),
-        theme: lightThemeData,
-        darkTheme: darkThemeData,
+        theme: darkThemeData,
       ),
     );
   }
