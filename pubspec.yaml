@@ -1,5 +1,5 @@
 name: shetter_app
-version: 1.0.0+1
+version: 0.1.0
 publish_to: none
 description: Shetter App written in Flutter
 
@@ -39,6 +39,7 @@ dev_dependencies:
   auto_localized_generator:
   auto_route_generator:
   injectable_generator:
+  cider:
 
   graphql_codegen:
     git:
@@ -106,3 +107,8 @@ index_generator:
     - path: lib/features/auth/domain
     - path: lib/features/auth/infrastructure
     - path: lib/features/auth/presentation
+
+cider:
+  link_template:
+    tag: https://github.com/pansydev/shetter_app/releases/tag/%tag%
+    diff: https://github.com/pansydev/shetter_app/compare/%from%...%to%
