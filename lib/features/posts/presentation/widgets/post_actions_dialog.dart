@@ -79,7 +79,10 @@ class _UserProfileUsername extends StatelessWidget {
           style: context.textTheme.bodyText1,
         ),
         SizedBox(height: 3),
-        Text(Strings.totalPosts.get(author.totalPosts.toString())),
+        Text(
+          Strings.totalPosts.get(author.totalPosts.toString()),
+          style: context.textTheme.caption,
+        ),
       ],
     );
   }
