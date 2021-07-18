@@ -38,7 +38,7 @@ jobs:
 
       - name: Retrieving changes
         id: changes
-        run: flutter pub run cider describe ${{ steps.tagName.outputs.tag }}) > body.md
+        run: flutter pub run cider describe ${{ steps.tagName.outputs.tag }} > body.md
 
       - name: Publishing release
         uses: ncipollo/release-action@v1
