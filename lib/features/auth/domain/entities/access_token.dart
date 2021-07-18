@@ -1,4 +1,3 @@
-import 'package:shetter_app/core/domain/domain.dart';
 import 'package:shetter_app/features/auth/domain/domain.dart';
 
 part 'access_token.freezed.dart';

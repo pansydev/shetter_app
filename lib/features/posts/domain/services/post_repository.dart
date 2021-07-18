@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:shetter_app/core/domain/domain.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 
 abstract class PostRepository {

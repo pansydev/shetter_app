@@ -1,4 +1,3 @@
-import 'package:graphql/client.dart';
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 
 @LazySingleton(as: FetchPolicyProvider)

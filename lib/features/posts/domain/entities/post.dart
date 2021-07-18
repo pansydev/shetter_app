@@ -1,5 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 
 part 'post.freezed.dart';

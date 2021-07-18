@@ -1,4 +1,3 @@
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 89.0;

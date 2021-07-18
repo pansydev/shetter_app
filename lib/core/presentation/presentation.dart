@@ -2,6 +2,9 @@
 
 library presentation;
 
+export 'blocs/auth/auth_bloc.dart';
+export 'blocs/auth/auth_event.dart';
+export 'blocs/auth/auth_state.dart';
 export 'constants.dart';
 export 'design/animations.dart';
 export 'design/constants.dart';

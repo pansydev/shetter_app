@@ -1,5 +1,5 @@
-import 'package:shetter_app/features/auth/domain/domain.dart';
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
+import 'package:shetter_app/core/domain/domain.dart';
+import 'package:shetter_app/core/presentation/presentation.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

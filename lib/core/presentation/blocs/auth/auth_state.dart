@@ -1,4 +1,4 @@
-import 'package:shetter_app/features/posts/domain/domain.dart';
+import 'package:shetter_app/core/domain/domain.dart';
 
 part 'auth_state.freezed.dart';
 
