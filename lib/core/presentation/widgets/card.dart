@@ -7,6 +7,8 @@ class UCard extends StatelessWidget {
     Key? key,
     required this.child,
     this.title,
+    this.leading,
+    this.trailing,
     this.outline = false,
     this.style = const UCardStyle(),
     this.onPressed,
@@ -16,6 +18,9 @@ class UCard extends StatelessWidget {
 
   factory UCard.outline({
     required Widget child,
+    Widget? title,
+    Widget? leading,
+    Widget? trailing,
     UCardStyle style = const UCardStyle(),
     VoidCallback? onPressed,
     VoidCallback? onLongPress,
@@ -23,6 +28,9 @@ class UCard extends StatelessWidget {
   }) {
     return UCard(
       child: child,
+      title: title,
+      leading: leading,
+      trailing: trailing,
       style: style,
       onPressed: onPressed,
       onLongPress: onLongPress,
@@ -33,6 +41,8 @@ class UCard extends StatelessWidget {
 
   final Widget child;
   final Widget? title;
+  final Widget? leading;
+  final Widget? trailing;
   final bool outline;
   final UCardStyle style;
   final VoidCallback? onPressed;
@@ -46,15 +56,30 @@ class UCard extends StatelessWidget {
     if (title == null) {
       cardChild = child;
     } else {
-      cardChild = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      cardChild = Row(
         children: [
-          DefaultTextStyle(
-            style: context.textTheme.subtitle2!,
-            child: title!,
+          if (leading != null) ...[
+            leading!,
+            SizedBox(width: 5),
+          ],
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DefaultTextStyle(
+                  style: context.textTheme.subtitle2!,
+                  child: title!,
+                ),
+                SizedBox(height: 4),
+                child,
+              ],
+            ),
           ),
-          SizedBox(height: 4),
-          child,
+          if (trailing != null) ...[
+            SizedBox(width: 5),
+            trailing!,
+          ],
         ],
       );
     }

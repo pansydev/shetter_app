@@ -1,6 +1,6 @@
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 87.0;
+final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 89.0;
 final minHeight = (Get.statusBarHeight / Get.pixelRatio) + 60.0;
 
 class UAppBar extends SliverPersistentHeaderDelegate {
@@ -121,26 +121,48 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: DesignConstants.paddingAlt.copyWith(bottom: 0),
-      child: Row(
-        children: [
-          Column(
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                Strings.homePageTitle.get(),
-                style: context.textTheme.headline6,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Strings.homePageTitle.get(),
+                    style: context.textTheme.headline6,
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    state.when(
+                      authenticated: (userInfo) => "@${userInfo.username}",
+                      unauthenticated: () => Strings.unauthenticated.get(),
+                    ),
+                    style: context.textTheme.subtitle2?.copyWith(
+                      fontSize: 13,
+                      color:
+                          context.textTheme.subtitle2?.color?.withOpacity(0.7),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 2),
-              Text(
-                "@username",
-                style: context.textTheme.subtitle2?.copyWith(
-                  fontSize: 13,
-                  color: context.textTheme.subtitle2?.color?.withOpacity(0.7),
+              Spacer(),
+              UAnimatedVisibility(
+                visible: state is AuthStateAuthenticated,
+                child: UIconButton(
+                  Icon(
+                    Icons.exit_to_app,
+                    size: 22,
+                  ),
+                  style: UIconButtonStyle(padding: DesignConstants.padding5),
+                  tooltip: Strings.logout.get(),
+                  onPressed: context.read<AuthBloc>().logout,
                 ),
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

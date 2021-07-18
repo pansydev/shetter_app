@@ -3,6 +3,7 @@ import 'package:shetter_app/core/presentation/presentation.dart';
 class DesignConstants {
   // #region sizes
   static const double maxWindowWidth = 600;
+  static const double minListTileHeight = 50;
   // #endregion sizes
 
   // #region borderRadius
@@ -43,6 +44,9 @@ class DesignConstants {
     horizontal: paddingAltValue,
     vertical: paddingValue,
   );
+
+  static const EdgeInsets padding7 = EdgeInsets.all(7);
+  static const EdgeInsets padding5 = EdgeInsets.all(5);
   // #endregion padding
 
 }

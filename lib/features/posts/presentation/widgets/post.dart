@@ -1,4 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import 'package:shetter_app/features/posts/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,8 +14,17 @@ class UPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UCard(
+      onLongPress: context.isDesktop
+          ? null
+          : () => PostActionsDialog(post: post).show(context),
       title: _buildTitle(context),
       child: _buildBody(context),
+      trailing: !context.isDesktop
+          ? null
+          : UIconButton(
+              Icon(Icons.more_vert, size: 20),
+              onPressed: () => PostActionsDialog(post: post).show(context),
+            ),
     );
   }
 

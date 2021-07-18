@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
@@ -61,16 +60,18 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
   Stream<PostListState> _fetchPosts([Connection<Post>? connection]) async* {
     yield PostListState.loading(connection: connection);
 
-    final nextPostConnection = await _postRepository.getPosts(
+    final nextConnectionStream = _postRepository.getPosts(
       pageSize: _pageSize,
     );
 
-    yield nextPostConnection.fold(
-      (l) => connection == null
-          ? PostListState.empty(failure: l)
-          : PostListState.loaded(connection: connection, failure: l),
-      (r) => PostListState.loaded(connection: r),
-    );
+    yield* nextConnectionStream.map((event) {
+      return event.fold(
+        (l) => connection == null
+            ? PostListState.empty(failure: l)
+            : PostListState.loaded(connection: connection, failure: l),
+        (r) => PostListState.loaded(connection: r),
+      );
+    });
   }
 
   Stream<PostListState> _fetchMorePosts(Connection<Post> connection) async* {
@@ -80,20 +81,22 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
 
     yield PostListState.loading(connection: connection);
 
-    final nextPostConnection = await _postRepository.getPosts(
+    final nextConnectionStream = _postRepository.getPosts(
       pageSize: _pageSize,
       after: connection.pageInfo.endCursor,
     );
 
-    yield nextPostConnection.fold(
-      (l) => PostListState.loaded(connection: connection, failure: l),
-      (r) => PostListState.loaded(
-        connection: connection.copyWith(
-          nodes: connection.nodes.plus(r.nodes),
-          pageInfo: r.pageInfo,
+    yield* nextConnectionStream.map((event) {
+      return event.fold(
+        (l) => PostListState.loaded(connection: connection, failure: l),
+        (r) => PostListState.loaded(
+          connection: connection.copyWith(
+            nodes: connection.nodes.plus(r.nodes),
+            pageInfo: r.pageInfo,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Stream<PostListState> _postCreated(

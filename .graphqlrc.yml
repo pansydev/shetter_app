@@ -1,0 +1,2 @@
+schema: lib/core/infrastructure/graphql/schema.graphql
+documents: "lib/features/**/infrastructure/graphql/**/*.graphql"

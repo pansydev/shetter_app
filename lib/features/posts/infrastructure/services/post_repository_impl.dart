@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';
 
@@ -12,13 +10,13 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<Either<Failure, Post>> createPost(PostInput input) async {
-    final result = await _client.mutateCreatePost(
-      GQLOptionsMutationCreatePost(
-        variables: VariablesMutationCreatePost(
-          input: PostInputMapper.postInputToDto(input),
-        ),
+    final options = GQLOptionsMutationCreatePost(
+      variables: VariablesMutationCreatePost(
+        input: PostInputMapper.postInputToDto(input),
       ),
     );
+
+    final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
       return Left(ServerFailure());
@@ -28,35 +26,38 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, Connection<Post>>> getPosts({
+  Stream<Either<Failure, Connection<Post>>> getPosts({
     required int pageSize,
     String? after,
-  }) async {
-    final result = await _client.queryPosts(
-      GQLOptionsQueryPosts(
-        variables: VariablesQueryPosts(pageSize: pageSize, after: after),
-        fetchPolicy: _fetchPolicyProvider.fetchPolicy,
-      ),
+  }) {
+    final options = GQLWatchOptionsQueryPosts(
+      fetchResults: true,
+      variables: VariablesQueryPosts(pageSize: pageSize, after: after),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
 
-    if (result.hasException) {
-      developer.log("Post fetching failed", error: result.exception);
+    final result = _client.watchQueryPosts(options);
 
-      if (result.exception!.linkException is CacheMissException) {
-        return Left(CacheFailure());
+    return result.stream.map((event) {
+      if (event.hasException) {
+        if (event.exception!.linkException is CacheMissException) {
+          return Left(CacheFailure());
+        }
+
+        return Left(ServerFailure());
       }
 
-      return Left(ServerFailure());
-    }
-
-    return Right(result.parsedDataQueryPosts!.posts!.toEntity());
+      return Right(event.parsedDataQueryPosts!.posts!.toEntity());
+    });
   }
 
   @override
   Stream<Either<Failure, Post>> subsribeToPosts() {
-    final stream = _client.subscribe(
-      SubscriptionOptions(document: SUBSCRIPTION_POST_CREATED),
+    final options = SubscriptionOptions(
+      document: SUBSCRIPTION_POST_CREATED,
     );
+
+    final stream = _client.subscribe(options);
 
     return stream.map((event) {
       if (event.hasException) {

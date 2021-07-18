@@ -7,11 +7,19 @@
     "**/.DS_Store": true,
 
     "**/*.freezed.dart": true,
+    "**/*.g.dart": true,
     "**/*.graphql.dart": true,
     "**/*.graphql.g.dart": true,
     "**/*.al.dart": true,
     "**/*.gr.dart": true,
     "**/service_provider.config.dart": true,
-    "**/generated_plugin_registrant.dart": true
+    "**/generated_plugin_registrant.dart": true,
+
+    ".flutter-plugins": true,
+    ".flutter-plugins-dependencies": true,
+    ".packages": true,
+
+    ".dart_tool": true,
+    "build": true
   }
 }

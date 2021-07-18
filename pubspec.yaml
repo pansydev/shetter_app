@@ -1,10 +1,10 @@
 name: shetter_app
-version: 1.0.0+1
+version: 0.1.0
 publish_to: none
 description: Shetter App written in Flutter
 
 environment:
-  sdk: ">=2.13.3 <3.0.0"
+  sdk: ">=2.13.4 <3.0.0"
 
 dependencies:
   flutter:
@@ -26,7 +26,6 @@ dependencies:
   get:
   simple_animations:
   flutter_markdown:
-  flutter_scale_tap:
   auto_route:
   flutter_localizations:
     sdk: flutter
@@ -40,6 +39,7 @@ dev_dependencies:
   auto_localized_generator:
   auto_route_generator:
   injectable_generator:
+  cider:
 
   graphql_codegen:
     git:
@@ -94,6 +94,8 @@ index_generator:
     - black: .*\.g\.dart$
     - black: .*\.freezed\.dart$
   indexes:
+    - path: lib/app
+
     - path: lib/core/domain
     - path: lib/core/infrastructure
     - path: lib/core/presentation
@@ -101,3 +103,12 @@ index_generator:
     - path: lib/features/posts/domain
     - path: lib/features/posts/infrastructure
     - path: lib/features/posts/presentation
+
+    - path: lib/features/auth/domain
+    - path: lib/features/auth/infrastructure
+    - path: lib/features/auth/presentation
+
+cider:
+  link_template:
+    tag: https://github.com/pansydev/shetter_app/releases/tag/%tag%
+    diff: https://github.com/pansydev/shetter_app/compare/%from%...%to%

@@ -2,6 +2,7 @@ import 'package:shetter_app/core/presentation/presentation.dart';
 
 import 'text_theme.dart';
 
+const _accentColor = Colors.white;
 const _backgroundColor = Color(0xFF212121);
 const _primaryColor = Color(0xFF323232);
 const _primaryColorDark = Color(0xFF1D1D1D);
@@ -17,6 +18,16 @@ get darkThemeData => ThemeData.dark().copyWith(
         bodyColor: _fontColor,
         displayColor: _fontColor,
       ),
+      accentColor: _accentColor,
       primaryColor: _primaryColor,
       primaryColorDark: _primaryColorDark,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: _accentColor,
+        selectionColor: _accentColor.withOpacity(0.5),
+        selectionHandleColor: _accentColor,
+      ),
+      iconTheme: IconThemeData(
+        color: _fontColor,
+        size: 17,
+      ),
     );

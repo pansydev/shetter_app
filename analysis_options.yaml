@@ -50,7 +50,7 @@ linter:
     missing_whitespace_between_adjacent_strings: true
     no_default_cases: true
     null_check_on_nullable_type_parameter: true
-    one_member_abstracts: true
+    one_member_abstract: false
     only_throw_errors: true
     sort_unnamed_constructors_first: true
     tighten_type_of_initializing_formals: true
