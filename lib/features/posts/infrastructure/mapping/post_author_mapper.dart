@@ -7,6 +7,7 @@ extension PostAuthorMapper on FragmentPostAuthor {
       id: id,
       username: username,
       isBot: isBot,
+      totalPosts: posts!.totalCount,
     );
   }
 }

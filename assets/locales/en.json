@@ -24,5 +24,6 @@
   "time_yesterday_at": "yesterday, at {1}",
   "write_a_message": "Write a message...",
   "actions": "Actions",
-  "copy_text": "Copy text"
+  "copy_text": "Copy text",
+  "total_posts": "Total posts: {1}"
 }
