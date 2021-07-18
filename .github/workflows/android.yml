@@ -38,11 +38,11 @@ jobs:
 
       - name: Retrieving changes
         id: changes
-        run: echo "::set-output name=body::$(flutter pub run cider describe ${{ steps.tagName.outputs.tag }})"
+        run: flutter pub run cider describe ${{ steps.tagName.outputs.tag }}) > body.md
 
       - name: Publishing release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/release/*.apk"
-          body: ${{ steps.changes.outputs.body }}
+          bodyFile: body.md
           token: ${{ secrets.GITHUB_TOKEN }}

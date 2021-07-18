@@ -110,5 +110,5 @@ index_generator:
 
 cider:
   link_template:
-    tag: https://github.com/pansydev/shetter_app/releases/tag/%tag%
-    diff: https://github.com/pansydev/shetter_app/compare/%from%...%to%
+    tag: https://github.com/pansydev/shetter_app/releases/tag/v%tag%
+    diff: https://github.com/pansydev/shetter_app/compare/v%from%...v%to%
