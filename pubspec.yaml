@@ -1,5 +1,5 @@
 name: shetter_app
-version: 0.1.0
+version: 0.1.1
 publish_to: none
 description: Shetter App written in Flutter
 
@@ -110,5 +110,5 @@ index_generator:
 
 cider:
   link_template:
-    tag: https://github.com/pansydev/shetter_app/releases/tag/%tag%
-    diff: https://github.com/pansydev/shetter_app/compare/%from%...%to%
+    tag: https://github.com/pansydev/shetter_app/releases/tag/v%tag%
+    diff: https://github.com/pansydev/shetter_app/compare/v%from%...v%to%
