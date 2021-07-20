@@ -7,14 +7,19 @@ class PostListFragment extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: DesignConstants.padding.copyWith(top: 10),
-      sliver: BlocBuilder<PostListBloc, PostListState>(
-        builder: (context, state) {
-          return _buildPreloader(
-            state,
-            builder: (connection, [failure]) {
-              return UPostList(
-                connection: connection,
-                failure: failure,
+      sliver: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, authState) {
+          return BlocBuilder<PostListBloc, PostListState>(
+            builder: (context, state) {
+              return _PostListFragmentPreloader(
+                state,
+                builder: (connection, [failure]) {
+                  return UPostList(
+                    connection: connection,
+                    authState: authState,
+                    failure: failure,
+                  );
+                },
               );
             },
           );
@@ -22,19 +27,28 @@ class PostListFragment extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildPreloader(
-    PostListState state, {
-    required PostListBuilder builder,
-  }) {
+class _PostListFragmentPreloader extends StatelessWidget {
+  const _PostListFragmentPreloader(
+    this.state, {
+    Key? key,
+    required this.builder,
+  }) : super(key: key);
+
+  final PostListState state;
+  final PostListBuilder builder;
+
+  @override
+  Widget build(BuildContext context) {
     return state.when(
       empty: (failure) => failure != null
           ? UPreloader(failure: failure).sliverBox
           : UPreloader().sliverBox,
-      loaded: (connection, failure) => builder(connection, failure),
+      loaded: builder,
       loading: (connection) =>
           connection != null ? builder(connection) : UPreloader().sliverBox,
-      loadingMore: (connection) => builder(connection),
+      loadingMore: builder,
     );
   }
 }

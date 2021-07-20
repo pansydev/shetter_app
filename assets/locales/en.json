@@ -25,5 +25,6 @@
   "write_a_message": "Write a message...",
   "actions": "Actions",
   "copy_text": "Copy text",
-  "total_posts": "Total posts: {1}"
+  "total_posts": "Total posts: {1}",
+  "profile": "Profile"
 }

@@ -5,10 +5,12 @@ class UPostList extends StatelessWidget {
   const UPostList({
     Key? key,
     required this.connection,
+    required this.authState,
     this.failure,
   }) : super(key: key);
 
   final Connection<Post> connection;
+  final AuthState authState;
   final Failure? failure;
 
   @override
@@ -20,7 +22,10 @@ class UPostList extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                UPost(connection.nodes[index].toNullable()!),
+                UPost(
+                  connection.nodes[index].toNullable()!,
+                  authState: authState,
+                ),
                 UPreloader(
                   visible: connection.pageInfo.hasNextPage,
                   failure: failure,
@@ -30,7 +35,10 @@ class UPostList extends StatelessWidget {
 
           return Column(
             children: [
-              UPost(connection.nodes[index].toNullable()!),
+              UPost(
+                connection.nodes[index].toNullable()!,
+                authState: authState,
+              ),
               SizedBox(height: 10),
             ],
           );

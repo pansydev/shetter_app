@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   dartz: ^0.10.0-nullsafety.2
   normalize: 0.5.2
@@ -25,10 +27,9 @@ dependencies:
   hive_flutter:
   get:
   simple_animations:
-  flutter_markdown:
+  flutter_parsed_text:
   auto_route:
-  flutter_localizations:
-    sdk: flutter
+  flutter_color:
 
 dev_dependencies:
   build_runner:
