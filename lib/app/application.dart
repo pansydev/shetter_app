@@ -39,7 +39,7 @@ class Application extends StatelessWidget {
           ...context.localizationsDelegates,
         ],
         locale: Locale('ru'),
-        theme: darkThemeData,
+        theme: darkThemeData(),
       ),
     );
   }
