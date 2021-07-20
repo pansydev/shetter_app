@@ -43,57 +43,54 @@ class _UPressableState extends State<UPressable> {
     final bool isTapEnabled =
         widget.onPressed != null || widget.onLongPress != null;
 
-    return Listener(
-      onPointerDown: isTapEnabled ? _onTapDown : null,
-      onPointerUp: _onTapUp,
-      onPointerCancel: _onTapUp,
-      child: GestureDetector(
-        onTap: isTapEnabled
-            ? () {
-                if (widget.enableFeedback) {
-                  SystemSound.play(SystemSoundType.click);
-                }
-                widget.onPressed?.call();
+    return GestureDetector(
+      onTapDown: isTapEnabled ? _onTapDown : null,
+      onTapUp: _onTapUp,
+      onTapCancel: () => _onTapUp(null),
+      onTap: isTapEnabled
+          ? () {
+              if (widget.enableFeedback) {
+                SystemSound.play(SystemSoundType.click);
               }
-            : null,
-        onLongPress: widget.onLongPress == null
-            ? null
-            : () {
-                widget.onLongPress!();
-                _onTapUp(null);
-              },
-        child: AnimatedContainer(
-          key: _key,
+              widget.onPressed?.call();
+            }
+          : null,
+      onLongPress: widget.onLongPress == null
+          ? null
+          : () {
+              widget.onLongPress!();
+              _onTapUp(null);
+            },
+      child: AnimatedContainer(
+        key: _key,
+        duration: _animationDuration,
+        curve: _animationCurve,
+        decoration: !pressabled || !widget.showBorder
+            ? BoxDecoration(
+                borderRadius:
+                    widget.style.borderRadius ?? DesignConstants.borderRadius,
+                border: Border.all(color: Colors.transparent),
+              )
+            : BoxDecoration(
+                color: widget.style.backgroundColor ??
+                    context.theme.primaryColorDark,
+                borderRadius:
+                    widget.style.borderRadius ?? DesignConstants.borderRadius,
+                border: Border.all(
+                  color: widget.style.borderColor ?? context.theme.dividerColor,
+                ),
+              ),
+        margin: widget.style.margin ?? EdgeInsets.zero,
+        padding: widget.style.padding ?? EdgeInsets.zero,
+        child: AnimatedOpacity(
           duration: _animationDuration,
           curve: _animationCurve,
-          decoration: !pressabled || !widget.showBorder
-              ? BoxDecoration(
-                  borderRadius:
-                      widget.style.borderRadius ?? DesignConstants.borderRadius,
-                  border: Border.all(color: Colors.transparent),
-                )
-              : BoxDecoration(
-                  color: widget.style.backgroundColor ??
-                      context.theme.primaryColorDark,
-                  borderRadius:
-                      widget.style.borderRadius ?? DesignConstants.borderRadius,
-                  border: Border.all(
-                    color:
-                        widget.style.borderColor ?? context.theme.dividerColor,
-                  ),
-                ),
-          margin: widget.style.margin ?? EdgeInsets.zero,
-          padding: widget.style.padding ?? EdgeInsets.zero,
-          child: AnimatedOpacity(
+          opacity: widget.isTransparent && pressabled ? 0.5 : 1,
+          child: UAnimatedScale(
             duration: _animationDuration,
             curve: _animationCurve,
-            opacity: widget.isTransparent && pressabled ? 0.5 : 1,
-            child: UAnimatedScale(
-              duration: _animationDuration,
-              curve: _animationCurve,
-              scale: pressabled ? _getScale() : 1,
-              child: widget.child,
-            ),
+            scale: pressabled ? _getScale() : 1,
+            child: widget.child,
           ),
         ),
       ),
