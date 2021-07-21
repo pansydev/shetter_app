@@ -144,7 +144,7 @@ class _UserMention extends StatelessWidget {
     return GestureDetector(
       onTap: () => ProfileDialog(user: user).show(context),
       child: Container(
-        margin: EdgeInsets.only(left: 2),
+        margin: EdgeInsets.only(right: 2),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
         decoration: BoxDecoration(
           color: !isMe ? context.theme.primaryColor : context.theme.accentColor,
