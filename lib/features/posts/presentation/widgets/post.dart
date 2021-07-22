@@ -55,10 +55,13 @@ class _UPostTitle extends StatelessWidget {
               margin: EdgeInsets.only(left: 5),
               padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
               decoration: BoxDecoration(
-                color: context.theme.accentColor.withOpacity(0.2),
+                color: context.theme.accentColor.withOpacity(0.6),
                 borderRadius: DesignConstants.borderRadiusCircle,
               ),
-              child: Text('bot', style: context.textTheme.overline),
+              child: Text(
+                'bot',
+                style: context.textTheme.bodyText1!.copyWith(fontSize: 10),
+              ),
             )),
           TextSpan(
             text: '  •  ' + post.creationTime.toFormatedString(),
