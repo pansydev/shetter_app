@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
 
   dartz: ^0.10.0-nullsafety.2
-  normalize: 0.5.2
 
   intl:
   freezed_annotation:

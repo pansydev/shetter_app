@@ -647,7 +647,7 @@ packages:
     source: hosted
     version: "1.0.0"
   normalize:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: normalize
       url: "https://pub.dartlang.org"
