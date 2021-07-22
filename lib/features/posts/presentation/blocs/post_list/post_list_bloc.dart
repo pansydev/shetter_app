@@ -123,8 +123,6 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     Stream<PostListEvent> events,
     transitionFn,
   ) {
-    return events
-        .debounceTime(const Duration(milliseconds: 100))
-        .switchMap(transitionFn);
+    return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }

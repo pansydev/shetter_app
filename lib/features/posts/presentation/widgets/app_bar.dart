@@ -84,7 +84,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
       clipBehavior: Clip.antiAlias,
       onPressed: isMinimized ? widget.onScrollToUp : null,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        duration: 500.milliseconds,
         curve: Curves.fastLinearToSlowEaseIn,
         width: isMinimized ? 60 : context.width,
         height: isMinimized ? 41 : maxHeight,
@@ -98,7 +98,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
               visible: controller.value > 0.19,
               child: AnimatedOpacity(
                 opacity: isMinimized ? 1 : 0,
-                duration: Duration(milliseconds: 300),
+                duration: 300.milliseconds,
                 curve: Curves.fastLinearToSlowEaseIn,
                 child: _buildBackButton(),
               ),

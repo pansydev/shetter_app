@@ -62,7 +62,7 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
     transitionFn,
   ) {
     return events
-        .debounceTime(const Duration(milliseconds: 100))
+        .debounceTime(100.milliseconds)
         .switchMap(transitionFn);
   }
 }

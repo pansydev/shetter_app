@@ -25,7 +25,7 @@ class UPreloader extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(35).copyWith(top: 45),
+        padding: EdgeInsets.all(35).copyWith(top: 45),
         child: child,
       ),
     );

@@ -116,8 +116,6 @@ class AuthFragmentBloc extends Bloc<AuthFragmentEvent, AuthFragmentState> {
     Stream<AuthFragmentEvent> events,
     transitionFn,
   ) {
-    return events
-        .debounceTime(const Duration(milliseconds: 100))
-        .switchMap(transitionFn);
+    return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }
