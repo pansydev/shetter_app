@@ -8,6 +8,7 @@ export 'blocs/post_form/post_form_state.dart';
 export 'blocs/post_list/post_list_bloc.dart';
 export 'blocs/post_list/post_list_event.dart';
 export 'blocs/post_list/post_list_state.dart';
+export 'constants.dart';
 export 'exports.dart';
 export 'widgets/app_bar.dart';
 export 'widgets/create_post_dialog.dart';

@@ -1,3 +1,3 @@
-abstract class PresentationConstants {
+abstract class CorePresentationConstants {
   static const appName = "Shetter";
 }

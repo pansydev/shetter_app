@@ -30,7 +30,7 @@ class Application extends StatelessWidget {
         routerDelegate: router.delegate(),
         routeInformationParser: router.defaultRouteParser(),
         debugShowCheckedModeBanner: false,
-        title: PresentationConstants.appName,
+        title: CorePresentationConstants.appName,
         supportedLocales: context.supportedLocales,
         localizationsDelegates: [
           GlobalCupertinoLocalizations.delegate,
