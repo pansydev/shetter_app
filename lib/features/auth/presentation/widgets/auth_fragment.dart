@@ -19,8 +19,8 @@ class AuthFragment extends StatelessWidget {
               builder: (context, state) {
                 return UFrameLoader(
                   state: state.maybeMap(
-                    loading: (_) => UFrameLoaderState.loading(),
-                    orElse: () => UFrameLoaderState.initial(),
+                    loading: (_) => UFrameLoaderState.loading,
+                    orElse: () => UFrameLoaderState.initial,
                   ),
                   child: Wrap(
                     spacing: 10,

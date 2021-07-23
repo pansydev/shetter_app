@@ -1,7 +1,4 @@
-import 'package:flutter/services.dart';
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'pressable.freezed.dart';
+import '../../pansy_ui.dart';
 
 const Duration _animationDuration = Duration(milliseconds: 300);
 const Curve _animationCurve = Curves.linearToEaseOut;
@@ -123,13 +120,18 @@ class _UPressableState extends State<UPressable> {
   }
 }
 
-@freezed
-class UPressableStyle with _$UPressableStyle {
-  const factory UPressableStyle({
-    Color? backgroundColor,
-    Color? borderColor,
-    EdgeInsets? margin,
-    EdgeInsets? padding,
-    BorderRadius? borderRadius,
-  }) = _UPressableStyle;
+class UPressableStyle {
+  const UPressableStyle({
+    this.backgroundColor,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

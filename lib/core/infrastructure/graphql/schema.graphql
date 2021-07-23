@@ -69,29 +69,23 @@ enum ApplyPolicy {
   AFTER_RESOLVER
 }
 
-type AuthenticationFailureResult {
-  code: String!
+type LinkTextToken implements TextToken {
+  url: Url!
+  text: String!
 }
 
-union AuthenticationResult =
-    AuthenticationSuccessResult
-  | AuthenticationFailureResult
-
-type AuthenticationSuccessResult {
-  tokens: TokenPairDto!
+type MentionTextToken implements TextToken {
+  authorId: Uuid!
+  text: String!
 }
-
-"""
-The `Long` scalar type represents non-fractional signed whole 64-bit numeric
-values. Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
 
 type Mutation {
-  createPost(input: PostInput!): Post!
-  auth(username: String!, password: String!): AuthenticationResult!
-  refresh(refreshToken: String!): RefreshResult!
-  register(username: String!, password: String!): RegistrationResult!
+  createPost(input: PostWriteModelInput!): PostOperationResult!
+  editPost(postId: Uuid!, input: PostWriteModelInput!): PostOperationResult!
+}
+
+type OperationFailureResult {
+  code: String!
 }
 
 """
@@ -119,11 +113,13 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
+type PlainTextToken implements TextToken {
   text: String!
-  creationTime: Long!
-  author: User
-  mentionedUsers: [User!]!
+}
+
+type Post {
+  currentVersion: PostVersion!
+  previousVersions: [PostVersion!]!
   id: Uuid!
 }
 
@@ -163,49 +159,33 @@ type PostEdge {
   node: Post!
 }
 
-input PostInput {
+type PostInput {
+  text: String!
+}
+
+union PostOperationResult = OperationFailureResult | PostOperationSuccessResult
+
+type PostOperationSuccessResult {
+  result: Post!
+}
+
+type PostVersion {
+  text: String!
+  textTokens: [TextToken!]!
+}
+
+input PostWriteModelInput {
   text: String!
 }
 
 type Query {
   posts(first: Int, after: String, last: Int, before: String): PostConnection
-  user(id: Uuid!): User
 }
 
-type RefreshFailureResult {
-  code: String!
+interface TextToken {
+  text: String!
 }
 
-union RefreshResult = RefreshSuccessResult | RefreshFailureResult
-
-type RefreshSuccessResult {
-  tokens: TokenPairDto!
-}
-
-type RegistrationFailureResult {
-  code: String!
-}
-
-union RegistrationResult = RegistrationSuccessResult | RegistrationFailureResult
-
-type RegistrationSuccessResult {
-  tokens: TokenPairDto!
-}
-
-type Subscription {
-  postCreated: Post!
-}
-
-type TokenPairDto {
-  accessToken: String!
-  refreshToken: String!
-}
-
-type User {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  username: String!
-  isBot: Boolean!
-  id: Uuid!
-}
+scalar Url
 
 scalar Uuid

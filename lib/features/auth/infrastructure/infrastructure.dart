@@ -3,10 +3,6 @@
 library infrastructure;
 
 export 'exports.dart';
-export 'graphql/fragments/token_pair.graphql.dart';
-export 'graphql/mutations/auth.graphql.dart';
-export 'graphql/mutations/refresh.graphql.dart';
-export 'graphql/mutations/register.graphql.dart';
 export 'mapping/access_token_mapper.dart';
 export 'mapping/authentication_result_mapper.dart';
 export 'mapping/refresh_result_mapper.dart';

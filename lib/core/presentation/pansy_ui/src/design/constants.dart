@@ -1,8 +1,10 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
 class DesignConstants {
   // #region sizes
-  static const double maxWindowWidth = 600;
+  static const UDesignConstraints constraints = UDesignConstraints(
+    maxPhoneWidth: 600,
+  );
   static const double minListTileHeight = 50;
   // #endregion sizes
 
@@ -18,7 +20,7 @@ class DesignConstants {
     bottomRight: borderRadiusValue,
   );
 
-  static Radius borderRadiusCircleValue = Radius.circular(Get.width);
+  static Radius borderRadiusCircleValue = Radius.circular(100);
   static BorderRadius borderRadiusCircle = BorderRadius.all(
     borderRadiusCircleValue,
   );
@@ -48,5 +50,4 @@ class DesignConstants {
   static const EdgeInsets padding7 = EdgeInsets.all(7);
   static const EdgeInsets padding5 = EdgeInsets.all(5);
   // #endregion padding
-
 }

@@ -64,7 +64,7 @@ class _UPostTitle extends StatelessWidget {
               ),
             )),
           TextSpan(
-            text: '  •  ' + post.creationTime.toFormatedString(),
+            text: '  •  ' + post.creationTime.toFormattedString(),
             style: context.textTheme.subtitle2?.copyWith(
               fontSize: 13,
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),

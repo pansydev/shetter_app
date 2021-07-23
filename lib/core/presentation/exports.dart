@@ -1,13 +1,5 @@
 export 'package:get/get.dart'
-    show
-        GetNavigation,
-        ContextExtensionss,
-        WidgetSliverBoxX,
-        Get,
-        ExtensionSnackbar,
-        LocalesIntl;
-export 'package:flutter/material.dart' hide RefreshCallback;
-export 'package:flutter/cupertino.dart';
+    show GetNavigation, WidgetSliverBoxX, Get, ExtensionSnackbar, LocalesIntl;
 export 'package:supercharged/supercharged.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:simple_animations/simple_animations.dart';

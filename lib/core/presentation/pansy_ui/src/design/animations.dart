@@ -1,11 +1,13 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
 const double _scrollPosition = 300;
 const Duration _animationDuration = Duration(milliseconds: 300);
 
-extension ScrollConrtollerAnimations on ScrollController {
+extension UScrollConrtollerAnimations on ScrollController {
   void scrollToUp() {
-    jumpTo(_scrollPosition);
+    if (offset < _scrollPosition) {
+      jumpTo(_scrollPosition);
+    }
     animateTo(
       0,
       duration: _animationDuration,

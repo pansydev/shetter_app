@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'icon_button.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UIconButton extends StatelessWidget {
   const UIconButton(
@@ -42,13 +40,18 @@ class UIconButton extends StatelessWidget {
   }
 }
 
-@freezed
-class UIconButtonStyle with _$UIconButtonStyle {
-  const factory UIconButtonStyle({
-    Color? backgroundColor,
-    Color? borderColor,
-    EdgeInsets? margin,
-    EdgeInsets? padding,
-    BorderRadius? borderRadius,
-  }) = _UIconButtonStyle;
+class UIconButtonStyle {
+  const UIconButtonStyle({
+    this.backgroundColor,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

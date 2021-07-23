@@ -33,7 +33,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: DesignConstants.maxWindowWidth),
+          constraints: BoxConstraints(
+            maxWidth: context.designConstraints.maxPhoneWidth,
+          ),
           child: _buildBody(),
         ),
       ),

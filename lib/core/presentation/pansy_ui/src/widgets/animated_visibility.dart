@@ -1,4 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
 const Duration _animationDuration = Duration(milliseconds: 300);
 const Curve _animationCurve = Curves.linearToEaseOut;
@@ -35,7 +35,9 @@ class _UAnimatedVisibilityState extends State<UAnimatedVisibility>
   @override
   void didUpdateWidget(UAnimatedVisibility oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final duration = widget.lazySize ? 200.milliseconds : Duration.zero;
+    final duration = widget.lazySize
+        ? _animationDuration - Duration(milliseconds: 100)
+        : Duration.zero;
 
     if (widget.visible != _visible) {
       setState(() => _closeInProcessing = false);

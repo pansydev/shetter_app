@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'button.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UButton extends StatelessWidget {
   const UButton({
@@ -45,13 +43,7 @@ class UButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            IconTheme(
-              data: IconThemeData(
-                color: context.iconColor,
-                size: 17,
-              ),
-              child: icon!,
-            ),
+            icon!,
             SizedBox(
               width: 13,
             ),
@@ -99,15 +91,22 @@ class UButton extends StatelessWidget {
   }
 }
 
-@freezed
-class UButtonStyle with _$UButtonStyle {
-  const factory UButtonStyle({
-    Color? backgroundColor,
-    Color? shadowColor,
-    double? elevation,
-    Color? borderColor,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    BorderRadius? borderRadius,
-  }) = _UButtonStyle;
+class UButtonStyle {
+  const UButtonStyle({
+    this.backgroundColor,
+    this.shadowColor,
+    this.elevation,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final double? elevation;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

@@ -99,6 +99,10 @@ index_generator:
     - path: lib/core/domain
     - path: lib/core/infrastructure
     - path: lib/core/presentation
+      filters:
+        - black: lib/core/presentation/pansy_ui/src
+
+    - path: lib/core/presentation/pansy_ui
 
     - path: lib/features/posts/domain
     - path: lib/features/posts/infrastructure

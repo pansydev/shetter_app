@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'chip.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UChip extends StatelessWidget {
   const UChip({
@@ -46,8 +44,7 @@ class UChip extends StatelessWidget {
         children: [
           if (icon != null) ...[
             IconTheme(
-              data: IconThemeData(
-                color: context.iconColor,
+              data: context.theme.iconTheme.copyWith(
                 size: 16,
               ),
               child: icon!,
@@ -100,15 +97,22 @@ class UChip extends StatelessWidget {
   }
 }
 
-@freezed
-class UChipStyle with _$UChipStyle {
-  const factory UChipStyle({
-    Color? backgroundColor,
-    Color? shadowColor,
-    double? elevation,
-    Color? borderColor,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    BorderRadius? borderRadius,
-  }) = _UChipStyle;
+class UChipStyle {
+  const UChipStyle({
+    this.backgroundColor,
+    this.shadowColor,
+    this.elevation,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final double? elevation;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

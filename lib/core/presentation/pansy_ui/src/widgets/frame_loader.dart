@@ -1,6 +1,6 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
-part 'frame_loader.freezed.dart';
+enum UFrameLoaderState { initial, loading }
 
 class UFrameLoader extends StatelessWidget {
   const UFrameLoader({
@@ -19,14 +19,14 @@ class UFrameLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: state is UFrameLoaderStateLoading,
+      ignoring: state == UFrameLoaderState.loading,
       child: Stack(
         children: [
           AnimatedOpacity(
-            opacity: state is UFrameLoaderStateInitial ? 1 : 0.5,
+            opacity: state == UFrameLoaderState.initial ? 1 : 0.5,
             duration: duration,
             child: UAnimatedScale(
-              scale: state is UFrameLoaderStateInitial ? 1 : 0.95,
+              scale: state == UFrameLoaderState.initial ? 1 : 0.95,
               duration: duration,
               child: child,
             ),
@@ -35,10 +35,4 @@ class UFrameLoader extends StatelessWidget {
       ),
     );
   }
-}
-
-@freezed
-class UFrameLoaderState with _$UFrameLoaderState {
-  const factory UFrameLoaderState.initial() = UFrameLoaderStateInitial;
-  const factory UFrameLoaderState.loading() = UFrameLoaderStateLoading;
 }

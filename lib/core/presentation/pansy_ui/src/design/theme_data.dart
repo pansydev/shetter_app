@@ -1,5 +1,5 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
 import 'package:flutter_color/flutter_color.dart';
+import '../../pansy_ui.dart';
 
 import 'text_theme.dart';
 
@@ -9,7 +9,7 @@ const _primaryColorDark = Color(0xFF1D1D1D);
 const _dividerColor = Colors.white;
 const _fontColor = Colors.white;
 
-ThemeData darkThemeData({
+ThemeData themeData({
   Color accentColor = Colors.deepPurpleAccent,
   double accentRatio = 0.5,
 }) {

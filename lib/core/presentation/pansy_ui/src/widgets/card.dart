@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'card.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UCard extends StatelessWidget {
   const UCard({
@@ -125,15 +123,22 @@ class UCard extends StatelessWidget {
   }
 }
 
-@freezed
-class UCardStyle with _$UCardStyle {
-  const factory UCardStyle({
-    Color? backgroundColor,
-    Color? shadowColor,
-    double? elevation,
-    Color? borderColor,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    BorderRadius? borderRadius,
-  }) = _UCardStyle;
+class UCardStyle {
+  const UCardStyle({
+    this.backgroundColor,
+    this.shadowColor,
+    this.elevation,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final double? elevation;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

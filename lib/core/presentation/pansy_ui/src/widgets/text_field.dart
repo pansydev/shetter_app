@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'text_field.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UTextField extends StatefulWidget {
   UTextField({
@@ -47,7 +45,7 @@ class _UTextFieldState extends State<UTextField> {
           decoration: _InputDecoration(context, widget.style, widget.hintText),
           obscureText: obscureText,
           controller: widget.controller,
-          cursorColor: context.iconColor,
+          cursorColor: context.theme.iconTheme.color,
           style: context.textTheme.button,
           cursorWidth: 1.5,
           cursorRadius: DesignConstants.borderRadius.bottomLeft,
@@ -62,7 +60,6 @@ class _UTextFieldState extends State<UTextField> {
               UIconButton(
                 Icon(obscureText ? Icons.visibility : Icons.visibility_off),
                 style: UIconButtonStyle(margin: DesignConstants.padding7),
-                tooltip: Strings.passwordVisiblity.get(),
                 onPressed: _switchObscure,
               ),
           ],
@@ -111,26 +108,29 @@ class _InputBorder extends OutlineInputBorder {
           borderSide: !isFocused
               ? BorderSide(
                   width: 2,
-                  color:
-                      style.borderColor ?? context.iconColor!.withOpacity(0.1),
+                  color: style.borderColor ??
+                      context.theme.iconTheme.color!.withOpacity(0.1),
                 )
               : BorderSide(
                   width: 2,
-                  color:
-                      style.borderColor ?? context.iconColor!.withOpacity(0.3),
+                  color: style.borderColor ??
+                      context.theme.iconTheme.color!.withOpacity(0.3),
                 ),
         );
 }
 
-@freezed
-class UTextFieldStyle with _$UTextFieldStyle {
-  const factory UTextFieldStyle({
-    Color? backgroundColor,
-    Color? shadowColor,
-    double? elevation,
-    Color? borderColor,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    BorderRadius? borderRadius,
-  }) = _UTextFieldStyle;
+class UTextFieldStyle {
+  const UTextFieldStyle({
+    this.backgroundColor,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

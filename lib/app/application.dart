@@ -26,20 +26,23 @@ class Application extends StatelessWidget {
         provider.createBlocProvider<PostFormBloc>(),
         provider.createBlocProvider<AuthBloc>()
       ],
-      child: MaterialApp.router(
-        routerDelegate: router.delegate(),
-        routeInformationParser: router.defaultRouteParser(),
-        debugShowCheckedModeBanner: false,
-        title: CorePresentationConstants.appName,
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: [
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          ...context.localizationsDelegates,
-        ],
-        locale: Locale('ru'),
-        theme: darkThemeData(),
+      child: UDesign(
+        constraints: DesignConstants.constraints,
+        child: MaterialApp.router(
+          routerDelegate: router.delegate(),
+          routeInformationParser: router.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+          title: CorePresentationConstants.appName,
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: [
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            ...context.localizationsDelegates,
+          ],
+          locale: Locale('ru'),
+          theme: themeData(),
+        ),
       ),
     );
   }

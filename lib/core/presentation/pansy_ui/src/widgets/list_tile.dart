@@ -1,6 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-part 'list_tile.freezed.dart';
+import '../../pansy_ui.dart';
 
 class UListTile extends StatelessWidget {
   const UListTile({
@@ -58,14 +56,20 @@ class UListTile extends StatelessWidget {
   }
 }
 
-@freezed
-class UListTileStyle with _$UListTileStyle {
-  const factory UListTileStyle({
-    Color? accentColor,
-    Color? backgroundColor,
-    Color? borderColor,
-    EdgeInsets? margin,
-    EdgeInsets? padding,
-    BorderRadius? borderRadius,
-  }) = _UListTileStyle;
+class UListTileStyle {
+  const UListTileStyle({
+    this.accentColor,
+    this.backgroundColor,
+    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+  });
+
+  final Color? accentColor;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BorderRadius? borderRadius;
 }

@@ -1,4 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
 class UAnimatedScale extends ImplicitlyAnimatedWidget {
   const UAnimatedScale({

@@ -1,4 +1,4 @@
-import 'package:shetter_app/core/presentation/presentation.dart';
+import '../../pansy_ui.dart';
 
 abstract class UDialogWidget extends StatelessWidget {
   const UDialogWidget({
@@ -43,8 +43,10 @@ class _UDialogWidgetBodyForPhone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
-      constraints: BoxConstraints(maxWidth: DesignConstants.maxWindowWidth),
+      padding: EdgeInsets.only(top: context.viewInsets.top),
+      constraints: BoxConstraints(
+        maxWidth: context.designConstraints.maxPhoneWidth,
+      ),
       child: UCard(
         title: Padding(
           padding: EdgeInsets.only(bottom: 3),
@@ -69,7 +71,7 @@ class _UDialogWidgetBodyForPhone extends StatelessWidget {
           padding: EdgeInsets.only(
             right:
                 DesignConstants.paddingValue - DesignConstants.paddingMiniValue,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
+            bottom: context.viewInsets.bottom,
           ),
           child: body,
         ),
@@ -94,10 +96,12 @@ class _UDialogWidgetBodyForDesktop extends StatelessWidget {
       child: Container(
         margin: DesignConstants.padding,
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).viewInsets.top,
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: context.viewInsets.top,
+          bottom: context.viewInsets.bottom,
         ),
-        constraints: BoxConstraints(maxWidth: DesignConstants.maxWindowWidth),
+        constraints: BoxConstraints(
+          maxWidth: context.designConstraints.maxPhoneWidth,
+        ),
         child: UCard(
           title: Padding(
             padding: EdgeInsets.only(bottom: 3),

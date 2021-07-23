@@ -20,7 +20,7 @@ class UPreloader extends StatelessWidget {
     } else if (this.visible) {
       child = CupertinoActivityIndicator();
     } else {
-      return Container();
+      return SizedBox();
     }
 
     return Center(
