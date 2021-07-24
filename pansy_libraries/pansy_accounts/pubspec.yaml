@@ -1,0 +1,30 @@
+name: pansy_accounts
+
+environment:
+  sdk: ">=2.13.4 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  pansy_arch_graphql:
+    path: ../pansy_arch_graphql
+
+  pansy_arch_auth:
+    path: ../pansy_arch_auth
+
+  pansy_ui:
+    path: ../pansy_ui
+
+  hive_flutter:
+
+dev_dependencies:
+  freezed:
+  build_runner:
+  injectable_generator:
+
+  graphql_codegen:
+    git:
+      url: https://github.com/exeteres/graphql_codegen
+      ref: main
+      path: graphql_codegen

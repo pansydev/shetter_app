@@ -1,0 +1,17 @@
+name: pansy_arch_core
+
+environment:
+  sdk: ">=2.13.4 <3.0.0"
+
+dependencies:
+  freezed_annotation:
+
+  fpdart:
+
+  # TODO replace get_it and injectable with own di container
+  get_it:
+  injectable:
+
+dev_dependencies:
+  freezed:
+  build_runner:

@@ -1,6 +1,4 @@
-abstract class Failure {}
-
-class ServerFailure extends Failure {}
+import 'package:pansy_arch_auth/domain/domain.dart';
 
 class CacheFailure extends Failure {}
 

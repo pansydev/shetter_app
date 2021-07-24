@@ -205,12 +205,12 @@ packages:
     source: hosted
     version: "1.15.0"
   connectivity_plus:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: connectivity_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.6"
   connectivity_plus_linux:
     dependency: transitive
     description:
@@ -281,13 +281,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  dartz:
-    dependency: "direct main"
-    description:
-      name: dartz
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0-nullsafety.2"
   dbus:
     dependency: transitive
     description:
@@ -364,6 +357,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fpdart:
+    dependency: transitive
+    description:
+      name: fpdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.8"
   freezed:
     dependency: "direct dev"
     description:
@@ -393,7 +393,7 @@ packages:
     source: hosted
     version: "4.1.4"
   get_it:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get_it
       url: "https://pub.dartlang.org"
@@ -542,7 +542,7 @@ packages:
     source: hosted
     version: "2.0.2"
   injectable:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: injectable
       url: "https://pub.dartlang.org"
@@ -660,6 +660,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  pansy_accounts:
+    dependency: "direct dev"
+    description:
+      path: "pansy_libraries/pansy_accounts"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_arch_auth:
+    dependency: transitive
+    description:
+      path: "pansy_libraries/pansy_arch_auth"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_arch_core:
+    dependency: "direct dev"
+    description:
+      path: "pansy_libraries/pansy_arch_core"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_arch_graphql:
+    dependency: "direct dev"
+    description:
+      path: "pansy_libraries/pansy_arch_graphql"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_ui:
+    dependency: "direct dev"
+    description:
+      path: "pansy_libraries/pansy_ui"
+      relative: true
+    source: path
+    version: "0.0.0"
   path:
     dependency: transitive
     description:

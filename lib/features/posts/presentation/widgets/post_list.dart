@@ -18,12 +18,12 @@ class UPostList extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, index) {
-          if (index == connection.nodes.length() - 1)
+          if (index == connection.nodes.length - 1)
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 UPost(
-                  connection.nodes[index].toNullable()!,
+                  connection.nodes[index],
                   authState: authState,
                 ),
                 UPreloader(
@@ -36,14 +36,14 @@ class UPostList extends StatelessWidget {
           return Column(
             children: [
               UPost(
-                connection.nodes[index].toNullable()!,
+                connection.nodes[index],
                 authState: authState,
               ),
               SizedBox(height: 10),
             ],
           );
         },
-        childCount: connection.nodes.length(),
+        childCount: connection.nodes.length,
       ),
     );
   }

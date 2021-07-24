@@ -14,8 +14,8 @@ class PostActionsDialog extends UDialogWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (post.author != null) ...[
-          UserProfile(post.author!),
+        ...[
+          UserProfile(post.author),
           Divider(),
         ],
         UListTile(
@@ -28,7 +28,8 @@ class PostActionsDialog extends UDialogWidget {
   }
 
   void _copy(BuildContext context) {
-    Clipboard.setData(ClipboardData(text: post.text));
+    // TODO add display text
+    Clipboard.setData(ClipboardData(text: ""));
     Navigator.pop(context);
   }
 }

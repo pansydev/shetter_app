@@ -64,10 +64,26 @@ directive @authorize(
   apply: ApplyPolicy! = BEFORE_RESOLVER
 ) on SCHEMA | OBJECT | FIELD_DEFINITION
 
+"""
+The `@specifiedBy` directive is used within the type system definition language
+to provide a URL for specifying the behavior of custom scalar definitions.
+"""
+directive @specifiedBy(
+  """
+  The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types.
+  """
+  url: String!
+) on SCALAR
+
 enum ApplyPolicy {
   BEFORE_RESOLVER
   AFTER_RESOLVER
 }
+
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime
 
 type LinkTextToken implements TextToken {
   url: Url!
@@ -80,8 +96,8 @@ type MentionTextToken implements TextToken {
 }
 
 type Mutation {
-  createPost(input: PostWriteModelInput!): PostOperationResult!
-  editPost(postId: Uuid!, input: PostWriteModelInput!): PostOperationResult!
+  createPost(input: PostInput!): PostOperationResult!
+  editPost(postId: Uuid!, input: PostInput!): PostOperationResult!
 }
 
 type OperationFailureResult {
@@ -118,9 +134,26 @@ type PlainTextToken implements TextToken {
 }
 
 type Post {
+  authorId: Uuid!
+  creationTime: DateTime!
+  lastModificationTime: DateTime
+  author: PostAuthor!
   currentVersion: PostVersion!
   previousVersions: [PostVersion!]!
   id: Uuid!
+}
+
+type PostAuthor {
+  username: String!
+  id: Uuid!
+}
+
+union PostAuthorOperationResult =
+    OperationFailureResult
+  | PostAuthorOperationSuccessResult
+
+type PostAuthorOperationSuccessResult {
+  result: PostAuthor!
 }
 
 """
@@ -141,7 +174,6 @@ type PostConnection {
   A flattened list of the nodes.
   """
   nodes: [Post!]
-  totalCount: Int!
 }
 
 """
@@ -159,7 +191,7 @@ type PostEdge {
   node: Post!
 }
 
-type PostInput {
+input PostInput {
   text: String!
 }
 
@@ -171,15 +203,13 @@ type PostOperationSuccessResult {
 
 type PostVersion {
   text: String!
+  creationTime: DateTime!
   textTokens: [TextToken!]!
-}
-
-input PostWriteModelInput {
-  text: String!
 }
 
 type Query {
   posts(first: Int, after: String, last: Int, before: String): PostConnection
+  post(id: Uuid!): Post
 }
 
 interface TextToken {

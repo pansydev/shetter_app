@@ -5,10 +5,9 @@ extension PostMapper on FragmentPost {
   Post toEntity() {
     return Post(
       id: id,
-      text: text,
-      author: author?.toEntity(),
-      creationTime: DateTimeMapper.unixSecondsToDateTime(creationTime),
-      mentionedUsers: IVector.from(mentionedUsers.map((e) => e.toEntity())),
+      author: author.toEntity(),
+      creationTime: DateTime.parse(creationTime),
+      currentVersion: currentVersion.toEntity(),
     );
   }
 }

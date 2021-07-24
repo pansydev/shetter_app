@@ -6,9 +6,8 @@ part 'post.freezed.dart';
 class Post with _$Post {
   factory Post({
     required String id,
-    required String text,
-    PostAuthor? author,
+    required PostAuthor author,
     required DateTime creationTime,
-    required IVector<PostAuthor> mentionedUsers,
+    required PostVersion currentVersion,
   }) = _Post;
 }

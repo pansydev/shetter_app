@@ -1,0 +1,15 @@
+mutation Auth($username: String!, $password: String!) {
+  auth(username: $username, password: $password) {
+    __typename
+
+    ... on TokenPairOperationSuccessResult {
+      result {
+        ...TokenPair
+      }
+    }
+
+    ... on OperationFailureResult {
+      ...OperationFailureResult
+    }
+  }
+}

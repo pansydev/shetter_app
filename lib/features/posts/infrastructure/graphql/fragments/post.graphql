@@ -1,11 +1,11 @@
 fragment Post on Post {
   id
-  text
   creationTime
-  author {
-    ...PostAuthor
+  lastModificationTime
+  currentVersion {
+    ...PostVersion
   }
-  mentionedUsers {
+  author {
     ...PostAuthor
   }
 }

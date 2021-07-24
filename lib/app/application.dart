@@ -10,11 +10,10 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
   Application(
-    this.router,
     this.provider,
   ) : super(key: Key("Application"));
 
-  final AppRouter router;
+  final AppRouter router = AppRouter();
   final ServiceProvider provider;
 
   @override

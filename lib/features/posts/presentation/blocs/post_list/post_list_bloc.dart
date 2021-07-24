@@ -91,7 +91,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         (l) => PostListState.loaded(connection: connection, failure: l),
         (r) => PostListState.loaded(
           connection: connection.copyWith(
-            nodes: connection.nodes.plus(r.nodes),
+            nodes: UnmodifiableListView(connection.nodes + r.nodes),
             pageInfo: r.pageInfo,
           ),
         ),
@@ -111,7 +111,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
       ),
       (r) => PostListState.loaded(
         connection: connection.copyWith(
-          nodes: connection.nodes.prependElement(r),
+          nodes: UnmodifiableListView(connection.nodes.prepend(r)),
         ),
         failure: failure,
       ),

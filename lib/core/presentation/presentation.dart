@@ -12,4 +12,3 @@ export 'helpers/date_time_helpers.dart';
 export 'localization/failure_localizer.dart';
 export 'localization/strings.al.dart';
 export 'localization/strings.dart';
-export 'pansy_ui/pansy_ui.dart';

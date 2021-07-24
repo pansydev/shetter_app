@@ -12,7 +12,7 @@
     "**/*.graphql.g.dart": true,
     "**/*.al.dart": true,
     "**/*.gr.dart": true,
-    "**/service_provider.config.dart": true,
+    "**/initializer.config.dart": true,
     "**/generated_plugin_registrant.dart": true,
 
     ".flutter-plugins": true,

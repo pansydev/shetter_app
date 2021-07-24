@@ -51,4 +51,4 @@ app.*.map.json
 *.al.dart
 *.gr.dart
 *.g.dart
-service_provider.config.dart
+initializer.config.dart

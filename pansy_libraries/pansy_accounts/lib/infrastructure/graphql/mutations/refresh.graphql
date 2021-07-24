@@ -1,0 +1,15 @@
+mutation Refresh($refreshToken: String!) {
+  refresh(refreshToken: $refreshToken) {
+    __typename
+
+    ... on TokenPairOperationSuccessResult {
+      result {
+        ...TokenPair
+      }
+    }
+
+    ... on OperationFailureResult {
+      ...OperationFailureResult
+    }
+  }
+}

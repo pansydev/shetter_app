@@ -46,7 +46,7 @@ class _UPostTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: post.author?.username ?? Strings.unknownAuthor.get(),
+        text: post.author.username,
         style: context.textTheme.subtitle2,
         children: [
           if (post.author != null && post.author!.isBot)

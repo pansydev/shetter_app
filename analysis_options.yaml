@@ -7,7 +7,7 @@ analyzer:
     - "**/*.freezed.dart"
     - "**/*.graphql.dart"
     - "**/*.graphql.g.dart"
-    - "**/service_provider.config.dart"
+    - "**/initializer.config.dart"
     - "**/generated"
     - "**/*.gr.dart"
     - "**/*.al.dart"
