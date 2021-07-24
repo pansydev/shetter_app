@@ -1,4 +1,3 @@
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         RefreshFragment(),
-        AuthFragment(),
+        AuthButton(),
         CreatePostFragment(),
         PostListFragment()
       ],

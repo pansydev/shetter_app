@@ -4,8 +4,6 @@ import 'package:shetter_app/app/app.dart';
 
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/core/presentation/presentation.dart';
-
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
@@ -20,7 +18,7 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        provider.createBlocProvider<AuthFragmentBloc>(),
+        provider.createBlocProvider<AuthDialogBloc>(),
         provider.createBlocProvider<PostListBloc>(),
         provider.createBlocProvider<PostFormBloc>(),
         provider.createBlocProvider<AuthBloc>()

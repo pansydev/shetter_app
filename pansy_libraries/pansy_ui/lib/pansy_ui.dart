@@ -11,6 +11,7 @@ export 'design/theme_data.dart';
 export 'exports.dart';
 export 'helpers/build_context_helpers.dart';
 export 'helpers/date_time_helpers.dart';
+export 'helpers/widget_helpers.dart';
 export 'widgets/animated_scale.dart';
 export 'widgets/animated_visibility.dart';
 export 'widgets/button.dart';

@@ -2,9 +2,6 @@
 
 library presentation;
 
-export 'blocs/auth/auth_bloc.dart';
-export 'blocs/auth/auth_event.dart';
-export 'blocs/auth/auth_state.dart';
 export 'constants.dart';
 export 'exports.dart';
 export 'helpers/bloc_helpers.dart';

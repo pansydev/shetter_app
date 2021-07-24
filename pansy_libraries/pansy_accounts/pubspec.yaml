@@ -17,6 +17,7 @@ dependencies:
     path: ../pansy_ui
 
   hive_flutter:
+  flutter_bloc:
 
 dev_dependencies:
   freezed:

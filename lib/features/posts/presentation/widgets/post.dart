@@ -49,7 +49,7 @@ class _UPostTitle extends StatelessWidget {
         text: post.author.username,
         style: context.textTheme.subtitle2,
         children: [
-          if (post.author != null && post.author!.isBot)
+          if (post.author.isBot)
             WidgetSpan(
                 child: Container(
               margin: EdgeInsets.only(left: 5),
@@ -88,39 +88,10 @@ class _UPostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mentionedUsersPattern = post.mentionedUsers
-        .map((user) => '@${user.username}')
-        .toIterable()
-        .join("|");
-
     return ParsedText(
-      text: post.text.trim(),
+      text: post.currentVersion.textTokens.map((e) => e.text).join(),
       textScaleFactor: context.textScaleFactor,
       style: context.textTheme.bodyText2,
-      parse: [
-        MatchText(
-          pattern: PostsPresentationConstants.urlPattern,
-          onTap: _onTapLink,
-          style: TextStyle(
-            color: context.theme.accentColor,
-          ),
-        ),
-        if (mentionedUsersPattern != '')
-          MatchText(
-            pattern: mentionedUsersPattern,
-            renderWidget: ({required pattern, required text}) {
-              return _UserMention(
-                post.mentionedUsers
-                    .where((user) => user.username == text.substring(1))[0]
-                    .toNullable()!,
-                isMe: authState.when(
-                  authenticated: (userInfo) => "@${userInfo.username}" == text,
-                  unauthenticated: () => false,
-                ),
-              );
-            },
-          ),
-      ],
     );
   }
 
