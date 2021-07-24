@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:pansy_arch_graphql/domain/domain.dart';
 
 part 'connection.freezed.dart';

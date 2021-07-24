@@ -1,4 +1,4 @@
-import 'package:pansy_arch_auth/domain/domain.dart';
+import 'package:shetter_app/core/domain/domain.dart';
 
 class CacheFailure extends Failure {}
 

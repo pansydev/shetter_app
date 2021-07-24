@@ -1,4 +1,4 @@
-import 'package:shetter_app/features/posts/presentation/presentation.dart';
+import 'package:shetter_app/core/presentation/presentation.dart';
 
 extension DateTimeExtensions on DateTime {
   String toFormattedString() {

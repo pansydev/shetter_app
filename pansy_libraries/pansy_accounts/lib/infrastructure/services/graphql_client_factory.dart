@@ -1,5 +1,4 @@
 import 'package:pansy_accounts/infrastructure/infrastructure.dart';
-import 'package:pansy_arch_graphql/infrastructure/infrastructure.dart';
 
 @module
 abstract class GraphQLClientFactory {
