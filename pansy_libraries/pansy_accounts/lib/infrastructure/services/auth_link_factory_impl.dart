@@ -92,7 +92,7 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
       (headers) => HttpLinkHeaders(
         headers: <String, String>{
           ...headers?.headers ?? <String, String>{},
-          "Authentication": _getAccessToken(),
+          "Authorization": _getAccessToken(),
         },
       ),
     );

@@ -9,7 +9,7 @@ void main() async {
 
   final services = ServiceCollection()
     ..configureGraphQL()
-    ..configurePansyAccounts()
+    ..configurePansyAccounts(audience: EnumSessionAudience.shetter)
     ..configureShetter();
 
   final provider = await services.buildServiceProvider();

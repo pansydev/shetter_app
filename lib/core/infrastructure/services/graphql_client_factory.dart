@@ -1,12 +1,11 @@
-import 'package:pansy_accounts/infrastructure/infrastructure.dart';
+import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 
 @module
 abstract class GraphQLClientFactory {
-  @Named("pansy_accounts")
   @lazySingleton
   GraphQLClient createClient(
     AuthLinkFactory linkFactory,
-    @Named("pansy_accounts") Box box,
+    Box box,
   ) {
     final transportLink = _createTransportLink();
 
@@ -18,8 +17,8 @@ abstract class GraphQLClientFactory {
   }
 
   Link _createTransportLink() {
-    final httpLink = HttpLink(AccountsInfrastructureConstants.httpApiUrl);
-    final wsLink = WebSocketLink(AccountsInfrastructureConstants.wsApiUrl);
+    final httpLink = HttpLink(InfrastructureConstants.httpApiUrl);
+    final wsLink = WebSocketLink(InfrastructureConstants.wsApiUrl);
 
     return Link.split(
       (request) => request.isSubscription,

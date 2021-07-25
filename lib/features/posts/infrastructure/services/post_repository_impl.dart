@@ -53,20 +53,23 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Stream<Either<Failure, Post>> subsribeToPosts() {
-    final options = SubscriptionOptions(
-      document: SUBSCRIPTION_POST_CREATED,
-    );
+    // final options = SubscriptionOptions(
+    //   document: SUBSCRIPTION_POST_CREATED,
+    // );
 
-    final stream = _client.subscribe(options);
+    // final stream = _client.subscribe(options);
 
-    return stream.map((event) {
-      if (event.hasException) {
-        return Left(ServerFailure());
-      }
+    // return stream.map((event) {
+    //   if (event.hasException) {
+    //     return Left(ServerFailure());
+    //   }
 
-      final result = SubscriptionPostCreated.fromJson(event.data!);
+    //   final result = SubscriptionPostCreated.fromJson(event.data!);
 
-      return Right(result.postCreated.toEntity());
-    });
+    //   return Right(result.postCreated.toEntity());
+    // });
+
+    // TODO implement post subscription
+    return Stream.empty();
   }
 }

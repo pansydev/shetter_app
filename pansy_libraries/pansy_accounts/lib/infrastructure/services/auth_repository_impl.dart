@@ -1,19 +1,29 @@
 import 'package:pansy_accounts/domain/domain.dart';
 import 'package:pansy_accounts/infrastructure/infrastructure.dart';
 
-@LazySingleton(as: AuthRepository, env: ["pansy_accounts"])
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._client);
+  AuthRepositoryImpl(
+    @Named("pansy_accounts") this._client,
+    this._optionsManager,
+  );
 
   final GraphQLClient _client;
+  final OptionsManager _optionsManager;
 
   @override
   Future<Either<Failure, TokenPair>> auth(
     String username,
     String password,
   ) async {
+    final pansyAccountsOptions = _optionsManager.get<PansyAccountsOptions>();
+
     final options = GQLOptionsMutationAuth(
-      variables: VariablesMutationAuth(username: username, password: password),
+      variables: VariablesMutationAuth(
+        username: username,
+        password: password,
+        audience: pansyAccountsOptions.audience,
+      ),
     );
 
     final result = await _client.mutateAuth(options);

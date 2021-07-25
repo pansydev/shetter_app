@@ -9,4 +9,5 @@ export 'graphql/fragments/page_info.graphql.dart';
 export 'graphql/schema.graphql.dart';
 export 'initializer.dart';
 export 'mapping/page_info_mapper.dart';
+export 'services/graphql_client_factory.dart';
 export 'services/hive_box_factory.dart';

@@ -10,3 +10,4 @@ dependencies:
 dev_dependencies:
   freezed:
   build_runner:
+  json_serializable:

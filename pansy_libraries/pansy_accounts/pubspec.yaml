@@ -23,6 +23,7 @@ dev_dependencies:
   freezed:
   build_runner:
   injectable_generator:
+  json_serializable:
 
   graphql_codegen:
     git:

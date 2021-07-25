@@ -98,7 +98,7 @@ class TokenManagerImpl implements TokenManager {
   }
 
   @factoryMethod
-  static Future<TokenManager> create(Box box) async {
+  static Future<TokenManager> create(@Named("pansy_accounts") Box box) async {
     final tokenManager = TokenManagerImpl(box);
     await tokenManager.load();
 
