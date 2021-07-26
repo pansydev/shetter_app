@@ -40,6 +40,7 @@ class UButton extends StatelessWidget {
     Widget cardChild = Padding(
       padding: style.padding ?? DesignConstants.paddingButton,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[

@@ -27,16 +27,22 @@ class AuthDialogBloc extends Bloc<AuthDialogEvent, AuthDialogState> {
     );
   }
 
-  void auth(BuildContext context) {
+  Future<void> auth(BuildContext context) async {
     FocusScope.of(context).unfocus();
     if (state is AuthDialogStateLoading) return;
     add(AuthDialogEvent.authetication());
+
+    await stream.firstWhere((element) => element is! AuthDialogStateLoading);
+    if (state is AuthDialogStateInitial) Navigator.pop(context);
   }
 
-  void register(BuildContext context) {
+  Future<void> register(BuildContext context) async {
     FocusScope.of(context).unfocus();
     if (state is AuthDialogStateLoading) return;
     add(AuthDialogEvent.registration());
+
+    await stream.firstWhere((element) => element is! AuthDialogStateLoading);
+    if (state is AuthDialogStateInitial) Navigator.pop(context);
   }
 
   Stream<AuthDialogState> _auth(

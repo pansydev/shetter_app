@@ -1,19 +1,25 @@
 import 'package:pansy_accounts/presentation/presentation.dart';
 
 class AuthDialog extends UDialogWidget {
-  const AuthDialog({Key? key}) : super(key: key, title: "Pansy Accounts");
+  const AuthDialog({Key? key})
+      : super(
+          key: key,
+          title: "Pansy Accounts",
+          outline: true,
+        );
+
+  @override
+  Widget buildBody({required Widget body}) {
+    return UPansyTheme(child: body);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return UCard.outline(
-      style: UCardStyle(
-        margin: EdgeInsets.symmetric(
-          horizontal: DesignConstants.paddingValue,
-        ).copyWith(top: DesignConstants.paddingMiniValue),
-      ),
-      child: BlocBuilder<AuthDialogBloc, AuthDialogState>(
-        builder: (context, state) {
-          return UFrameLoader(
+    return BlocBuilder<AuthDialogBloc, AuthDialogState>(
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: UFrameLoader(
             state: state.maybeMap(
               loading: (_) => UFrameLoaderState.loading,
               orElse: () => UFrameLoaderState.initial,
@@ -55,9 +61,9 @@ class AuthDialog extends UDialogWidget {
                 ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

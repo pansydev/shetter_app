@@ -9,14 +9,18 @@ class AuthButton extends UDialogWidget {
       builder: (context, state) {
         return UAnimatedVisibility(
           visible: state is AuthStateUnauthenticated,
-          child: UButton.outline(
-            style: UButtonStyle(
-              margin: EdgeInsets.symmetric(
-                horizontal: DesignConstants.paddingValue,
-              ).copyWith(top: DesignConstants.paddingMiniValue),
+          child: UPansyTheme(
+            child: UButton.outline(
+              icon: Icon(Icons.login),
+              style: UButtonStyle(
+                margin: EdgeInsets.symmetric(
+                  horizontal: DesignConstants.paddingValue,
+                ).copyWith(top: DesignConstants.paddingMiniValue),
+                padding: DesignConstants.paddingAlt,
+              ),
+              child: Text('Авторизоваться через Pansy'),
+              onPressed: () => AuthDialog().show(context),
             ),
-            child: Text('Авторизоваться через Pansy'),
-            onPressed: () => AuthDialog().show(context),
           ),
         );
       },

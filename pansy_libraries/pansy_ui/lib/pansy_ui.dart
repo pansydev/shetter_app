@@ -6,6 +6,7 @@ export 'design/animations.dart';
 export 'design/constants.dart';
 export 'design/constraints.dart';
 export 'design/design.dart';
+export 'design/pansy_theme.dart';
 export 'design/text_theme.dart';
 export 'design/theme_data.dart';
 export 'exports.dart';

@@ -98,16 +98,19 @@ class UCard extends StatelessWidget {
         child: cardChildWithPadding,
       );
     } else {
-      cardDecoration = Container(
-        decoration: BoxDecoration(
-          color: style.backgroundColor ?? context.theme.primaryColorDark,
-          borderRadius: style.borderRadius ?? DesignConstants.borderRadius,
-          border: Border.all(
-            color: style.borderColor ?? context.theme.dividerColor,
+      cardDecoration = Material(
+        type: MaterialType.transparency,
+        child: Container(
+          decoration: BoxDecoration(
+            color: style.backgroundColor ?? context.theme.primaryColorDark,
+            borderRadius: style.borderRadius ?? DesignConstants.borderRadius,
+            border: Border.all(
+              color: style.borderColor ?? context.theme.dividerColor,
+            ),
           ),
+          clipBehavior: clipBehavior,
+          child: cardChildWithPadding,
         ),
-        clipBehavior: clipBehavior,
-        child: cardChildWithPadding,
       );
     }
 

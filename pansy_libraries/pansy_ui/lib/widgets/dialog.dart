@@ -4,27 +4,37 @@ abstract class UDialogWidget extends StatelessWidget {
   const UDialogWidget({
     Key? key,
     this.title,
+    this.outline = false,
   }) : super(key: key);
 
   final String? title;
+  final bool outline;
+
+  Widget buildBody({required Widget body}) => body;
 
   Future<T?> show<T>(BuildContext context) {
     if (!context.isDesktop) {
       return showCupertinoModalPopup<T>(
         context: context,
         barrierColor: Colors.black45,
-        builder: (context) => _UDialogWidgetBodyForPhone(
-          title: title,
-          body: this,
+        builder: (context) => buildBody(
+          body: _UDialogWidgetBodyForPhone(
+            title: title,
+            body: this,
+            outline: outline,
+          ),
         ),
       );
     } else {
       return showCupertinoDialog<T>(
         context: context,
         barrierDismissible: true,
-        builder: (context) => _UDialogWidgetBodyForDesktop(
-          title: title,
-          body: this,
+        builder: (context) => buildBody(
+          body: _UDialogWidgetBodyForDesktop(
+            title: title,
+            body: this,
+            outline: outline,
+          ),
         ),
       );
     }
@@ -36,10 +46,13 @@ class _UDialogWidgetBodyForPhone extends StatelessWidget {
     Key? key,
     this.title,
     required this.body,
+    required this.outline,
   }) : super(key: key);
 
   final String? title;
   final Widget body;
+  final bool outline;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,7 +79,9 @@ class _UDialogWidgetBodyForPhone extends StatelessWidget {
           padding: DesignConstants.paddingMini.copyWith(
             right: DesignConstants.paddingMiniValue,
           ),
+          borderColor: Colors.transparent,
         ),
+        outline: outline,
         child: Padding(
           padding: EdgeInsets.only(
             right:
@@ -85,10 +100,12 @@ class _UDialogWidgetBodyForDesktop extends StatelessWidget {
     Key? key,
     this.title,
     required this.body,
+    required this.outline,
   }) : super(key: key);
 
   final String? title;
   final Widget body;
+  final bool outline;
 
   @override
   Widget build(BuildContext context) {
