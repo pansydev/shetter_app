@@ -89,7 +89,11 @@ class _UPostContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgets = post.currentVersion.textTokens
-        .map((e) => _textTokenToSpan(context, e))
+        .map((e) => _textTokenToSpan(
+              context,
+              textToken: e,
+              authState: authState,
+            ))
         .toList();
 
     return RichText(
@@ -101,13 +105,21 @@ class _UPostContent extends StatelessWidget {
     );
   }
 
-  InlineSpan _textTokenToSpan(BuildContext context, TextToken textToken) {
+  InlineSpan _textTokenToSpan(
+    BuildContext context, {
+    required TextToken textToken,
+    required AuthState authState,
+  }) {
     if (textToken is LinkTextToken) {
       return _linkTextSpan(context, text: textToken.text, url: textToken.url);
     }
 
     if (textToken is MentionTextToken) {
-      return _mentionTextSpan(context, text: textToken.text);
+      return _mentionTextSpan(
+        context,
+        text: textToken.text,
+        authState: authState,
+      );
     }
 
     if (textToken is PlainTextToken) {
@@ -135,12 +147,20 @@ InlineSpan _linkTextSpan(
   );
 }
 
-InlineSpan _mentionTextSpan(BuildContext context, {required String text}) {
+InlineSpan _mentionTextSpan(
+  BuildContext context, {
+  required String text,
+  required AuthState authState,
+}) {
   //TODO: Add opening profile
   void _onTap() {}
 
-  const isMe = false;
+  final isMe = authState.when(
+    authenticated: (userInfo) => "@${userInfo.username}" == text,
+    unauthenticated: () => false,
+  );
   return WidgetSpan(
+    alignment: PlaceholderAlignment.middle,
     child: GestureDetector(
       onTap: _onTap,
       child: Container(
@@ -159,6 +179,7 @@ InlineSpan _mentionTextSpan(BuildContext context, {required String text}) {
 
 InlineSpan _unsupportedTextSpan(BuildContext context) {
   return WidgetSpan(
+    alignment: PlaceholderAlignment.middle,
     child: Container(
       margin: EdgeInsets.only(right: 2),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
