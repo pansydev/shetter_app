@@ -212,6 +212,11 @@ type Query {
   post(id: Uuid!): Post
 }
 
+type Subscription {
+  postCreated: Post!
+  postEdited: Post!
+}
+
 interface TextToken {
   text: String!
 }

@@ -12,6 +12,7 @@ export 'graphql/fragments/text_token.graphql.dart';
 export 'graphql/mutations/create_post.graphql.dart';
 export 'graphql/mutations/edit_post.graphql.dart';
 export 'graphql/queries/posts.graphql.dart';
+export 'graphql/subscriptions/post_created.graphql.dart';
 export 'mapping/post_author_mapper.dart';
 export 'mapping/post_connection_mapper.dart';
 export 'mapping/post_input_mapper.dart';
