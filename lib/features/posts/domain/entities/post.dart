@@ -8,6 +8,7 @@ class Post with _$Post {
     required String id,
     required PostAuthor author,
     required DateTime creationTime,
+    required DateTime? lastModificationTime,
     required PostVersion currentVersion,
   }) = _Post;
 }

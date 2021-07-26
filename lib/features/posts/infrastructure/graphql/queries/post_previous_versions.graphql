@@ -1,0 +1,7 @@
+query PostPreviousVersions($postId: Uuid!) {
+  post(id: $postId) {
+    previousVersions {
+      ...PostVersion
+    }
+  }
+}

@@ -8,4 +8,7 @@ abstract class PostRepository {
 
   Future<Either<Failure, Post>> createPost(PostInput input);
   Stream<Either<Failure, Post>> subsribeToPosts();
+
+  Future<Either<Failure, UnmodifiableListView<PostVersion>>>
+      getPostPreviousVersions(String postId);
 }

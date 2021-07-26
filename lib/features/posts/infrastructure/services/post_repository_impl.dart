@@ -69,4 +69,25 @@ class PostRepositoryImpl implements PostRepository {
       return Right(result.postCreated.toEntity());
     });
   }
+
+  @override
+  Future<Either<Failure, UnmodifiableListView<PostVersion>>>
+      getPostPreviousVersions(String postId) async {
+    final options = GQLOptionsQueryPostPreviousVersions(
+      variables: VariablesQueryPostPreviousVersions(postId: postId),
+    );
+
+    final result = await _client.queryPostPreviousVersions(options);
+
+    if (result.hasException) {
+      return Left(ServerFailure());
+    }
+
+    if (result.parsedDataQueryPostPreviousVersions!.post == null) {
+      // TODO handle 404
+      return Left(ServerFailure());
+    }
+
+    return Right(result.parsedDataQueryPostPreviousVersions!.post!.toEntity());
+  }
 }

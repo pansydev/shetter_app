@@ -7,6 +7,9 @@ extension PostMapper on FragmentPost {
       id: id,
       author: author.toEntity(),
       creationTime: DateTime.parse(creationTime),
+      lastModificationTime: lastModificationTime != null
+          ? DateTime.parse(lastModificationTime!)
+          : null,
       currentVersion: currentVersion.toEntity(),
     );
   }

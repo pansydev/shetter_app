@@ -1,6 +1,0 @@
-fragment FullPost on Post {
-  ...Post
-  previousVersions {
-    ...PostVersion
-  }
-}
