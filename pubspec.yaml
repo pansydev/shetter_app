@@ -21,7 +21,6 @@ dependencies:
   hive_flutter:
   get:
   simple_animations:
-  flutter_parsed_text:
   auto_route:
   flutter_color:
 

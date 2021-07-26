@@ -1,4 +1,4 @@
-import 'package:flutter_parsed_text/flutter_parsed_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -88,32 +88,61 @@ class _UPostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ParsedText(
-      text: post.currentVersion.textTokens.map((e) => e.text).join(),
+    final widgets = post.currentVersion.textTokens
+        .map((e) => _textTokenToSpan(context, e))
+        .toList();
+
+    return RichText(
+      text: TextSpan(
+        style: context.textTheme.bodyText2,
+        children: widgets,
+      ),
       textScaleFactor: context.textScaleFactor,
-      style: context.textTheme.bodyText2,
     );
   }
 
-  Future<void> _onTapLink(url) async {
-    await launch(url);
+  InlineSpan _textTokenToSpan(BuildContext context, TextToken textToken) {
+    if (textToken is LinkTextToken) {
+      return _linkTextSpan(context, text: textToken.text, url: textToken.url);
+    }
+
+    if (textToken is MentionTextToken) {
+      return _mentionTextSpan(context, text: textToken.text);
+    }
+
+    if (textToken is PlainTextToken) {
+      return TextSpan(text: textToken.text);
+    }
+
+    return _unsupportedTextSpan(context);
   }
 }
 
-class _UserMention extends StatelessWidget {
-  const _UserMention(
-    this.user, {
-    required this.isMe,
-    Key? key,
-  }) : super(key: key);
+InlineSpan _linkTextSpan(
+  BuildContext context, {
+  required String text,
+  required String url,
+}) {
+  void _onTap() {
+    launch(url);
+  }
 
-  final PostAuthor user;
-  final bool isMe;
+  return TextSpan(
+    style: TextStyle(
+      color: context.theme.accentColor,
+    ),
+    recognizer: TapGestureRecognizer()..onTap = _onTap,
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => ProfileDialog(user: user).show(context),
+InlineSpan _mentionTextSpan(BuildContext context, {required String text}) {
+  //TODO: Add opening profile
+  void _onTap() {}
+
+  const isMe = false;
+  return WidgetSpan(
+    child: GestureDetector(
+      onTap: _onTap,
       child: Container(
         margin: EdgeInsets.only(right: 2),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
@@ -122,8 +151,25 @@ class _UserMention extends StatelessWidget {
           borderRadius: DesignConstants.borderRadiusCircle,
           border: Border.all(color: context.theme.dividerColor),
         ),
-        child: Text("@${user.username}", style: context.textTheme.bodyText1),
+        child: Text(text, style: context.textTheme.bodyText1),
       ),
-    );
-  }
+    ),
+  );
+}
+
+InlineSpan _unsupportedTextSpan(BuildContext context) {
+  return WidgetSpan(
+    child: Container(
+      margin: EdgeInsets.only(right: 2),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        borderRadius: DesignConstants.borderRadiusCircle,
+        border: Border.all(color: context.theme.dividerColor),
+      ),
+      child: Text(
+        Strings.unsupportedAttachment.get(),
+        style: context.textTheme.bodyText1,
+      ),
+    ),
+  );
 }
