@@ -71,6 +71,18 @@ class _UPostTitle extends StatelessWidget {
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),
             ),
           ),
+          if (post.lastModificationTime != null)
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: EdgeInsets.only(left: 7),
+                child: Icon(
+                  Icons.edit,
+                  size: 12,
+                  color: context.textTheme.subtitle2?.color?.withOpacity(0.8),
+                ),
+              ),
+            ),
         ],
       ),
     );
