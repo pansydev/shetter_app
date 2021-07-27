@@ -18,12 +18,12 @@ class UPost extends StatelessWidget {
     return UCard(
       onLongPress: context.isDesktop
           ? null
-          : () => PostActionsDialog(post: post).show(context),
+          : () => PostActionsDialog(post).show(context),
       trailing: !context.isDesktop
           ? null
           : UIconButton(
               Icon(Icons.more_vert, size: 20),
-              onPressed: () => PostActionsDialog(post: post).show(context),
+              onPressed: () => PostActionsDialog(post).show(context),
             ),
       title: _UPostTitle(post),
       child: Column(
@@ -51,18 +51,19 @@ class _UPostTitle extends StatelessWidget {
         children: [
           if (post.author.isBot)
             WidgetSpan(
-                child: Container(
-              margin: EdgeInsets.only(left: 5),
-              padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-              decoration: BoxDecoration(
-                color: context.theme.accentColor.withOpacity(0.6),
-                borderRadius: DesignConstants.borderRadiusCircle,
+              child: Container(
+                margin: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                decoration: BoxDecoration(
+                  color: context.theme.accentColor.withOpacity(0.6),
+                  borderRadius: DesignConstants.borderRadiusCircle,
+                ),
+                child: Text(
+                  'bot',
+                  style: context.textTheme.bodyText1!.copyWith(fontSize: 10),
+                ),
               ),
-              child: Text(
-                'bot',
-                style: context.textTheme.bodyText1!.copyWith(fontSize: 10),
-              ),
-            )),
+            ),
           TextSpan(
             text: '  •  ' + post.creationTime.toFormattedString(),
             style: context.textTheme.subtitle2?.copyWith(

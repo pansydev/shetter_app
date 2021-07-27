@@ -2,9 +2,9 @@ import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class PostActionsDialog extends UDialogWidget {
-  PostActionsDialog({
+  PostActionsDialog(
+    this.post, {
     Key? key,
-    required this.post,
   }) : super(key: key, title: Strings.actions.get());
 
   final Post post;
