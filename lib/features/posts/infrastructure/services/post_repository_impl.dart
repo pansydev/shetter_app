@@ -90,7 +90,7 @@ class PostRepositoryImpl implements PostRepository {
           return Left(CacheFailure());
         }
 
-        if (event.parsedDataQueryPostPreviousVersions!.post == null) {
+        if (event.parsedDataQueryPostPreviousVersions?.post == null) {
           // TODO handle 404
           return Left(ServerFailure());
         }
