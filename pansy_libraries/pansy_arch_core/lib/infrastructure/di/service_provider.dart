@@ -7,7 +7,7 @@ class ServiceProvider {
 
   final GetIt _container;
 
-  T resolve<T extends Object>() {
-    return _container.get<T>();
+  T resolve<T extends Object>({param1, param2}) {
+    return _container.get<T>(param1: param1, param2: param2);
   }
 }

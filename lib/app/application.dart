@@ -5,15 +5,13 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application(
-    this.provider,
-  ) : super(key: Key("Application"));
+  Application() : super(key: Key("Application"));
 
   final AppRouter router = AppRouter();
-  final ServiceProvider provider;
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<ServiceProvider>();
     return MultiBlocProvider(
       providers: [
         provider.createBlocProvider<AuthDialogBloc>(),
