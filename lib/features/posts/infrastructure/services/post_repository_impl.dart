@@ -71,23 +71,43 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, UnmodifiableListView<PostVersion>>>
-      getPostPreviousVersions(String postId) async {
-    final options = GQLOptionsQueryPostPreviousVersions(
+  Stream<Either<Failure, Connection<PostVersion>>> getPostPreviousVersions(
+    String postId, {
+    required int pageSize,
+    String? after,
+  }) {
+    final options = GQLWatchOptionsQueryPostPreviousVersions(
+      fetchResults: true,
       variables: VariablesQueryPostPreviousVersions(postId: postId),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
 
-    final result = await _client.queryPostPreviousVersions(options);
+    final result = _client.watchQueryPostPreviousVersions(options);
 
-    if (result.hasException) {
-      return Left(ServerFailure());
-    }
+    return result.stream.map((event) {
+      if (event.hasException) {
+        if (event.exception!.linkException is CacheMissException) {
+          return Left(CacheFailure());
+        }
 
-    if (result.parsedDataQueryPostPreviousVersions!.post == null) {
-      // TODO handle 404
-      return Left(ServerFailure());
-    }
+        if (event.parsedDataQueryPostPreviousVersions!.post == null) {
+          // TODO handle 404
+          return Left(ServerFailure());
+        }
 
-    return Right(result.parsedDataQueryPostPreviousVersions!.post!.toEntity());
+        return Left(ServerFailure());
+      }
+
+      return Right(
+        // TODO replace fake data
+        Connection(
+          nodes: event.parsedDataQueryPostPreviousVersions!.post!.toEntity(),
+          pageInfo: PageInfo(
+            hasNextPage: true,
+            hasPreviousPage: false,
+          ),
+        ),
+      );
+    });
   }
 }
