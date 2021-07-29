@@ -134,12 +134,17 @@ type PlainTextToken implements TextToken {
 }
 
 type Post {
+  previousVersions(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): PostVersionConnection
   authorId: Uuid!
   creationTime: DateTime!
   lastModificationTime: DateTime
   author: PostAuthor!
   currentVersion: PostVersion!
-  previousVersions: [PostVersion!]!
   id: Uuid!
 }
 
@@ -174,6 +179,7 @@ type PostConnection {
   A flattened list of the nodes.
   """
   nodes: [Post!]
+  totalCount: Int!
 }
 
 """
@@ -205,6 +211,42 @@ type PostVersion {
   text: String!
   creationTime: DateTime!
   textTokens: [TextToken!]!
+}
+
+"""
+A connection to a list of items.
+"""
+type PostVersionConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [PostVersionEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [PostVersion!]
+  totalCount: Int!
+}
+
+"""
+An edge in a connection.
+"""
+type PostVersionEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: PostVersion!
 }
 
 type Query {

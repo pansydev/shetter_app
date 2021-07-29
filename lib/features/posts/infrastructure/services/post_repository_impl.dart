@@ -98,16 +98,11 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure());
       }
 
-      return Right(
-        // TODO replace fake data
-        Connection(
-          nodes: event.parsedDataQueryPostPreviousVersions!.post!.toEntity(),
-          pageInfo: PageInfo(
-            hasNextPage: true,
-            hasPreviousPage: false,
-          ),
-        ),
-      );
+      final connection = event
+          .parsedDataQueryPostPreviousVersions!.post!.previousVersions!
+          .toEntity();
+
+      return Right(connection);
     });
   }
 }

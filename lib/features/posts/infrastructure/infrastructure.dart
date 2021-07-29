@@ -17,7 +17,7 @@ export 'mapping/post_author_mapper.dart';
 export 'mapping/post_connection_mapper.dart';
 export 'mapping/post_input_mapper.dart';
 export 'mapping/post_mapper.dart';
-export 'mapping/post_previous_versions_mapper.dart';
+export 'mapping/post_previous_version_connection_mapper.dart';
 export 'mapping/post_result_mapper.dart';
 export 'mapping/post_text_token_mapper.dart';
 export 'mapping/post_version_mapper.dart';
