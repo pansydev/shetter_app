@@ -33,6 +33,17 @@
       },
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": "Global pub get",
+      "command": "flutter pub get && cd pansy_libraries && pub global run melos:melos exec flutter pub get && cd ../",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
