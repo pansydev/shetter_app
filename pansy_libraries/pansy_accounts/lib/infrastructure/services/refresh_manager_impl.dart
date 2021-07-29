@@ -39,7 +39,7 @@ class RefreshManagerImpl implements RefreshManager {
       ),
     );
 
-    final client = _provider.resolve<GraphQLClient>();
+    final client = _provider.resolve<GraphQLClient>(name: "pansy_accounts");
 
     final result = await client.mutateRefresh(options);
 
