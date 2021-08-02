@@ -36,7 +36,7 @@
     },
     {
       "label": "Global pub get",
-      "command": "flutter pub get && cd pansy_libraries && pub global run melos:melos exec flutter pub get && cd ../",
+      "command": "flutter pub get && cd pansy_libraries && flutter pub global run melos:melos exec flutter pub get && cd ../",
       "type": "shell",
       "args": [],
       "presentation": {

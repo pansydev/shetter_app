@@ -12,6 +12,7 @@ class PostActionsDialog extends UDialogWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ...[
           UserProfile(post.author),
@@ -21,7 +22,13 @@ class PostActionsDialog extends UDialogWidget {
           icon: Icon(Icons.copy),
           child: Text(Strings.copyText.get()),
           onPressed: () => _copy(context),
-        )
+        ),
+        if (post.lastModificationTime != null)
+          UListTile(
+            icon: Icon(Icons.history),
+            child: Text(Strings.changesHistory.get()),
+            onPressed: () => PostHistoryDialog(post).show(context),
+          ),
       ],
     );
   }

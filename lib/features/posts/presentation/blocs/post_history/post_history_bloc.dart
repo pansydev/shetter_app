@@ -1,7 +1,11 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-typedef PostHistoryBuilder = Widget Function(Connection<Post>, [Failure?]);
+typedef PostHistoryBuilder = Widget Function(
+  Post,
+  Connection<PostVersion>, [
+  Failure?,
+]);
 
 @injectable
 class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {

@@ -14,14 +14,15 @@ abstract class UDialogWidget extends StatelessWidget {
 
   Future<T?> show<T>(BuildContext context) {
     if (!context.isDesktop) {
-      return showCupertinoModalPopup<T>(
+      return showFloatingModalBottomSheet<T>(
         context: context,
-        barrierColor: Colors.black45,
         builder: (context) => buildBody(
-          body: _UDialogWidgetBodyForPhone(
-            title: title,
-            body: this,
-            outline: outline,
+          body: _UDialogWidgetContainerForPhone(
+            child: _UDialogWidgetBody(
+              title: title,
+              outline: outline,
+              body: this,
+            ),
           ),
         ),
       );
@@ -30,10 +31,12 @@ abstract class UDialogWidget extends StatelessWidget {
         context: context,
         barrierDismissible: true,
         builder: (context) => buildBody(
-          body: _UDialogWidgetBodyForDesktop(
-            title: title,
-            body: this,
-            outline: outline,
+          body: _UDialogWidgetContainerForDesktop(
+            child: _UDialogWidgetBody(
+              title: title,
+              outline: outline,
+              body: this,
+            ),
           ),
         ),
       );
@@ -41,71 +44,36 @@ abstract class UDialogWidget extends StatelessWidget {
   }
 }
 
-class _UDialogWidgetBodyForPhone extends StatelessWidget {
-  const _UDialogWidgetBodyForPhone({
+class _UDialogWidgetContainerForPhone extends StatelessWidget {
+  const _UDialogWidgetContainerForPhone({
     Key? key,
-    this.title,
-    required this.body,
-    required this.outline,
+    required this.child,
   }) : super(key: key);
 
-  final String? title;
-  final Widget body;
-  final bool outline;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: context.viewInsets.top),
+      padding: EdgeInsets.only(
+        top: context.viewPadding.top,
+        bottom: context.viewInsets.bottom,
+      ),
       constraints: BoxConstraints(
         maxWidth: context.designConstraints.maxPhoneWidth,
       ),
-      child: UCard(
-        title: Padding(
-          padding: EdgeInsets.only(bottom: 3),
-          child: Row(
-            children: [
-              if (title != null) Text(title!),
-              Spacer(),
-              UIconButton(
-                Icon(Icons.close),
-                onPressed: () => Navigator.pop(context),
-              )
-            ],
-          ),
-        ),
-        style: UCardStyle(
-          borderRadius: DesignConstants.borderRadiusOnlyTop,
-          padding: DesignConstants.paddingMini.copyWith(
-            right: DesignConstants.paddingMiniValue,
-          ),
-          borderColor: Colors.transparent,
-        ),
-        outline: outline,
-        child: Padding(
-          padding: EdgeInsets.only(
-            right:
-                DesignConstants.paddingValue - DesignConstants.paddingMiniValue,
-            bottom: context.viewInsets.bottom,
-          ),
-          child: body,
-        ),
-      ),
+      child: child,
     );
   }
 }
 
-class _UDialogWidgetBodyForDesktop extends StatelessWidget {
-  const _UDialogWidgetBodyForDesktop({
+class _UDialogWidgetContainerForDesktop extends StatelessWidget {
+  const _UDialogWidgetContainerForDesktop({
     Key? key,
-    this.title,
-    required this.body,
-    required this.outline,
+    required this.child,
   }) : super(key: key);
 
-  final String? title;
-  final Widget body;
-  final bool outline;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -113,41 +81,77 @@ class _UDialogWidgetBodyForDesktop extends StatelessWidget {
       child: Container(
         margin: DesignConstants.padding,
         padding: EdgeInsets.only(
-          top: context.viewInsets.top,
+          top: context.viewPadding.top,
           bottom: context.viewInsets.bottom,
         ),
         constraints: BoxConstraints(
           maxWidth: context.designConstraints.maxPhoneWidth,
         ),
-        child: UCard(
-          title: Padding(
-            padding: EdgeInsets.only(bottom: 3),
-            child: Row(
-              children: [
-                if (title != null) Text(title!),
-                Spacer(),
-                UIconButton(
-                  Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
-                )
-              ],
-            ),
-          ),
-          style: UCardStyle(
-            borderRadius: DesignConstants.borderRadius,
-            padding: DesignConstants.paddingMini.copyWith(
-              right: DesignConstants.paddingMiniValue,
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.only(
-              right: DesignConstants.paddingValue -
-                  DesignConstants.paddingMiniValue,
-            ),
-            child: body,
-          ),
-        ),
+        child: child,
       ),
     );
   }
+}
+
+class _UDialogWidgetBody extends StatelessWidget {
+  const _UDialogWidgetBody({
+    Key? key,
+    this.title,
+    required this.outline,
+    required this.body,
+  }) : super(key: key);
+
+  final String? title;
+  final bool outline;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    return UCard(
+      title: Row(
+        children: [
+          SizedBox(width: DesignConstants.paddingMiniValue),
+          if (title != null) Text(title!),
+          Spacer(),
+          UIconButton(
+            Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+      style: UCardStyle(
+        margin: DesignConstants.padding10,
+        borderRadius: DesignConstants.borderRadius,
+        padding: DesignConstants.padding10,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal:
+              DesignConstants.paddingValue - DesignConstants.paddingMiniValue,
+        ).copyWith(top: 3),
+        child: body,
+      ),
+    );
+  }
+}
+
+Future<T> showFloatingModalBottomSheet<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+}) async {
+  final result = await showCustomModalBottomSheet(
+    context: context,
+    builder: builder,
+    barrierColor: Colors.black45,
+    animationCurve: Curves.linearToEaseOut,
+    containerWidget: (_, animation, child) {
+      return ScaleTransition(
+        scale: animation.drive(Tween<double>(begin: 0.9, end: 1)),
+        alignment: Alignment.topCenter,
+        child: child,
+      );
+    },
+  );
+
+  return result;
 }

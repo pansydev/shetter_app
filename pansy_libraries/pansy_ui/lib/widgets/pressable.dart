@@ -32,7 +32,7 @@ class UPressable extends StatefulWidget {
 }
 
 class _UPressableState extends State<UPressable> {
-  GlobalKey _key = GlobalKey();
+  final _key = GlobalKey();
   bool pressabled = false;
 
   @override

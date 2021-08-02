@@ -26,8 +26,8 @@ class UListTile extends StatelessWidget {
         style: UPressableStyle(
           backgroundColor: style.backgroundColor,
           borderColor: style.borderColor,
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
+          margin: style.margin ?? EdgeInsets.zero,
+          padding: style.padding ?? DesignConstants.padding5,
           borderRadius: style.borderRadius,
         ),
         showBorder: true,
@@ -37,7 +37,7 @@ class UListTile extends StatelessWidget {
           children: [
             if (icon != null) ...[
               icon!,
-              SizedBox(width: DesignConstants.paddingValue),
+              SizedBox(width: DesignConstants.paddingAltValue),
             ],
             DefaultTextStyle(
               style: context.textTheme.button!,

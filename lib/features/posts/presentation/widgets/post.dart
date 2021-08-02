@@ -6,12 +6,10 @@ import 'package:url_launcher/url_launcher.dart';
 class UPost extends StatelessWidget {
   const UPost(
     this.post, {
-    required this.authState,
     Key? key,
   }) : super(key: key);
 
   final Post post;
-  final AuthState authState;
 
   @override
   Widget build(BuildContext context) {
@@ -25,31 +23,85 @@ class UPost extends StatelessWidget {
               Icon(Icons.more_vert, size: 20),
               onPressed: () => PostActionsDialog(post).show(context),
             ),
-      title: _UPostTitle(post),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [_UPostContent(post, authState: authState)],
+      title: _PostTitle(
+        author: post.author,
+        creationTime: post.creationTime,
+        lastModificationTime: post.lastModificationTime,
+      ),
+      child: _PostInfo(
+        post.currentVersion,
       ),
     );
   }
 }
 
-class _UPostTitle extends StatelessWidget {
-  const _UPostTitle(
-    this.post, {
+class UPostVersion extends StatelessWidget {
+  const UPostVersion(
+    this.version, {
+    Key? key,
+    required this.author,
+  }) : super(key: key);
+
+  final PostVersion version;
+  final PostAuthor author;
+
+  @override
+  Widget build(BuildContext context) {
+    return UCard.outline(
+      title: _PostTitle(
+        author: author,
+        creationTime: version.creationTime,
+      ),
+      child: _PostInfo(
+        version,
+      ),
+    );
+  }
+}
+
+class _PostInfo extends StatelessWidget {
+  const _PostInfo(
+    this.version, {
     Key? key,
   }) : super(key: key);
 
-  final Post post;
+  final PostVersion version;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _PostContent(version, authState: state),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _PostTitle extends StatelessWidget {
+  const _PostTitle({
+    Key? key,
+    required this.author,
+    required this.creationTime,
+    this.lastModificationTime,
+  }) : super(key: key);
+
+  final PostAuthor author;
+  final DateTime creationTime;
+  final DateTime? lastModificationTime;
 
   @override
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: post.author.username,
+        text: author.username,
         style: context.textTheme.subtitle2,
         children: [
-          if (post.author.isBot)
+          if (author.isBot)
             WidgetSpan(
               child: Container(
                 margin: EdgeInsets.only(left: 5),
@@ -65,13 +117,13 @@ class _UPostTitle extends StatelessWidget {
               ),
             ),
           TextSpan(
-            text: '  •  ' + post.creationTime.toFormattedString(),
+            text: '  •  ' + creationTime.toFormattedString(),
             style: context.textTheme.subtitle2?.copyWith(
               fontSize: 13,
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),
             ),
           ),
-          if (post.lastModificationTime != null)
+          if (lastModificationTime != null)
             WidgetSpan(
               alignment: PlaceholderAlignment.middle,
               child: Padding(
@@ -89,19 +141,19 @@ class _UPostTitle extends StatelessWidget {
   }
 }
 
-class _UPostContent extends StatelessWidget {
-  const _UPostContent(
-    this.post, {
-    required this.authState,
+class _PostContent extends StatelessWidget {
+  const _PostContent(
+    this.version, {
     Key? key,
+    required this.authState,
   }) : super(key: key);
 
-  final Post post;
+  final PostVersion version;
   final AuthState authState;
 
   @override
   Widget build(BuildContext context) {
-    final widgets = post.currentVersion.textTokens
+    final widgets = version.textTokens
         .map((e) => _textTokenToSpan(
               context,
               textToken: e,

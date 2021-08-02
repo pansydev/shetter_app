@@ -26,5 +26,6 @@
   "actions": "Actions",
   "copy_text": "Copy text",
   "total_posts": "Total posts: {1}",
-  "profile": "Profile"
+  "profile": "Profile",
+  "changes_history": "History of changes"
 }

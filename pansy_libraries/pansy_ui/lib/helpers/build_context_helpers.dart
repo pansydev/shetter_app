@@ -9,6 +9,7 @@ extension UBuildContextExtensions on BuildContext {
   double get width => size.width;
   double get height => size.height;
   EdgeInsets get viewInsets => mediaQuery.viewInsets;
+  EdgeInsets get viewPadding => mediaQuery.viewPadding;
   double get textScaleFactor => mediaQuery.textScaleFactor;
 
   UDesign get design => UDesign.of(this);

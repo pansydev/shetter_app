@@ -49,9 +49,7 @@ class UChip extends StatelessWidget {
               ),
               child: icon!,
             ),
-            SizedBox(
-              width: 11,
-            ),
+            SizedBox(width: 11),
           ],
           DefaultTextStyle(
             style: context.textTheme.button!,

@@ -47,6 +47,7 @@ class DesignConstants {
     vertical: paddingValue,
   );
 
+  static const EdgeInsets padding10 = EdgeInsets.all(10);
   static const EdgeInsets padding7 = EdgeInsets.all(7);
   static const EdgeInsets padding5 = EdgeInsets.all(5);
   // #endregion padding
