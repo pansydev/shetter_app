@@ -29,6 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final result = await _client.mutateAuth(options);
 
     if (result.hasException) {
+      log('${result.exception}', name: '$this');
       return Left(ServerFailure());
     }
 
@@ -50,6 +51,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final result = await _client.mutateRegister(options);
 
     if (result.hasException) {
+      log('${result.exception}', name: '$this');
       return Left(ServerFailure());
     }
 

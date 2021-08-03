@@ -44,6 +44,7 @@ class RefreshManagerImpl implements RefreshManager {
     final result = await client.mutateRefresh(options);
 
     if (result.hasException) {
+      log('${result.exception}', name: '$this');
       return Some(ServerFailure());
     }
 

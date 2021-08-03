@@ -19,6 +19,7 @@ class PostRepositoryImpl implements PostRepository {
     final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
+      log('${result.exception}', name: '$this');
       return Left(ServerFailure());
     }
 
@@ -40,6 +41,7 @@ class PostRepositoryImpl implements PostRepository {
 
     return result.stream.map((event) {
       if (event.hasException) {
+        log('${event.exception}', name: '$this');
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }
@@ -61,6 +63,7 @@ class PostRepositoryImpl implements PostRepository {
 
     return stream.map((event) {
       if (event.hasException) {
+        log('${event.exception}', name: '$this');
         return Left(ServerFailure());
       }
 
@@ -86,6 +89,7 @@ class PostRepositoryImpl implements PostRepository {
 
     return result.stream.map((event) {
       if (event.hasException) {
+        log('${event.exception}', name: '$this');
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }

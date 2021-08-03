@@ -42,7 +42,6 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
 
     yield result.fold(
       (l) {
-        print(l);
         Get.snackbar(Strings.error.get(), l.toString());
         return PostFormState.error(
           textController: textController,
@@ -61,8 +60,6 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
     Stream<PostFormEvent> events,
     transitionFn,
   ) {
-    return events
-        .debounceTime(100.milliseconds)
-        .switchMap(transitionFn);
+    return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }
