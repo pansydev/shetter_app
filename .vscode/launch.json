@@ -7,64 +7,74 @@
         {
             "name": "shetter_app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "shetter_app (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_accounts",
             "cwd": "pansy_libraries/pansy_accounts",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_accounts (profile mode)",
             "cwd": "pansy_libraries/pansy_accounts",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_arch_auth",
             "cwd": "pansy_libraries/pansy_arch_auth",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_arch_core",
             "cwd": "pansy_libraries/pansy_arch_core",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_arch_graphql",
             "cwd": "pansy_libraries/pansy_arch_graphql",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_arch_graphql (profile mode)",
             "cwd": "pansy_libraries/pansy_arch_graphql",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_ui",
             "cwd": "pansy_libraries/pansy_ui",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "pansy_ui (profile mode)",
             "cwd": "pansy_libraries/pansy_ui",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/main.dart"
         }
     ]
 }
