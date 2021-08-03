@@ -329,14 +329,14 @@ packages:
     source: hosted
     version: "7.0.1"
   flutter_color:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_color
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
   flutter_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -365,7 +365,7 @@ packages:
     source: hosted
     version: "0.14.2"
   freezed_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
@@ -378,13 +378,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  get:
-    dependency: "direct main"
-    description:
-      name: get
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.4"
   get_it:
     dependency: transitive
     description:
@@ -549,7 +542,7 @@ packages:
     source: hosted
     version: "1.4.1"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -632,13 +625,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  modal_bottom_sheet:
-    dependency: transitive
-    description:
-      name: modal_bottom_sheet
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   nested:
     dependency: transitive
     description:

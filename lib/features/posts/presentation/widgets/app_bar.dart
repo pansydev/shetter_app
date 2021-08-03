@@ -1,7 +1,10 @@
+import 'dart:ui' show window;
+
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 89.0;
-final minHeight = (Get.statusBarHeight / Get.pixelRatio) + 60.0;
+final _statusBarHeight = window.padding.top / window.devicePixelRatio;
+final _maxHeight = _statusBarHeight + 89.0;
+final _minHeight = _statusBarHeight + 60.0;
 
 class UAppBar extends SliverPersistentHeaderDelegate {
   const UAppBar({
@@ -20,7 +23,7 @@ class UAppBar extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final offset = shrinkOffset / maxHeight;
+    final offset = shrinkOffset / _maxHeight;
 
     return SafeArea(
       child: Align(
@@ -34,10 +37,10 @@ class UAppBar extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => maxHeight;
+  double get maxExtent => _maxHeight;
 
   @override
-  double get minExtent => minHeight;
+  double get minExtent => _minHeight;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
@@ -87,7 +90,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
         duration: 500.milliseconds,
         curve: Curves.fastLinearToSlowEaseIn,
         width: isMinimized ? 60 : context.width,
-        height: isMinimized ? 41 : maxHeight,
+        height: isMinimized ? 41 : _maxHeight,
         child: Stack(
           children: [
             FadeTransition(

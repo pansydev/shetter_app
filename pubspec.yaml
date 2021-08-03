@@ -9,20 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
-  intl:
-  freezed_annotation:
   flutter_bloc:
   graphql:
   auto_localized:
   url_launcher:
   hive_flutter:
-  get:
   simple_animations:
   auto_route:
-  flutter_color:
 
 dev_dependencies:
   build_runner:

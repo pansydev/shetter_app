@@ -42,7 +42,6 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
 
     yield result.fold(
       (l) {
-        Get.snackbar(Strings.error.get(), l.toString());
         return PostFormState.error(
           textController: textController,
           failure: l,

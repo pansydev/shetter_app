@@ -14,7 +14,7 @@ abstract class UDialogWidget extends StatelessWidget {
 
   Future<T?> show<T>(BuildContext context) {
     if (!context.isDesktop) {
-      return showFloatingModalBottomSheet<T>(
+      return showCupertinoModalPopup<T>(
         context: context,
         builder: (context) => buildBody(
           body: _UDialogWidgetContainerForPhone(
@@ -133,25 +133,4 @@ class _UDialogWidgetBody extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<T> showFloatingModalBottomSheet<T>({
-  required BuildContext context,
-  required WidgetBuilder builder,
-}) async {
-  final result = await showCustomModalBottomSheet(
-    context: context,
-    builder: builder,
-    barrierColor: Colors.black45,
-    animationCurve: Curves.linearToEaseOut,
-    containerWidget: (_, animation, child) {
-      return ScaleTransition(
-        scale: animation.drive(Tween<double>(begin: 0.9, end: 1)),
-        alignment: Alignment.topCenter,
-        child: child,
-      );
-    },
-  );
-
-  return result;
 }

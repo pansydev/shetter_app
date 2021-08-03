@@ -1,5 +1,3 @@
-export 'package:get/get.dart' show GetNavigation, Get, ExtensionSnackbar;
-export 'package:supercharged/supercharged.dart';
 export 'package:simple_animations/simple_animations.dart';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:provider/provider.dart';

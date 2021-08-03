@@ -6,7 +6,7 @@ class PostHistoryDialog extends UDialogWidget {
   PostHistoryDialog(
     this.post, {
     Key? key,
-  }) : super(key: key, title: Strings.changesHistory.get());
+  }) : super(key: key, title: Strings.changesHistory.get(), outline: true);
 
   final Post post;
 
