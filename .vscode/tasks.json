@@ -44,6 +44,17 @@
       },
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": "Global pub upgrade --major-versions",
+      "command": "flutter pub upgrade --major-versions && cd pansy_libraries && flutter pub global run melos:melos exec \"flutter pub upgrade --major-versions\" && cd ../",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
