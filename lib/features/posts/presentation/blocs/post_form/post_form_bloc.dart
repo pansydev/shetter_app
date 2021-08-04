@@ -37,7 +37,10 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
     yield PostFormState.loading(textController: textController);
 
     final result = await _postRepository.createPost(
-      PostInput(text: textController.text),
+      CreatePostInput(
+        text: textController.text,
+        images: UnmodifiableListView([]),
+      ),
     );
 
     yield result.fold(

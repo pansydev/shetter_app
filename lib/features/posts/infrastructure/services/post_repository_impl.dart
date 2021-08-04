@@ -9,10 +9,10 @@ class PostRepositoryImpl implements PostRepository {
   final FetchPolicyProvider _fetchPolicyProvider;
 
   @override
-  Future<Either<Failure, Post>> createPost(PostInput input) async {
+  Future<Either<Failure, Post>> createPost(CreatePostInput input) async {
     final options = GQLOptionsMutationCreatePost(
       variables: VariablesMutationCreatePost(
-        input: PostInputMapper.postInputToDto(input),
+        input: PostInputMapper.mapCreatePostInputToDto(input),
       ),
     );
 
@@ -24,6 +24,27 @@ class PostRepositoryImpl implements PostRepository {
     }
 
     return result.parsedDataMutationCreatePost!.createPost.toEntity();
+  }
+
+  @override
+  Future<Either<Failure, Post>> editPost(
+    String postId,
+    EditPostInput input,
+  ) async {
+    final options = GQLOptionsMutationEditPost(
+      variables: VariablesMutationEditPost(
+        postId: postId,
+        input: PostInputMapper.mapEditPostInputToDto(input),
+      ),
+    );
+
+    final result = await _client.mutateEditPost(options);
+
+    if (result.hasException) {
+      return Left(ServerFailure());
+    }
+
+    return result.parsedDataMutationEditPost!.editPost.toEntity();
   }
 
   @override

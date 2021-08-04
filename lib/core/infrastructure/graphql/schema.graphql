@@ -80,10 +80,20 @@ enum ApplyPolicy {
   AFTER_RESOLVER
 }
 
+input CreatePostInput {
+  text: String!
+  images: [Upload!]
+}
+
 """
 The `DateTime` scalar represents an ISO-8601 compliant date time type.
 """
 scalar DateTime
+
+input EditPostInput {
+  text: String!
+  images: [PostImageInput!]!
+}
 
 type LinkTextToken implements TextToken {
   url: Url!
@@ -96,8 +106,8 @@ type MentionTextToken implements TextToken {
 }
 
 type Mutation {
-  createPost(input: PostInput!): PostOperationResult!
-  editPost(postId: Uuid!, input: PostInput!): PostOperationResult!
+  createPost(input: CreatePostInput!): PostOperationResult!
+  editPost(postId: Uuid!, input: EditPostInput!): PostOperationResult!
 }
 
 type OperationFailureResult {
@@ -197,8 +207,14 @@ type PostEdge {
   node: Post!
 }
 
-input PostInput {
-  text: String!
+type PostImage {
+  id: Uuid!
+  url: String!
+}
+
+input PostImageInput {
+  id: Uuid
+  file: Upload
 }
 
 union PostOperationResult = OperationFailureResult | PostOperationSuccessResult
@@ -211,6 +227,7 @@ type PostVersion {
   text: String!
   creationTime: DateTime!
   textTokens: [TextToken!]!
+  images: [PostImage!]!
 }
 
 """
@@ -262,6 +279,11 @@ type Subscription {
 interface TextToken {
   text: String!
 }
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
 
 scalar Url
 
