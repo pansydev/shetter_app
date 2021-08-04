@@ -39,5 +39,6 @@ ThemeData themeData({
       color: _fontColor.mix(_accentColor, 0.1),
       size: 17,
     ),
+    indicatorColor: _accentColor.lighter(20),
   );
 }
