@@ -205,8 +205,10 @@ InlineSpan _linkTextSpan(
   }
 
   return TextSpan(
-    style: TextStyle(
-      color: context.theme.accentColor,
+    text: text,
+    style: context.textTheme.bodyText2!.copyWith(
+      decoration: TextDecoration.underline,
+      color: context.theme.indicatorColor,
     ),
     recognizer: TapGestureRecognizer()..onTap = _onTap,
   );
