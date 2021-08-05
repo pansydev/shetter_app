@@ -11,6 +11,7 @@ analyzer:
     - "**/generated"
     - "**/*.gr.dart"
     - "**/*.al.dart"
+    - "**/*.i18n.dart"
 
 linter:
   rules:
