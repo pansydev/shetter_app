@@ -3,8 +3,8 @@ fragment PostVersion on PostVersion {
   textTokens {
     ...TextToken
   }
-  # images {
-  #   id
-  #   url
-  # }
+  images {
+    id
+    url
+  }
 }

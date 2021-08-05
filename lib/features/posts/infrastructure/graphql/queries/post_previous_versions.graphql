@@ -1,4 +1,4 @@
-query PostPreviousVersions($postId: Uuid!) {
+query PostPreviousVersions($postId: UUID!) {
   post(id: $postId) {
     previousVersions {
       nodes {

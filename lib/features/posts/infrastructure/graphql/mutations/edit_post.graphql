@@ -1,4 +1,4 @@
-mutation EditPost($postId: Uuid!, $input: EditPostInput!) {
+mutation EditPost($postId: UUID!, $input: EditPostInput!) {
   editPost(postId: $postId, input: $input) {
     ...PostOperationResult
   }

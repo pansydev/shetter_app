@@ -96,18 +96,18 @@ input EditPostInput {
 }
 
 type LinkTextToken implements TextToken {
-  url: Url!
+  url: URL!
   text: String!
 }
 
 type MentionTextToken implements TextToken {
-  authorId: Uuid!
+  authorId: UUID!
   text: String!
 }
 
 type Mutation {
   createPost(input: CreatePostInput!): PostOperationResult!
-  editPost(postId: Uuid!, input: EditPostInput!): PostOperationResult!
+  editPost(postId: UUID!, input: EditPostInput!): PostOperationResult!
 }
 
 type OperationFailureResult {
@@ -145,22 +145,37 @@ type PlainTextToken implements TextToken {
 
 type Post {
   previousVersions(
+    """
+    Returns the first _n_ elements from the list.
+    """
     first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
     after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
     last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
     before: String
   ): PostVersionConnection
-  authorId: Uuid!
+  authorId: UUID!
   creationTime: DateTime!
   lastModificationTime: DateTime
   author: PostAuthor!
   currentVersion: PostVersion!
-  id: Uuid!
+  id: UUID!
 }
 
 type PostAuthor {
   username: String!
-  id: Uuid!
+  id: UUID!
 }
 
 union PostAuthorOperationResult =
@@ -208,12 +223,12 @@ type PostEdge {
 }
 
 type PostImage {
-  id: Uuid!
+  id: UUID!
   url: String!
 }
 
 input PostImageInput {
-  id: Uuid
+  id: UUID
   file: Upload
 }
 
@@ -267,8 +282,28 @@ type PostVersionEdge {
 }
 
 type Query {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  post(id: Uuid!): Post
+  posts(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostConnection
+  post(id: UUID!): Post
 }
 
 type Subscription {
@@ -285,6 +320,6 @@ The `Upload` scalar type represents a file upload.
 """
 scalar Upload
 
-scalar Url
+scalar URL
 
-scalar Uuid
+scalar UUID

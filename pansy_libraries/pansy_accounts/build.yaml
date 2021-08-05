@@ -6,11 +6,13 @@ targets:
           clients:
             - graphql
           scalars:
-            Uuid:
+            UUID:
               type: String
             Long:
               type: int
-            Url:
+            URL:
               type: String
             DateTime:
               type: String
+            Upload:
+              type: dynamic
