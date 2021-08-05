@@ -107,10 +107,12 @@ class _UDialogWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding =
+        DesignConstants.paddingValue - DesignConstants.paddingMiniValue;
     return UCard(
       title: Row(
         children: [
-          SizedBox(width: DesignConstants.paddingMiniValue),
+          SizedBox(width: padding),
           if (title != null) Text(title!),
           Spacer(),
           UIconButton(
@@ -126,8 +128,7 @@ class _UDialogWidgetBody extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal:
-              DesignConstants.paddingValue - DesignConstants.paddingMiniValue,
+          horizontal: padding,
         ).copyWith(top: 3),
         child: body,
       ),
