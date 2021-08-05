@@ -18,6 +18,7 @@ dependencies:
 
   hive_flutter:
   flutter_bloc:
+  i18n:
 
 dev_dependencies:
   freezed:

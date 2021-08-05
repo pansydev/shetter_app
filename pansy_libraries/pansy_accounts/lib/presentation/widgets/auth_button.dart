@@ -18,7 +18,7 @@ class AuthButton extends UDialogWidget {
                 ).copyWith(top: DesignConstants.paddingMiniValue),
                 padding: DesignConstants.paddingAlt,
               ),
-              child: Text('Авторизоваться через Pansy'),
+              child: Text(context.localizations.accounts.signin_button),
               onPressed: () => AuthDialog().show(context),
             ),
           ),

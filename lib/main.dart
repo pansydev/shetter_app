@@ -14,7 +14,7 @@ void main() async {
 
   final provider = await services.buildServiceProvider();
 
-  runApp(Provider<ServiceProvider>.value(
+  runApp(Provider.value(
     value: provider,
     child: Application(),
   ));

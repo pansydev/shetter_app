@@ -1,0 +1,7 @@
+signin_button: Sign in with Pansy Accounts
+
+dialog:
+  username: Username
+  password: Password
+  signin: Sign in
+  signup: Sign up

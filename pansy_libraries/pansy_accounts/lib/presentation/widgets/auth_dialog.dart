@@ -34,13 +34,13 @@ class AuthDialog extends UDialogWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     UTextField(
-                      hintText: "Strings.username.get()",
+                      hintText: context.localizations.accounts.dialog.username,
                       controller: state.usernameController,
                       icon: Icon(Icons.ac_unit),
                     ),
                     SizedBox(height: 10),
                     UTextField(
-                      hintText: "Strings.password.get()",
+                      hintText: context.localizations.accounts.dialog.password,
                       controller: state.passwordController,
                       isPassword: true,
                     ),
@@ -48,16 +48,12 @@ class AuthDialog extends UDialogWidget {
                 ),
                 UButton.outline(
                   onPressed: () => context.read<AuthDialogBloc>().auth(context),
-                  child: Text(
-                    "Strings.login.get()",
-                  ),
+                  child: Text(context.localizations.accounts.dialog.signin),
                 ),
                 UButton(
                   onPressed: () =>
                       context.read<AuthDialogBloc>().register(context),
-                  child: Text(
-                    "Strings.signin.get()",
-                  ),
+                  child: Text(context.localizations.accounts.dialog.signup),
                 ),
               ],
             ),

@@ -412,6 +412,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  i18n:
+    dependency: "direct main"
+    description:
+      name: i18n
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.4.0"
   injectable:
     dependency: transitive
     description:
@@ -636,6 +643,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  quick_log:
+    dependency: transitive
+    description:
+      name: quick_log
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.2.1"
   recase:
     dependency: transitive
     description:

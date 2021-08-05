@@ -52,3 +52,4 @@ app.*.map.json
 *.gr.dart
 *.g.dart
 initializer.config.dart
+*.i18n.dart

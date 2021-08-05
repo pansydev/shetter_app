@@ -1,0 +1,7 @@
+signin_button: Войти с помощью Pansy Accounts
+
+dialog:
+  username: Имя пользователя
+  password: Пароль
+  signin: Войти
+  signup: Зарегистрироваться
