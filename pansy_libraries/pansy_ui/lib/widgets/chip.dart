@@ -53,7 +53,7 @@ class UChip extends StatelessWidget {
           ],
           DefaultTextStyle(
             style: context.textTheme.button!,
-            child: Center(child: child),
+            child: child,
           ),
         ],
       ),
