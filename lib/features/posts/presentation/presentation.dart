@@ -15,7 +15,6 @@ export 'exports.dart';
 export 'widgets/app_bar.dart';
 export 'widgets/create_post_dialog.dart';
 export 'widgets/create_post_fragment.dart';
-export 'widgets/image_viewer.dart';
 export 'widgets/post.dart';
 export 'widgets/post_actions_dialog.dart';
 export 'widgets/post_history_dialog.dart';

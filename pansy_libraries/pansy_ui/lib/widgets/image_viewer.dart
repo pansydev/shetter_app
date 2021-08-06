@@ -1,23 +1,23 @@
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:shetter_app/features/posts/domain/domain.dart';
-import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class ImageViewer extends StatefulWidget {
-  const ImageViewer(
+import 'package:pansy_ui/pansy_ui.dart';
+
+class UImageViewer extends StatefulWidget {
+  const UImageViewer(
     this.images, {
     required this.selectedIndex,
     Key? key,
   }) : super(key: key);
 
-  final UnmodifiableListView<PostImage> images;
+  final List<UImageProvider> images;
   final int selectedIndex;
 
   void show(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => ImageViewer(
+        builder: (_) => UImageViewer(
           images,
           selectedIndex: selectedIndex,
         ),
@@ -26,10 +26,10 @@ class ImageViewer extends StatefulWidget {
   }
 
   @override
-  _ImageViewerState createState() => _ImageViewerState();
+  _UImageViewerState createState() => _UImageViewerState();
 }
 
-class _ImageViewerState extends State<ImageViewer> {
+class _UImageViewerState extends State<UImageViewer> {
   late PageController _pageController;
 
   @override
@@ -49,13 +49,23 @@ class _ImageViewerState extends State<ImageViewer> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final image = widget.images[index];
+    final provider = widget.images[index];
+    ImageProvider image;
+
+    if (provider is UNetworkImageProvider) {
+      image = NetworkImage(provider.url);
+    } else if (provider is UFileImageProvider) {
+      image = FileImage(provider.file);
+    } else {
+      throw Exception('unknown image provider');
+    }
+
     return PhotoViewGalleryPageOptions(
-      imageProvider: NetworkImage(image.url),
+      imageProvider: image,
       initialScale: PhotoViewComputedScale.contained,
       minScale: PhotoViewComputedScale.contained,
       maxScale: PhotoViewComputedScale.covered * 2,
-      heroAttributes: PhotoViewHeroAttributes(tag: image.id),
+      heroAttributes: PhotoViewHeroAttributes(tag: provider),
     );
   }
 }

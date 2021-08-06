@@ -113,31 +113,11 @@ class _CreatePostDialogImagesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topRight,
-      children: [
-        UCard.outline(
-          style: UCardStyle(padding: EdgeInsets.zero),
-          clipBehavior: Clip.antiAlias,
-          child: Image.file(
-            image,
-            width: 80,
-            height: 80,
-            fit: BoxFit.cover,
-          ),
-        ),
-        UChip.outline(
-          style: UChipStyle(
-            padding: DesignConstants.padding5,
-            margin: DesignConstants.padding5,
-          ),
-          child: Icon(
-            Icons.close,
-            size: 15,
-          ),
-          onPressed: () => removeImage(context),
-        ),
-      ],
+    return UImage(
+      UFileImageProvider(image),
+      width: 80,
+      height: 80,
+      onClose: () => removeImage(context),
     );
   }
 

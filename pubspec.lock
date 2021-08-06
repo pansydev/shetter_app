@@ -780,7 +780,7 @@ packages:
     source: hosted
     version: "4.1.0"
   photo_view:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: photo_view
       url: "https://pub.dartlang.org"

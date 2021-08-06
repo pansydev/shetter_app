@@ -323,21 +323,16 @@ class _PostImagesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: images[index].id,
-      child: UCard(
-        style: UCardStyle(padding: EdgeInsets.zero),
-        clipBehavior: Clip.antiAlias,
-        child: Image.network(
-          images[index].url,
-          fit: BoxFit.cover,
-          width: 80,
-        ),
-        onPressed: () => ImageViewer(
-          images,
-          selectedIndex: index,
-        ).show(context),
+    final image = images[index];
+    return UImage(
+      UNetworkImageProvider(
+        image.url,
+        showPreloader: true,
       ),
+      width: 80,
+      height: 80,
+      hero: true,
+      galleryImages: images.map((e) => UNetworkImageProvider(e.url)).toList(),
     );
   }
 }

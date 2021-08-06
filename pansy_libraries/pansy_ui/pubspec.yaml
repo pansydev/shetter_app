@@ -8,3 +8,4 @@ dependencies:
     sdk: flutter
 
   flutter_color:
+  photo_view:
