@@ -280,7 +280,7 @@ class _PostImagesFragment extends StatelessWidget {
       visible: images.isNotEmpty,
       child: Column(
         children: [
-          SizedBox(height: 5),
+          SizedBox(height: 10),
           _PostImages(images),
         ],
       ),
@@ -299,8 +299,9 @@ class _PostImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 80,
       child: ListView.separated(
+        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) => _PostImagesItem(images, index),
         separatorBuilder: (_, __) => SizedBox(width: 5),
@@ -330,7 +331,7 @@ class _PostImagesItem extends StatelessWidget {
         child: Image.network(
           images[index].url,
           fit: BoxFit.cover,
-          width: 50,
+          width: 80,
         ),
         onPressed: () => ImageViewer(
           images,

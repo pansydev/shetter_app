@@ -50,11 +50,14 @@ class _PostHistoryDialogBody extends StatelessWidget {
     return SizedBox(
       height: 323,
       child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 5),
         itemBuilder: (_, index) {
           if (index == connection.nodes.length - 1)
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(height: 5),
                 UPostVersion(
                   connection.nodes[index],
                   author: post.author,
@@ -66,13 +69,19 @@ class _PostHistoryDialogBody extends StatelessWidget {
               ],
             );
 
+          if (index == 0)
+            return UPostVersion(
+              connection.nodes[index],
+              author: post.author,
+            );
+
           return Column(
             children: [
+              SizedBox(height: 5),
               UPostVersion(
                 connection.nodes[index],
                 author: post.author,
               ),
-              SizedBox(height: 10),
             ],
           );
         },
