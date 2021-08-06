@@ -74,7 +74,9 @@ class _PostInfo extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _PostContent(version, authState: state),
+            if (version.textTokens.isNotEmpty)
+              _PostContent(version, authState: state),
+            _PostImagesFragment(version.images),
           ],
         );
       },
@@ -98,9 +100,11 @@ class _PostTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: author.username,
         style: context.textTheme.subtitle2,
         children: [
+          TextSpan(
+            text: author.username,
+          ),
           if (author.isBot)
             WidgetSpan(
               child: Container(
@@ -260,4 +264,79 @@ InlineSpan _unsupportedTextSpan(BuildContext context) {
       ),
     ),
   );
+}
+
+class _PostImagesFragment extends StatelessWidget {
+  const _PostImagesFragment(
+    this.images, {
+    Key? key,
+  }) : super(key: key);
+
+  final UnmodifiableListView<PostImage> images;
+
+  @override
+  Widget build(BuildContext context) {
+    return UAnimatedVisibility(
+      visible: images.isNotEmpty,
+      child: Column(
+        children: [
+          SizedBox(height: 5),
+          _PostImages(images),
+        ],
+      ),
+    );
+  }
+}
+
+class _PostImages extends StatelessWidget {
+  const _PostImages(
+    this.images, {
+    Key? key,
+  }) : super(key: key);
+
+  final UnmodifiableListView<PostImage> images;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) => _PostImagesItem(images, index),
+        separatorBuilder: (_, __) => SizedBox(width: 5),
+        itemCount: images.length,
+      ),
+    );
+  }
+}
+
+class _PostImagesItem extends StatelessWidget {
+  const _PostImagesItem(
+    this.images,
+    this.index, {
+    Key? key,
+  }) : super(key: key);
+
+  final UnmodifiableListView<PostImage> images;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: images[index].id,
+      child: UCard(
+        style: UCardStyle(padding: EdgeInsets.zero),
+        clipBehavior: Clip.antiAlias,
+        child: Image.network(
+          images[index].url,
+          fit: BoxFit.cover,
+          width: 50,
+        ),
+        onPressed: () => ImageViewer(
+          images,
+          selectedIndex: index,
+        ).show(context),
+      ),
+    );
+  }
 }
