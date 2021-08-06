@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
             onScrollToUp: _scrollController.scrollToUp,
           ),
         ),
-        RefreshFragment(),
         AuthButton(),
         CreatePostFragment(),
         PostListFragment()

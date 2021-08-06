@@ -52,11 +52,6 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     }
   }
 
-  Future<void> refresh() async {
-    add(PostListEvent.fetchPosts());
-    await stream.firstWhere((element) => element is PostListStateLoaded);
-  }
-
   Stream<PostListState> _fetchPosts([Connection<Post>? connection]) async* {
     yield PostListState.loading(connection: connection);
 
