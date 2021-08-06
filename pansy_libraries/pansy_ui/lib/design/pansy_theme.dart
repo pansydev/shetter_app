@@ -1,4 +1,5 @@
 import 'package:pansy_ui/pansy_ui.dart';
+import 'package:flutter_color/flutter_color.dart';
 
 import 'text_theme.dart';
 
@@ -50,5 +51,6 @@ ThemeData _pansyThemeData() {
       color: _fontColor,
       size: 17,
     ),
+    buttonColor: _accentColor.darker(70),
   );
 }

@@ -40,5 +40,6 @@ ThemeData themeData({
       size: 17,
     ),
     indicatorColor: _accentColor.lighter(20),
+    buttonColor: _accentColor,
   );
 }

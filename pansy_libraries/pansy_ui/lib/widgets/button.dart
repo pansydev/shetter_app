@@ -60,7 +60,7 @@ class UButton extends StatelessWidget {
     Widget cardDecoration;
     if (!outline) {
       cardDecoration = Material(
-        color: style.backgroundColor ?? context.theme.primaryColor,
+        color: style.backgroundColor ?? context.theme.buttonColor,
         shadowColor: style.shadowColor ?? Colors.black38,
         elevation: style.elevation ?? 2,
         borderRadius: style.borderRadius ?? DesignConstants.borderRadius,
