@@ -37,9 +37,10 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
     return state is! PostFormStateError;
   }
 
-  void addImage({bool fromCamera = false}) async {
-    final _picker = ImagePicker();
+  Future<void> addImage({bool fromCamera = false}) async {
+    if (state.images.length > 12) return;
 
+    final _picker = ImagePicker();
     List<XFile> images = [];
 
     if (fromCamera) {
@@ -104,6 +105,8 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
       },
       () {
         textController.clear();
+        images = UnmodifiableListView([]);
+
         return PostFormState.initial(
           textController: textController,
           images: images,
