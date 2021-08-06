@@ -51,6 +51,7 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
       if (result != null) images.addAll(result);
     }
 
+    if (images.length > 12) return;
     final imageFiles = images.map((e) => File(e.path)).toList();
     add(PostFormEvent.updateImages(
       UnmodifiableListView(
