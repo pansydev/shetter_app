@@ -1,16 +1,16 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';
 
-extension AuthenticationResultMapper on FragmentPostOperationResult {
-  Either<Failure, Post> toEntity() {
+extension PostResultMapper on FragmentPostOperationResult {
+  Option<Failure> toEntity() {
     final result = this;
 
     if (result is FragmentPostOperationResult$OperationFailureResult) {
-      return Left(OperationFailure(result.code));
+      return Some(OperationFailure(result.code));
     }
 
-    if (result is FragmentPostOperationResult$PostOperationSuccessResult) {
-      return Right(result.result.toEntity());
+    if (result is FragmentPostOperationResult) {
+      return None();
     }
 
     throw Exception("Invalid result state");

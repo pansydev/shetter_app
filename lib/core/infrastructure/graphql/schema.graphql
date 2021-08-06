@@ -224,7 +224,7 @@ type PostEdge {
 
 type PostImage {
   id: UUID!
-  url: String!
+  url: URL!
 }
 
 input PostImageInput {

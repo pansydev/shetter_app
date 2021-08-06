@@ -94,7 +94,7 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
       ),
     );
 
-    yield result.fold(
+    yield result.match(
       (l) {
         return PostFormState.error(
           textController: textController,
@@ -102,7 +102,7 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
           failure: l,
         );
       },
-      (r) {
+      () {
         textController.clear();
         return PostFormState.initial(
           textController: textController,

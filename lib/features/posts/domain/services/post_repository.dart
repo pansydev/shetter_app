@@ -6,8 +6,8 @@ abstract class PostRepository {
     String? after,
   });
 
-  Future<Either<Failure, Post>> createPost(CreatePostInput input);
-  Future<Either<Failure, Post>> editPost(String postId, EditPostInput input);
+  Future<Option<Failure>> createPost(CreatePostInput input);
+  Future<Option<Failure>> editPost(String postId, EditPostInput input);
 
   Stream<Either<Failure, Post>> subsribeToPosts();
 

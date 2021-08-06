@@ -2,15 +2,6 @@ import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';
 
 abstract class PostInputMapper {
-  static InputCreatePostInput mapCreatePostInputToDto(
-      CreatePostInput postInput) {
-    return InputCreatePostInput(
-      text: postInput.text,
-      images: UnmodifiableListView(postInput.images
-          .map((e) => MultipartFile.fromBytes("", e.readAsBytesSync()))),
-    );
-  }
-
   static InputEditPostInput mapEditPostInputToDto(EditPostInput postInput) {
     return InputEditPostInput(
       text: postInput.text,

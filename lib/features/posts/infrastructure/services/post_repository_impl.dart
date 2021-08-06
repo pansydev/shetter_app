@@ -9,10 +9,13 @@ class PostRepositoryImpl implements PostRepository {
   final FetchPolicyProvider _fetchPolicyProvider;
 
   @override
-  Future<Either<Failure, Post>> createPost(CreatePostInput input) async {
+  Future<Option<Failure>> createPost(CreatePostInput input) async {
     final options = GQLOptionsMutationCreatePost(
       variables: VariablesMutationCreatePost(
-        input: PostInputMapper.mapCreatePostInputToDto(input),
+        text: input.text,
+        images: await Future.wait(input.images
+            .map((e) => MultipartFile.fromPath("", e.path))
+            .toList()),
       ),
     );
 
@@ -20,14 +23,14 @@ class PostRepositoryImpl implements PostRepository {
 
     if (result.hasException) {
       log('${result.exception}', name: '$this');
-      return Left(ServerFailure());
+      return Some(ServerFailure());
     }
 
     return result.parsedDataMutationCreatePost!.createPost.toEntity();
   }
 
   @override
-  Future<Either<Failure, Post>> editPost(
+  Future<Option<Failure>> editPost(
     String postId,
     EditPostInput input,
   ) async {
@@ -41,7 +44,7 @@ class PostRepositoryImpl implements PostRepository {
     final result = await _client.mutateEditPost(options);
 
     if (result.hasException) {
-      return Left(ServerFailure());
+      return Some(ServerFailure());
     }
 
     return result.parsedDataMutationEditPost!.editPost.toEntity();

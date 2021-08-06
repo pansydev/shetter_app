@@ -1,12 +1,6 @@
 fragment PostOperationResult on PostOperationResult {
   __typename
 
-  ... on PostOperationSuccessResult {
-    result {
-      ...Post
-    }
-  }
-
   ... on OperationFailureResult {
     ...OperationFailureResult
   }
