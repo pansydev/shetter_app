@@ -7,7 +7,7 @@ part 'user_info.freezed.dart';
 @freezed
 class UserInfo with _$UserInfo {
   factory UserInfo({
-    required Object id,
+    required String id,
     required String username,
     required UnmodifiableMapView<String, Object> properties,
   }) = _UserInfo;
