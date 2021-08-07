@@ -259,7 +259,7 @@ InlineSpan _unsupportedTextSpan(BuildContext context) {
         border: Border.all(color: context.theme.dividerColor),
       ),
       child: Text(
-        Strings.unsupportedAttachment.get(),
+        localizations.shetter.unsupported_attachment,
         style: context.textTheme.bodyText1,
       ),
     ),

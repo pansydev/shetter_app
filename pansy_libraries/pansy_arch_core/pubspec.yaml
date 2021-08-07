@@ -7,6 +7,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   provider:
   freezed_annotation:
 
@@ -16,6 +19,9 @@ dependencies:
   get_it:
   injectable:
 
+  i18n:
+
 dev_dependencies:
   freezed:
   build_runner:
+  injectable_generator:

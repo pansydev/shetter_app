@@ -6,7 +6,11 @@ class PostHistoryDialog extends UDialogWidget {
   PostHistoryDialog(
     this.post, {
     Key? key,
-  }) : super(key: key, title: Strings.changesHistory.get(), outline: true);
+  }) : super(
+          key: key,
+          title: localizations.shetter.change_history,
+          outline: true,
+        );
 
   final Post post;
 

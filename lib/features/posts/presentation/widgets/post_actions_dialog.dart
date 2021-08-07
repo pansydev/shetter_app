@@ -5,7 +5,7 @@ class PostActionsDialog extends UDialogWidget {
   PostActionsDialog(
     this.post, {
     Key? key,
-  }) : super(key: key, title: Strings.actions.get());
+  }) : super(key: key, title: localizations.shetter.actions);
 
   final Post post;
 
@@ -20,13 +20,13 @@ class PostActionsDialog extends UDialogWidget {
         ],
         UListTile(
           icon: Icon(Icons.copy),
-          child: Text(Strings.copyText.get()),
+          child: Text(localizations.shetter.copy_text),
           onPressed: () => _copy(context),
         ),
         if (post.lastModificationTime != null)
           UListTile(
             icon: Icon(Icons.history),
-            child: Text(Strings.changesHistory.get()),
+            child: Text(localizations.shetter.change_history),
             onPressed: () => PostHistoryDialog(post).show(context),
           ),
       ],

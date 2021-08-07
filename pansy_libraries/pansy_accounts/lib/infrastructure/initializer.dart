@@ -8,12 +8,15 @@ Future<void> _configureDependencies(GetIt container) => $initGetIt(container);
 
 extension PansyAccountsInitializer on ServiceCollection {
   void configurePansyAccounts({required EnumSessionAudience audience}) {
-    initializeAsync(_configureDependencies);
+    configurePansyCore();
+
+    addAsyncInitializer(_configureDependencies);
+
     configure(PansyAccountsOptions(audience));
 
     configureI18N({
-      "en": Accounts(),
-      "ru": AccountsRu(),
+      "en": LocaleDescriptor(Accounts(), accountsMap),
+      "ru": LocaleDescriptor(AccountsRu(), accountsRuMap),
     });
   }
 }

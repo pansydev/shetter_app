@@ -7,6 +7,6 @@ void _configureDependencies(GetIt container) => $initGetIt(container);
 
 extension GraphQLInitializer on ServiceCollection {
   void configureGraphQL() {
-    initialize(_configureDependencies);
+    addInitializer(_configureDependencies);
   }
 }

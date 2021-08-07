@@ -35,13 +35,13 @@ class UPreloader extends StatelessWidget {
     return Column(
       children: [
         Text(
-          FailureLocalizer.localize(failure!),
+          localizations.failureLocalizer.localize(failure!),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 15),
         UButton(
           onPressed: context.read<PostListBloc>().retry,
-          child: Text(Strings.tryAgainAction.get()),
+          child: Text(localizations.shetter.try_again_action),
         ),
       ],
     );

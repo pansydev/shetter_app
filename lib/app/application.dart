@@ -5,19 +5,21 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application() : super(key: Key("Application"));
+  Application(this.serviceProvider) : super(key: Key("Application"));
+
+  final ServiceProvider serviceProvider;
 
   final AppRouter router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<ServiceProvider>();
-    return MultiBlocProvider(
+    return PansyArchApplication(
+      serviceProvider: serviceProvider,
       providers: [
-        provider.createBlocProvider<AuthDialogBloc>(),
-        provider.createBlocProvider<PostListBloc>(),
-        provider.createBlocProvider<PostFormBloc>(),
-        provider.createBlocProvider<AuthBloc>()
+        serviceProvider.createBlocProvider<AuthDialogBloc>(),
+        serviceProvider.createBlocProvider<PostListBloc>(),
+        serviceProvider.createBlocProvider<PostFormBloc>(),
+        serviceProvider.createBlocProvider<AuthBloc>()
       ],
       child: UDesign(
         constraints: DesignConstants.constraints,
@@ -26,12 +28,14 @@ class Application extends StatelessWidget {
           routeInformationParser: router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           title: PresentationConstants.appName,
-          supportedLocales: context.supportedLocales,
           localizationsDelegates: [
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-            ...context.localizationsDelegates,
+          ],
+          supportedLocales: [
+            Locale('en'),
+            Locale('ru'),
           ],
           locale: Locale('ru'),
           theme: themeData(),

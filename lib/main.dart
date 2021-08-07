@@ -12,10 +12,9 @@ void main() async {
     ..configurePansyAccounts(audience: EnumSessionAudience.shetter)
     ..configureShetter();
 
-  final provider = await services.buildServiceProvider();
+  final serviceProvider = await services.buildServiceProvider();
 
-  runApp(Provider.value(
-    value: provider,
-    child: Application(),
-  ));
+  setupGlobalLocalization(serviceProvider);
+
+  runApp(Application(serviceProvider));
 }

@@ -1,3 +1,4 @@
+import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +30,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO remove
+    context
+        .read<ServiceProvider>()
+        .resolve<BuildContextAccessor>()
+        .buildContext = context;
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(

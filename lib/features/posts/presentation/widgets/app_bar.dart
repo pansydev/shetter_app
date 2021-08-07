@@ -133,14 +133,15 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.homePageTitle.get(),
+                    localizations.shetter.home_page_title,
                     style: context.textTheme.headline6,
                   ),
                   SizedBox(height: 2),
                   Text(
                     state.when(
                       authenticated: (userInfo) => "@${userInfo.username}",
-                      unauthenticated: () => Strings.unauthenticated.get(),
+                      unauthenticated: () =>
+                          localizations.shetter.unauthenticated,
                     ),
                     style: context.textTheme.subtitle2?.copyWith(
                       fontSize: 13,
@@ -159,7 +160,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                     size: 22,
                   ),
                   style: UIconButtonStyle(padding: DesignConstants.padding5),
-                  tooltip: Strings.logout.get(),
+                  tooltip: localizations.shetter.logout,
                   onPressed: context.read<AuthBloc>().logout,
                 ),
               ),

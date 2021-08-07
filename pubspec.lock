@@ -50,20 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
-  auto_localized:
-    dependency: "direct main"
-    description:
-      name: auto_localized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  auto_localized_generator:
-    dependency: "direct dev"
-    description:
-      name: auto_localized_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   auto_route:
     dependency: "direct main"
     description:
@@ -776,6 +762,13 @@ packages:
     dependency: "direct dev"
     description:
       path: "pansy_libraries/pansy_arch_graphql"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_core:
+    dependency: "direct dev"
+    description:
+      path: "pansy_libraries/pansy_core"
       relative: true
     source: path
     version: "0.0.0"

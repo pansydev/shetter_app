@@ -2,5 +2,4 @@
 
 library domain;
 
-export 'entities/failure.dart';
 export 'exports.dart';

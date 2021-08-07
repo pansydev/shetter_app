@@ -3,7 +3,7 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class CreatePostDialog extends UDialogWidget {
   CreatePostDialog({Key? key})
-      : super(key: key, title: Strings.postFormAction.get());
+      : super(key: key, title: localizations.shetter.post_form_action);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CreatePostDialog extends UDialogWidget {
             children: [
               UTextField(
                 controller: state.textController,
-                hintText: Strings.writeAMessage.get(),
+                hintText: localizations.shetter.write_a_message,
                 minLines: 5,
                 maxLines: 10,
                 autofocus: true,

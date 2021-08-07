@@ -1,8 +1,11 @@
 import 'package:pansy_arch_core/infrastructure/infrastructure.dart';
 
+typedef SyncInitializer = void Function(GetIt container);
+typedef AsyncInitializer = Future<void> Function(GetIt container);
+
 class ServiceCollection {
-  OptionsManagerImpl _optionsManager = OptionsManagerImpl();
-  List<Future<void> Function(GetIt container)> _initializers = [];
+  final OptionsManagerImpl _optionsManager = OptionsManagerImpl();
+  final List<dynamic> _initializers = [];
 
   Future<ServiceProvider> buildServiceProvider() async {
     var container = GetIt.asNewInstance();
@@ -11,7 +14,15 @@ class ServiceCollection {
     container.registerSingleton<OptionsManager>(_optionsManager);
 
     for (final initializer in _initializers) {
-      await initializer(container);
+      if (initializer is AsyncInitializer) {
+        await initializer(container);
+        continue;
+      }
+
+      if (initializer is SyncInitializer) {
+        initializer(container);
+        continue;
+      }
     }
 
     await container.allReady();
@@ -19,15 +30,14 @@ class ServiceCollection {
     return serviceProvider;
   }
 
-  void initializeAsync(Future<void> Function(GetIt container) initializer) {
-    _initializers.add(initializer);
+  void addAsyncInitializer(Future<void> Function(GetIt container) initializer) {
+    addInitializer(initializer);
   }
 
-  void initialize(void Function(GetIt container) initializer) {
-    _initializers.add((x) {
-      initializer(x);
-      return Future.value();
-    });
+  void addInitializer(void Function(GetIt container) initializer) {
+    if (!_initializers.contains(initializer)) {
+      _initializers.add(initializer);
+    }
   }
 
   void configure<T extends Object>(T options) {

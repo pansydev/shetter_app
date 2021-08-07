@@ -41,7 +41,7 @@ class _CreatePostFragmentBody extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                Strings.writeAMessage.get(),
+                localizations.shetter.write_a_message,
                 style: context.textTheme.button,
               ),
               Spacer(),

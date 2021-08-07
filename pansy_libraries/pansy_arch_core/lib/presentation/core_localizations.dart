@@ -1,15 +1,19 @@
 import 'package:pansy_arch_core/infrastructure/infrastructure.dart';
-import 'package:pansy_arch_core/presentation/presentation.dart';
 
+late CoreLocalizations localizations;
+
+void setupGlobalLocalization(ServiceProvider serviceProvider) {
+  localizations = serviceProvider.resolve<CoreLocalizations>();
+}
+
+@singleton
 class CoreLocalizations {
-  CoreLocalizations(this._provider, this._context);
+  CoreLocalizations(this._localizationManager, this.serviceProvider);
 
-  ServiceProvider _provider;
-  BuildContext _context;
+  final LocalizationManager _localizationManager;
+  final ServiceProvider serviceProvider;
 
   resolve<T extends Object>() {
-    return _provider.resolve<T>(
-      param1: Localizations.localeOf(_context).languageCode,
-    );
+    return _localizationManager.localizationStorage.getLocalization<T>();
   }
 }

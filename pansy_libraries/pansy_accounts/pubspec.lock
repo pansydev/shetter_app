@@ -300,6 +300,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -469,7 +474,7 @@ packages:
     source: hosted
     version: "4.0.0"
   i18n:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: i18n
       url: "https://pub.dartlang.org"
@@ -496,6 +501,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.1"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   io:
     dependency: transitive
     description:
@@ -595,9 +607,16 @@ packages:
     source: path
     version: "0.0.0"
   pansy_arch_graphql:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../pansy_arch_graphql"
+      relative: true
+    source: path
+    version: "0.0.0"
+  pansy_core:
+    dependency: "direct main"
+    description:
+      path: "../pansy_core"
       relative: true
     source: path
     version: "0.0.0"

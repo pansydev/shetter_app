@@ -48,7 +48,7 @@ class _UserProfileUsername extends StatelessWidget {
         ),
         SizedBox(height: 3),
         Text(
-          Strings.totalPosts.get(author.totalPosts.toString()),
+          localizations.shetter.total_posts(author.totalPosts),
           style: context.textTheme.caption,
         ),
       ],

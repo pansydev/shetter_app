@@ -1,17 +1,32 @@
 import 'package:pansy_arch_core/infrastructure/infrastructure.dart';
 
-extension I18NInitializer on ServiceCollection {
-  static const fallbackLocale = "en";
+class LocaleDescriptor<T> {
+  LocaleDescriptor(this.instance, this.map);
 
-  void configureI18N<T extends Object>(Map<String, T> locales) {
-    if (!locales.containsKey(fallbackLocale)) {
-      throw Exception("Fallback locale $fallbackLocale is not provided");
+  final T instance;
+  final Map<String, String> map;
+}
+
+extension I18NInitializer on ServiceCollection {
+  void configureI18N<T extends Object>(
+    Map<String, LocaleDescriptor<T>> locales,
+  ) {
+    if (!locales.containsKey(LocalizationManager.fallbackLocale)) {
+      throw Exception(
+        "Fallback locale $LocalizationManager.fallbackLocale is not provided",
+      );
     }
 
-    initialize((container) {
-      container.registerFactoryParam((param1, _) {
-        return locales[param1] ?? locales[fallbackLocale]!;
-      });
+    addInitializer((container) {
+      final localizationManager = container.get<LocalizationManagerImpl>();
+
+      for (final locale in locales.entries) {
+        localizationManager.getLocalizationStorage(locale.key)
+          ..addLocalization(
+            locale.value.instance,
+            locale.value.map,
+          );
+      }
     });
   }
 }

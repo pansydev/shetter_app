@@ -8,14 +8,16 @@ extension DateTimeExtensions on DateTime {
       final time = DateFormat("H:mm", currentLocale).format(this);
 
       if (isToday) {
-        return Strings.timeTodayAt.get(time);
-      } else if (isYesterday) {
-        return Strings.timeYesterdayAt.get(time);
+        return localizations.shetter.time_today_at(time);
+      }
+
+      if (isYesterday) {
+        return localizations.shetter.time_yesterday_at(time);
       }
 
       if (isThisYear) {
         return DateFormat("dd MMMM", currentLocale).format(this) +
-            Strings.timeAt.get(time);
+            localizations.shetter.time_at(time);
       }
     }
 

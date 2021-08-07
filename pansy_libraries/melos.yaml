@@ -1,7 +1,9 @@
 name: pansy_libraries
 
 packages:
-  - "pansy_accounts/*"
   - "pansy_arch_core/*"
   - "pansy_arch_graphql/*"
   - "pansy_arch_auth/*"
+
+  - "pansy_core/*"
+  - "pansy_accounts/*"
