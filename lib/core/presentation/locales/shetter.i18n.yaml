@@ -1,5 +1,6 @@
 home_page_title: Shetter
-post_form_action: Create post
+post_form_create_action: Create post
+post_form_edit_action: Edit post
 try_again_action: Try again
 
 error: Error

@@ -11,25 +11,38 @@ class PostActionsDialog extends UDialogWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ...[
-          UserProfile(post.author),
-          Divider(),
-        ],
-        UListTile(
-          icon: Icon(Icons.copy),
-          child: Text(localizations.shetter.copy_text),
-          onPressed: () => _copy(context),
-        ),
-        if (post.lastModificationTime != null)
-          UListTile(
-            icon: Icon(Icons.history),
-            child: Text(localizations.shetter.change_history),
-            onPressed: () => PostHistoryDialog(post).show(context),
-          ),
-      ],
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ...[
+              UserProfile(post.author),
+              Divider(),
+            ],
+            if (state is AuthStateAuthenticated &&
+                post.author.username == state.userInfo.username)
+              UListTile(
+                icon: Icon(Icons.edit),
+                child: Text(localizations.shetter.post_form_edit_action),
+                onPressed: () => PostFormDialog(
+                  editablePost: post,
+                ).show(context),
+              ),
+            UListTile(
+              icon: Icon(Icons.copy),
+              child: Text(localizations.shetter.copy_text),
+              onPressed: () => _copy(context),
+            ),
+            if (post.lastModificationTime != null)
+              UListTile(
+                icon: Icon(Icons.history),
+                child: Text(localizations.shetter.change_history),
+                onPressed: () => PostHistoryDialog(post).show(context),
+              ),
+          ],
+        );
+      },
     );
   }
 

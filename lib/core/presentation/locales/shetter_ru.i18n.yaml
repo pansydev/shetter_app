@@ -1,5 +1,6 @@
 home_page_title: Shetter
-post_form_action: Создать пост
+post_form_create_action: Создать пост
+post_form_edit_action: Редактировать пост
 try_again_action: Попробовать снова
 
 error: Ошибка

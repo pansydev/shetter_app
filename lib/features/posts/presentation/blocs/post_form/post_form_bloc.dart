@@ -4,11 +4,12 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 @injectable
 class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
-  PostFormBloc(this._postRepository)
+  PostFormBloc(this._postRepository, @factoryParam Post? post)
       : super(
           PostFormState.initial(
-            textController: TextEditingController(),
-            images: UnmodifiableListView([]),
+            post != null
+                ? PostEditingController.editPost(post)
+                : PostEditingController(),
           ),
         );
 
@@ -17,28 +18,28 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
   @override
   Stream<PostFormState> mapEventToState(PostFormEvent event) {
     return event.when(
-      createPost: () => state.maybeWhen(
-        initial: _createPost,
-        error: _createPost,
+      sendPost: () => state.maybeWhen(
+        initial: _sendPost,
+        error: _sendPost,
         orElse: keep(state),
       ),
-      updateImages: (images) => state.maybeMap(
-        initial: (_) => _updatePhotos(images),
-        error: (_) => _updatePhotos(images),
+      update: (postEditingController) => state.maybeMap(
+        initial: (_) => _update(postEditingController),
+        error: (_) => _update(postEditingController),
         orElse: keep(state),
       ),
     );
   }
 
-  Future<bool> createPost() async {
-    add(PostFormEvent.createPost());
+  Future<bool> sendPost() async {
+    add(PostFormEvent.sendPost());
     await stream.firstWhere((element) => element is! PostFormStateLoading);
 
     return state is! PostFormStateError;
   }
 
   Future<void> addImage({bool fromCamera = false}) async {
-    if (state.images.length > 12) return;
+    if (state.postEditingController.images.length > 12) return;
 
     final _picker = ImagePicker();
     List<XFile> images = [];
@@ -53,75 +54,72 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
 
     if (images.length > 12) return;
     final imageFiles = images.map((e) => File(e.path)).toList();
-    add(PostFormEvent.updateImages(
-      UnmodifiableListView(
-        state.images.toList() + imageFiles,
-      ),
+
+    add(PostFormEvent.update(
+      state.postEditingController..addImages(imageFiles),
     ));
   }
 
-  void removeImage(File image) {
-    add(PostFormEvent.updateImages(
-      UnmodifiableListView(
-        state.images.toList()..remove(image),
-      ),
+  void removeImage(PostEditingImage file) {
+    add(PostFormEvent.update(
+      state.postEditingController..removeImage(file),
     ));
   }
 
   void reorderImage(int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-
-    final items = state.images.toList();
-    final item = items.removeAt(oldIndex);
-    items.insert(newIndex, item);
-
-    add(PostFormEvent.updateImages(
-      UnmodifiableListView(items),
+    add(PostFormEvent.update(
+      state.postEditingController..reorderImage(oldIndex, newIndex),
     ));
   }
 
-  Stream<PostFormState> _createPost(
-    TextEditingController textController,
-    UnmodifiableListView<File> images, [
+  Stream<PostFormState> _sendPost(
+    PostEditingController postEditingController, [
     Failure? failure,
   ]) async* {
-    yield PostFormState.loading(textController: textController, images: images);
+    yield PostFormState.loading(postEditingController);
 
-    final result = await _postRepository.createPost(
-      CreatePostInput(
-        text: textController.text,
-        images: UnmodifiableListView(images),
-      ),
-    );
+    Option<Failure> result;
+    if (postEditingController.editablePost == null) {
+      result = await _postRepository.createPost(
+        CreatePostInput(
+          text: postEditingController.textController.text,
+          images: postEditingController.getImagesForCreatePost(),
+        ),
+      );
+    } else {
+      result = await _postRepository.editPost(
+        postEditingController.editablePost!.id,
+        EditPostInput(
+          text: postEditingController.textController.text,
+          images: postEditingController.getImagesForEditPost(),
+        ),
+      );
+    }
 
     yield result.match(
       (l) {
         return PostFormState.error(
-          textController: textController,
-          images: images,
+          postEditingController,
           failure: l,
         );
       },
       () {
-        textController.clear();
-        images = UnmodifiableListView([]);
-
         return PostFormState.initial(
-          textController: textController,
-          images: images,
+          postEditingController..clear(),
         );
       },
     );
   }
 
-  Stream<PostFormState> _updatePhotos(
-    UnmodifiableListView<File> images,
+  Stream<PostFormState> _update(
+    PostEditingController newPostEditingController,
   ) async* {
     yield PostFormState.initial(
-      textController: state.textController,
-      images: images,
+      PostEditingController(
+        editablePost: newPostEditingController.editablePost,
+        textController: newPostEditingController.textController,
+        images: newPostEditingController.images,
+      ),
     );
   }
 
