@@ -7,5 +7,6 @@ class PostImage with _$PostImage {
   factory PostImage({
     required String id,
     required String url,
+    required String blurHash,
   }) = _PostImage;
 }

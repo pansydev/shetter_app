@@ -7,7 +7,13 @@ extension PostVersionMapper on FragmentPostVersion {
       creationTime: DateTime.parse(creationTime),
       textTokens: UnmodifiableListView(textTokens.map((e) => e.toEntity())),
       images: UnmodifiableListView(
-        images.map((e) => PostImage(id: e.id, url: e.url)),
+        images.map(
+          (e) => PostImage(
+            id: e.id,
+            url: e.url,
+            blurHash: e.blurHash,
+          ),
+        ),
       ),
     );
   }

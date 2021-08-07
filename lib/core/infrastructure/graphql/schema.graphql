@@ -81,7 +81,7 @@ enum ApplyPolicy {
 }
 
 input CreatePostInput {
-  text: String!
+  text: String
   images: [Upload!]
 }
 
@@ -91,8 +91,8 @@ The `DateTime` scalar represents an ISO-8601 compliant date time type.
 scalar DateTime
 
 input EditPostInput {
-  text: String!
-  images: [PostImageInput!]!
+  text: String
+  images: [PostImageInput!]
 }
 
 type LinkTextToken implements TextToken {
@@ -225,6 +225,7 @@ type PostEdge {
 type PostImage {
   id: UUID!
   url: URL!
+  blurHash: String!
 }
 
 input PostImageInput {

@@ -6,5 +6,6 @@ fragment PostVersion on PostVersion {
   images {
     id
     url
+    blurHash
   }
 }
