@@ -9,3 +9,5 @@ dependencies:
 
   flutter_color:
   photo_view:
+  cached_network_image:
+  blurhash_dart:

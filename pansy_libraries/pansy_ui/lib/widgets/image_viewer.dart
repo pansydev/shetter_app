@@ -53,7 +53,7 @@ class _UImageViewerState extends State<UImageViewer> {
     ImageProvider image;
 
     if (provider is UNetworkImageProvider) {
-      image = NetworkImage(provider.url);
+      image = CachedNetworkImageProvider(provider.url);
     } else if (provider is UFileImageProvider) {
       image = FileImage(provider.file);
     } else {

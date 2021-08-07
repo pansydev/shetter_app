@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:blurhash_dart/blurhash_dart.dart';
+import 'package:image/image.dart' as img;
 import 'package:pansy_ui/pansy_ui.dart';
 
 class UImage extends StatelessWidget {
@@ -37,11 +41,46 @@ class UImage extends StatelessWidget {
     Widget image;
 
     if (provider is UNetworkImageProvider) {
-      image = Image.network(
-        (provider as UNetworkImageProvider).url,
+      final networkProvider = provider as UNetworkImageProvider;
+      final url = networkProvider.url;
+      final blurImage = networkProvider.blurHash != null
+          ? Uint8List.fromList(
+              img.encodeJpg(
+                BlurHash.decode(networkProvider.blurHash!).toImage(30, 30),
+              ),
+            )
+          : null;
+
+      image = CachedNetworkImage(
+        imageUrl: url,
         width: width,
         height: height,
         fit: fit,
+        placeholder: (_, __) {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              if (blurImage != null)
+                SizedBox(
+                  width: width,
+                  height: height,
+                  child: Image.memory(
+                    blurImage,
+                    fit: fit,
+                  ),
+                ),
+              if (blurImage == null)
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: CircularProgressIndicator(
+                    color: context.theme.iconTheme.color,
+                  ),
+                ),
+            ],
+          );
+        },
+        errorWidget: (context, url, error) => Icon(Icons.error),
       );
     } else if (provider is UFileImageProvider) {
       image = Image.file(

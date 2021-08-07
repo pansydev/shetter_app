@@ -327,6 +327,7 @@ class _PostImagesItem extends StatelessWidget {
     return UImage(
       UNetworkImageProvider(
         image.url,
+        blurHash: image.blurHash,
         showPreloader: true,
       ),
       width: 80,

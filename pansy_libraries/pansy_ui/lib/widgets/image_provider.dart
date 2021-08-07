@@ -15,10 +15,12 @@ class UImageProvider {
 class UNetworkImageProvider extends UImageProvider {
   const UNetworkImageProvider(
     this.url, {
+    this.blurHash,
     this.showPreloader = false,
   });
 
   final String url;
+  final String? blurHash;
   final bool showPreloader;
 
   @override
