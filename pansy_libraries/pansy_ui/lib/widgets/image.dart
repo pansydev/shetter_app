@@ -96,23 +96,26 @@ class UImage extends StatelessWidget {
     Widget body = Stack(
       alignment: Alignment.topRight,
       children: [
-        UCard(
-          style: UCardStyle(
-            backgroundColor: style.backgroundColor,
-            shadowColor: style.shadowColor,
-            elevation: style.elevation,
-            padding: style.padding ?? EdgeInsets.zero,
-            margin: style.margin,
-            borderRadius: style.borderRadius,
+        Hero(
+          tag: provider,
+          child: UCard(
+            style: UCardStyle(
+              backgroundColor: style.backgroundColor,
+              shadowColor: style.shadowColor,
+              elevation: style.elevation,
+              padding: style.padding ?? EdgeInsets.zero,
+              margin: style.margin,
+              borderRadius: style.borderRadius,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: image,
+            onPressed: galleryImages.isEmpty
+                ? null
+                : () => UImageViewer(
+                      galleryImages,
+                      selectedIndex: galleryImages.indexOf(provider),
+                    ).show(context),
           ),
-          clipBehavior: Clip.antiAlias,
-          child: image,
-          onPressed: galleryImages.isEmpty
-              ? null
-              : () => UImageViewer(
-                    galleryImages,
-                    selectedIndex: galleryImages.indexOf(provider),
-                  ).show(context),
         ),
         if (onClose != null)
           UChip.outline(
@@ -129,14 +132,7 @@ class UImage extends StatelessWidget {
       ],
     );
 
-    if (hero) {
-      return Hero(
-        tag: provider,
-        child: body,
-      );
-    } else {
-      return body;
-    }
+    return body;
   }
 }
 

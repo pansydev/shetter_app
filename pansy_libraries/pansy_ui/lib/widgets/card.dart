@@ -82,7 +82,9 @@ class UCard extends StatelessWidget {
       );
     }
 
-    Widget cardChildWithPadding = Padding(
+    Widget cardChildWithPadding = AnimatedContainer(
+      duration: 500.milliseconds,
+      curve: Curves.linearToEaseOut,
       padding: style.padding ?? DesignConstants.padding,
       child: cardChild,
     );
@@ -118,7 +120,9 @@ class UCard extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       isTransparent: false,
-      child: Padding(
+      child: AnimatedContainer(
+        duration: 500.milliseconds,
+        curve: Curves.linearToEaseOut,
         padding: style.margin ?? EdgeInsets.zero,
         child: cardDecoration,
       ),
