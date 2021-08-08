@@ -78,7 +78,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<Either<Failure, Post>> subsribeToPosts() {
+  Stream<Either<Failure, Post>> subscribeToNewPosts() {
     final options = SubscriptionOptions(
       document: SUBSCRIPTION_POST_CREATED,
     );
@@ -94,6 +94,26 @@ class PostRepositoryImpl implements PostRepository {
       final result = SubscriptionPostCreated.fromJson(event.data!);
 
       return Right(result.postCreated.toEntity());
+    });
+  }
+
+  @override
+  Stream<Either<Failure, Post>> subscribeToEditedPosts() {
+    final options = SubscriptionOptions(
+      document: SUBSCRIPTION_POST_EDITED,
+    );
+
+    final stream = _client.subscribe(options);
+
+    return stream.map((event) {
+      if (event.hasException) {
+        log('${event.exception}', name: '$this');
+        return Left(ServerFailure());
+      }
+
+      final result = SubscriptionPostEdited.fromJson(event.data!);
+
+      return Right(result.postEdited.toEntity());
     });
   }
 

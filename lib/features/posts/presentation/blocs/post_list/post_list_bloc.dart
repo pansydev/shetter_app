@@ -9,8 +9,12 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     add(PostListEvent.fetchPosts());
 
     _postRepository
-        .subsribeToPosts()
+        .subscribeToNewPosts()
         .listen((post) => add(PostListEvent.postCreated(post)));
+
+    _postRepository
+        .subscribeToEditedPosts()
+        .listen((post) => add(PostListEvent.postEdited(post)));
   }
 
   final PostRepository _postRepository;
@@ -33,6 +37,11 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         loaded: (connection, failure) =>
             _postCreated(post, connection, failure),
         loadingMore: (connection) => _postCreated(post, connection),
+        orElse: keep(state),
+      ),
+      postEdited: (post) => state.maybeWhen(
+        loaded: (connection, failure) => _postEdited(post, connection, failure),
+        loadingMore: (connection) => _postEdited(post, connection),
         orElse: keep(state),
       ),
     );
@@ -107,6 +116,27 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
       (r) => PostListState.loaded(
         connection: connection.copyWith(
           nodes: UnmodifiableListView(connection.nodes.prepend(r)),
+        ),
+        failure: failure,
+      ),
+    );
+  }
+
+  Stream<PostListState> _postEdited(
+    Either<Failure, Post> post,
+    Connection<Post> connection, [
+    Failure? failure,
+  ]) async* {
+    yield post.fold(
+      (l) => PostListState.loaded(
+        connection: connection,
+        failure: l,
+      ),
+      (edited) => PostListState.loaded(
+        connection: connection.copyWith(
+          nodes: UnmodifiableListView(
+            connection.nodes.map((old) => old.id == edited.id ? edited : old),
+          ),
         ),
         failure: failure,
       ),
