@@ -157,7 +157,6 @@ class _PostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(version.textTokens);
     final widgets = version.textTokens
         .map((e) => _textTokenToSpan(
               context,
