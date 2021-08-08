@@ -140,6 +140,7 @@ type PageInfo {
 }
 
 type PlainTextToken implements TextToken {
+  modifiers: [TextTokenModifier!]!
   text: String!
 }
 
@@ -314,6 +315,14 @@ type Subscription {
 
 interface TextToken {
   text: String!
+}
+
+enum TextTokenModifier {
+  BOLD
+  ITALIC
+  UNDERLINE
+  STRIKETHROUGH
+  CODE
 }
 
 """

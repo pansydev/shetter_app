@@ -157,6 +157,7 @@ class _PostContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(version.textTokens);
     final widgets = version.textTokens
         .map((e) => _textTokenToSpan(
               context,
@@ -180,36 +181,79 @@ class _PostContent extends StatelessWidget {
     required AuthState authState,
   }) {
     if (textToken is LinkTextToken) {
-      return _linkTextSpan(context, text: textToken.text, url: textToken.url);
+      return _linkTextSpan(context, textToken);
     }
 
     if (textToken is MentionTextToken) {
       return _mentionTextSpan(
         context,
-        text: textToken.text,
+        textToken,
         authState: authState,
       );
     }
 
     if (textToken is PlainTextToken) {
-      return TextSpan(text: textToken.text);
+      return _plainTextSpan(context, textToken);
     }
 
     return _unsupportedTextSpan(context);
   }
 }
 
+InlineSpan _plainTextSpan(BuildContext context, PlainTextToken textToken) {
+  return TextSpan(
+    text: textToken.text,
+    style: context.textTheme.bodyText2?.merge(
+      _generateTextStyle(context, textToken.modifiers),
+    ),
+  );
+}
+
+TextStyle _generateTextStyle(
+  BuildContext context,
+  List<TextTokenModifier> modifiers,
+) {
+  var textStyle = TextStyle();
+
+  for (final modifier in modifiers) {
+    if (modifier == TextTokenModifier.bold)
+      textStyle = textStyle.merge(TextStyle(fontWeight: FontWeight.bold));
+
+    if (modifier == TextTokenModifier.italic)
+      textStyle = textStyle.merge(TextStyle(fontStyle: FontStyle.italic));
+
+    if (modifier == TextTokenModifier.underline)
+      textStyle = textStyle.merge(TextStyle(
+        decoration: TextDecoration.underline,
+      ));
+
+    if (modifier == TextTokenModifier.strikethrough)
+      textStyle = textStyle.merge(TextStyle(
+        decoration: TextDecoration.lineThrough,
+      ));
+
+    if (modifier == TextTokenModifier.code)
+      textStyle = textStyle.merge(
+        context.textTheme.overline!.copyWith(
+          fontSize: 12,
+          backgroundColor: context.theme.scaffoldBackgroundColor,
+        ),
+      );
+  }
+
+  return textStyle;
+}
+
 InlineSpan _linkTextSpan(
-  BuildContext context, {
-  required String text,
-  required String url,
-}) {
+  BuildContext context,
+  LinkTextToken textToken,
+) {
   void _onTap() {
-    launch(url);
+    launch(textToken.url);
   }
 
   return TextSpan(
-    text: text,
+    text: textToken.text,
     style: context.textTheme.bodyText2!.copyWith(
       decoration: TextDecoration.underline,
       color: context.theme.indicatorColor,
@@ -219,15 +263,15 @@ InlineSpan _linkTextSpan(
 }
 
 InlineSpan _mentionTextSpan(
-  BuildContext context, {
-  required String text,
+  BuildContext context,
+  MentionTextToken textToken, {
   required AuthState authState,
 }) {
   //TODO: Add opening profile
   void _onTap() {}
 
   final isMe = authState.when(
-    authenticated: (userInfo) => "@${userInfo.username}" == text,
+    authenticated: (userInfo) => "@${userInfo.username}" == textToken.text,
     unauthenticated: () => false,
   );
   return WidgetSpan(
@@ -242,7 +286,7 @@ InlineSpan _mentionTextSpan(
           borderRadius: DesignConstants.borderRadiusCircle,
           border: Border.all(color: context.theme.dividerColor),
         ),
-        child: Text(text, style: context.textTheme.bodyText1),
+        child: Text(textToken.text, style: context.textTheme.bodyText1),
       ),
     ),
   );

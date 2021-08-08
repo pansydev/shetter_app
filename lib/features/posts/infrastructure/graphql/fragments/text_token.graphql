@@ -4,6 +4,7 @@ fragment TextToken on TextToken {
 
   ... on PlainTextToken {
     text
+    modifiers
   }
 
   ... on MentionTextToken {

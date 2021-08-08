@@ -14,7 +14,10 @@ extension PostTextTokenMapper on FragmentTextToken {
     }
 
     if (textToken is FragmentTextToken$PlainTextToken) {
-      return PlainTextToken(text: text);
+      return PlainTextToken(
+        text: text,
+        modifiers: textToken.modifiers.toEntitiesList(),
+      );
     }
 
     return UnsupportedTextToken(text: text);
