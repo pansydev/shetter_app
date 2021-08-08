@@ -213,33 +213,35 @@ TextStyle _generateTextStyle(
   BuildContext context,
   List<TextTokenModifier> modifiers,
 ) {
-  var textStyle = TextStyle();
+  TextStyle _getTextStyle(TextTokenModifier modifier) {
+    switch (modifier) {
+      case TextTokenModifier.bold:
+        return TextStyle(fontWeight: FontWeight.bold);
 
-  for (final modifier in modifiers) {
-    if (modifier == TextTokenModifier.bold)
-      textStyle = textStyle.merge(TextStyle(fontWeight: FontWeight.bold));
+      case TextTokenModifier.italic:
+        return TextStyle(fontStyle: FontStyle.italic);
 
-    if (modifier == TextTokenModifier.italic)
-      textStyle = textStyle.merge(TextStyle(fontStyle: FontStyle.italic));
+      case TextTokenModifier.underline:
+        return TextStyle(decoration: TextDecoration.underline);
 
-    if (modifier == TextTokenModifier.underline)
-      textStyle = textStyle.merge(TextStyle(
-        decoration: TextDecoration.underline,
-      ));
+      case TextTokenModifier.strikethrough:
+        return TextStyle(decoration: TextDecoration.lineThrough);
 
-    if (modifier == TextTokenModifier.strikethrough)
-      textStyle = textStyle.merge(TextStyle(
-        decoration: TextDecoration.lineThrough,
-      ));
-
-    if (modifier == TextTokenModifier.code)
-      textStyle = textStyle.merge(
-        context.textTheme.overline!.copyWith(
+      case TextTokenModifier.code:
+        return context.textTheme.overline!.copyWith(
           fontSize: 12,
           backgroundColor: context.theme.scaffoldBackgroundColor,
-        ),
-      );
+        );
+
+      case TextTokenModifier.unsupported:
+        return TextStyle();
+    }
   }
+
+  var textStyle = TextStyle();
+
+  for (final modifier in modifiers)
+    textStyle = textStyle.merge(_getTextStyle(modifier));
 
   return textStyle;
 }
