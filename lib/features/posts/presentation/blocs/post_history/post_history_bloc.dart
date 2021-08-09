@@ -10,7 +10,7 @@ typedef PostHistoryBuilder = Widget Function(
 @injectable
 class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
   PostHistoryBloc(this._postRepository, @factoryParam Post? post)
-      : assert(post != null, "parameter post can not be null"),
+      : assert(post != null, 'parameter post can not be null'),
         super(PostHistoryState.empty(post: post!)) {
     add(PostHistoryEvent.fetchHistory(post));
   }

@@ -19,12 +19,12 @@ class UChip extends StatelessWidget {
     Widget? icon,
   }) {
     return UChip(
-      child: child,
       style: style,
       onPressed: onPressed,
       onLongPress: onLongPress,
       icon: icon,
       outline: true,
+      child: child,
     );
   }
 
@@ -37,7 +37,7 @@ class UChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget cardChild = Padding(
+    final Widget cardChild = Padding(
       padding: style.padding ?? DesignConstants.paddingMini,
       child: Row(
         mainAxisSize: MainAxisSize.min,

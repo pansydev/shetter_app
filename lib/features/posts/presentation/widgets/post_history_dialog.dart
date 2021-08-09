@@ -57,7 +57,7 @@ class _PostHistoryDialogBody extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.only(bottom: 5),
         itemBuilder: (_, index) {
-          if (index == connection.nodes.length - 1)
+          if (index == connection.nodes.length - 1) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -72,12 +72,14 @@ class _PostHistoryDialogBody extends StatelessWidget {
                 ),
               ],
             );
+          }
 
-          if (index == 0)
+          if (index == 0) {
             return UPostVersion(
               connection.nodes[index],
               author: post.author,
             );
+          }
 
           return Column(
             children: [

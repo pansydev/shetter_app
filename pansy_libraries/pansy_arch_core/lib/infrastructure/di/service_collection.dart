@@ -8,7 +8,7 @@ class ServiceCollection {
   final List<dynamic> _initializers = [];
 
   Future<ServiceProvider> buildServiceProvider() async {
-    var container = GetIt.asNewInstance();
+    final container = GetIt.asNewInstance();
 
     final serviceProvider = ServiceProvider.fromContainer(container);
     container.registerSingleton<OptionsManager>(_optionsManager);

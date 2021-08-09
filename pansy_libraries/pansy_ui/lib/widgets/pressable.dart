@@ -37,7 +37,7 @@ class _UPressableState extends State<UPressable> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isTapEnabled =
+    final isTapEnabled =
         widget.onPressed != null || widget.onLongPress != null;
 
     return GestureDetector(

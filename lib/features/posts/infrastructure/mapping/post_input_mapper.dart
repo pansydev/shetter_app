@@ -9,7 +9,7 @@ abstract class PostInputMapper {
         (e) => e.id != null
             ? InputPostImageInput(id: e.id)
             : InputPostImageInput(
-                file: MultipartFile.fromBytes("", e.file!.readAsBytesSync()),
+                file: MultipartFile.fromBytes('', e.file!.readAsBytesSync()),
               ),
       )),
     );

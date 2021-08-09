@@ -5,7 +5,7 @@ extension DateTimeExtensions on DateTime {
     final currentLocale = Intl.getCurrentLocale();
 
     if (isToday || isYesterday || isThisYear) {
-      final time = DateFormat("H:mm", currentLocale).format(this);
+      final time = DateFormat('H:mm', currentLocale).format(this);
 
       if (isToday) {
         return localizations.shetter.time_today_at(time);
@@ -16,11 +16,11 @@ extension DateTimeExtensions on DateTime {
       }
 
       if (isThisYear) {
-        return DateFormat("dd MMMM", currentLocale).format(this) +
+        return DateFormat('dd MMMM', currentLocale).format(this) +
             localizations.shetter.time_at(time);
       }
     }
 
-    return DateFormat("dd MMMM yyyy", currentLocale).format(this);
+    return DateFormat('dd MMMM yyyy', currentLocale).format(this);
   }
 }

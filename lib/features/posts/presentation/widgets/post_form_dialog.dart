@@ -191,7 +191,7 @@ class _PostFormDialogToolbar extends StatelessWidget {
     );
   }
 
-  void _sendPost(BuildContext context) async {
+  Future<void> _sendPost(BuildContext context) async {
     if (await context.read<PostFormBloc>().sendPost()) {
       Navigator.pop(context);
     }

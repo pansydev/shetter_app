@@ -121,7 +121,7 @@ class _PostTitle extends StatelessWidget {
               ),
             ),
           TextSpan(
-            text: '  •  ' + creationTime.toFormattedString(),
+            text: '  •  ${creationTime.toFormattedString()}',
             style: context.textTheme.subtitle2?.copyWith(
               fontSize: 13,
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),
@@ -239,8 +239,9 @@ TextStyle _generateTextStyle(
 
   var textStyle = TextStyle();
 
-  for (final modifier in modifiers)
+  for (final modifier in modifiers) {
     textStyle = textStyle.merge(_getTextStyle(modifier));
+  }
 
   return textStyle;
 }
@@ -268,11 +269,11 @@ InlineSpan _mentionTextSpan(
   MentionTextToken textToken, {
   required AuthState authState,
 }) {
-  //TODO: Add opening profile
+  // TODO(exeteres): Add opening profile
   void _onTap() {}
 
   final isMe = authState.when(
-    authenticated: (userInfo) => "@${userInfo.username}" == textToken.text,
+    authenticated: (userInfo) => '@${userInfo.username}' == textToken.text,
     unauthenticated: () => false,
   );
   return WidgetSpan(

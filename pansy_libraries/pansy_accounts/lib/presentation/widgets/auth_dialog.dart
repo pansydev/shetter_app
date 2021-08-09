@@ -4,7 +4,7 @@ class AuthDialog extends UDialogWidget {
   const AuthDialog({Key? key})
       : super(
           key: key,
-          title: "Pansy Accounts",
+          title: 'Pansy Accounts',
           outline: true,
         );
 

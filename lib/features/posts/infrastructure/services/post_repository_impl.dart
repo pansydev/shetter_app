@@ -14,7 +14,7 @@ class PostRepositoryImpl implements PostRepository {
       variables: VariablesMutationCreatePost(
         text: input.text,
         images: await Future.wait(input.images
-            .map((e) => MultipartFile.fromPath("", e.path))
+            .map((e) => MultipartFile.fromPath('', e.path))
             .toList()),
       ),
     );
@@ -139,7 +139,7 @@ class PostRepositoryImpl implements PostRepository {
         }
 
         if (event.parsedDataQueryPostPreviousVersions?.post == null) {
-          // TODO handle 404
+          // TODO(exeteres): handle 404
           return Left(ServerFailure());
         }
 

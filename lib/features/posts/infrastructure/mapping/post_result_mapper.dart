@@ -13,6 +13,6 @@ extension PostResultMapper on FragmentPostOperationResult {
       return None();
     }
 
-    throw Exception("Invalid result state");
+    throw Exception('Invalid result state');
   }
 }

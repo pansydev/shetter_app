@@ -5,7 +5,7 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application(this.serviceProvider) : super(key: Key("Application"));
+  Application(this.serviceProvider) : super(key: Key('Application'));
 
   final ServiceProvider serviceProvider;
 
@@ -28,12 +28,12 @@ class Application extends StatelessWidget {
           routeInformationParser: router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           title: PresentationConstants.appName,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [
+          supportedLocales: const [
             Locale('en'),
             Locale('ru'),
           ],

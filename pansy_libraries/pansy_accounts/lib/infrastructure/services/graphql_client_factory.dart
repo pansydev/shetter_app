@@ -2,11 +2,11 @@ import 'package:pansy_accounts/infrastructure/infrastructure.dart';
 
 @module
 abstract class GraphQLClientFactory {
-  @Named("pansy_accounts")
+  @Named('pansy_accounts')
   @lazySingleton
   GraphQLClient createClient(
     AuthLinkFactory linkFactory,
-    @Named("pansy_accounts") Box box,
+    @Named('pansy_accounts') Box box,
   ) {
     final transportLink = _createTransportLink();
 

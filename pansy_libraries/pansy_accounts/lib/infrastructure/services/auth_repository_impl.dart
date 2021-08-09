@@ -4,7 +4,7 @@ import 'package:pansy_accounts/infrastructure/infrastructure.dart';
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(
-    @Named("pansy_accounts") this._client,
+    @Named('pansy_accounts') this._client,
     this._optionsManager,
   );
 

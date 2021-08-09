@@ -13,8 +13,8 @@ extension PansyCoreInitializer on ServiceCollection {
     addInitializer(_configureDependencies);
 
     configureI18N({
-      "en": LocaleDescriptor(Core(), coreMap),
-      "ru": LocaleDescriptor(CoreRu(), coreRuMap),
+      'en': LocaleDescriptor(Core(), coreMap),
+      'ru': LocaleDescriptor(CoreRu(), coreRuMap),
     });
   }
 }

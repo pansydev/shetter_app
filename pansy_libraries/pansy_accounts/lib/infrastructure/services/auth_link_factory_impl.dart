@@ -26,7 +26,7 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
       }
 
       final isRefreshError = response.errors!.any(
-        (element) => element.extensions?["code"] == "AUTH_NOT_AUTHENTICATED",
+        (element) => element.extensions?['code'] == 'AUTH_NOT_AUTHENTICATED',
       );
 
       if (!isRefreshError) {
@@ -47,12 +47,12 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
       final definition = request.operation.document.definitions[0];
 
       if (definition is! OperationDefinitionNode) {
-        throw Exception("Failed to get operation definition");
+        throw Exception('Failed to get operation definition');
       }
 
       final operationName = definition.name!.value;
 
-      if (operationName != "Refresh") {
+      if (operationName != 'Refresh') {
         await _refreshManager.ensureRefreshed();
       }
 
@@ -84,7 +84,7 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
 
   String _getAccessToken() {
     final accessToken = _tokenManager.tokens.accessToken.value;
-    return "Bearer ${accessToken}";
+    return 'Bearer $accessToken';
   }
 
   Request _updateRequest(Request request) {
@@ -92,7 +92,7 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
       (headers) => HttpLinkHeaders(
         headers: <String, String>{
           ...headers?.headers ?? <String, String>{},
-          "Authorization": _getAccessToken(),
+          'Authorization': _getAccessToken(),
         },
       ),
     );

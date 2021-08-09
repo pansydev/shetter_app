@@ -8,7 +8,7 @@ class PansyArchApplication extends StatelessWidget {
     required this.child,
     required this.serviceProvider,
     this.providers,
-  }) : super(key: Key("Pansy"));
+  }) : super(key: Key('Pansy'));
 
   final Widget child;
   final ServiceProvider serviceProvider;

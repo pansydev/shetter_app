@@ -28,6 +28,8 @@ dev_dependencies:
   injectable_generator:
   cider:
 
+  pansy_lint:
+
   pansy_arch_core:
     path: pansy_libraries/pansy_arch_core
 

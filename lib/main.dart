@@ -4,7 +4,7 @@ import 'package:shetter_app/app/app.dart';
 
 import 'package:pansy_accounts/infrastructure/infrastructure.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final services = ServiceCollection()

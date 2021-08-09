@@ -13,6 +13,6 @@ extension RefreshResultMapper on MutationRefresh$refresh {
       return Right(result.result.toEntity());
     }
 
-    throw Exception("Invalid result state");
+    throw Exception('Invalid result state');
   }
 }

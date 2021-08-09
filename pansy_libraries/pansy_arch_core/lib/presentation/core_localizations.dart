@@ -13,7 +13,7 @@ class CoreLocalizations {
   final LocalizationManager _localizationManager;
   final ServiceProvider serviceProvider;
 
-  resolve<T extends Object>() {
+  T resolve<T extends Object>() {
     return _localizationManager.localizationStorage.getLocalization<T>();
   }
 }

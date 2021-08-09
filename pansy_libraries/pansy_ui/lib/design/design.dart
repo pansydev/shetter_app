@@ -10,12 +10,12 @@ class UDesign extends InheritedWidget {
   final UDesignConstraints constraints;
 
   static UDesign of(BuildContext context) {
-    final UDesign? result =
-        context.dependOnInheritedWidgetOfExactType<UDesign>();
+    final result = context.dependOnInheritedWidgetOfExactType<UDesign>();
     assert(result != null, 'No UDesign found in context');
     return result!;
   }
 
   @override
-  bool updateShouldNotify(UDesign old) => constraints != old.constraints;
+  bool updateShouldNotify(UDesign oldWidget) =>
+      constraints != oldWidget.constraints;
 }

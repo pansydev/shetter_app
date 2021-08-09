@@ -9,7 +9,7 @@ class UAnimatedScale extends ImplicitlyAnimatedWidget {
     required Duration duration,
     VoidCallback? onEnd,
     this.alignment = Alignment.center,
-  })  : assert(scale >= 0.0, "cannot be less than zero"),
+  })  : assert(scale >= 0.0, 'cannot be less than zero'),
         super(key: key, curve: curve, duration: duration, onEnd: onEnd);
 
   final Widget child;
@@ -40,8 +40,8 @@ class _AnimatedScaleState
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: _scaleAnimation,
-      child: widget.child,
       alignment: widget.alignment,
+      child: widget.child,
     );
   }
 }

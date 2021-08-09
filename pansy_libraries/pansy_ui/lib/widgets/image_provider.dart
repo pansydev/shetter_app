@@ -5,11 +5,6 @@ import 'package:pansy_ui/pansy_ui.dart';
 @immutable
 class UImageProvider {
   const UImageProvider();
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UImageProvider && runtimeType == other.runtimeType;
 }
 
 class UNetworkImageProvider extends UImageProvider {

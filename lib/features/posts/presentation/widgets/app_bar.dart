@@ -139,7 +139,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                   SizedBox(height: 2),
                   Text(
                     state.when(
-                      authenticated: (userInfo) => "@${userInfo.username}",
+                      authenticated: (userInfo) => '@${userInfo.username}',
                       unauthenticated: () =>
                           localizations.shetter.unauthenticated,
                     ),

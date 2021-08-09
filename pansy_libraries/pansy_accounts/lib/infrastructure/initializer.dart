@@ -15,8 +15,8 @@ extension PansyAccountsInitializer on ServiceCollection {
     configure(PansyAccountsOptions(audience));
 
     configureI18N({
-      "en": LocaleDescriptor(Accounts(), accountsMap),
-      "ru": LocaleDescriptor(AccountsRu(), accountsRuMap),
+      'en': LocaleDescriptor(Accounts(), accountsMap),
+      'ru': LocaleDescriptor(AccountsRu(), accountsRuMap),
     });
   }
 }

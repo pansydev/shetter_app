@@ -7,7 +7,7 @@ import 'package:pansy_core/presentation/presentation.dart';
 class FailureLocalizerImpl implements FailureLocalizer {
   FailureLocalizerImpl(this._localizationManager);
 
-  LocalizationManager _localizationManager;
+  final LocalizationManager _localizationManager;
 
   Core get _localization =>
       _localizationManager.localizationStorage.getLocalization<Core>();

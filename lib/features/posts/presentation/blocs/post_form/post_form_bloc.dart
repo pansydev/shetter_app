@@ -42,7 +42,7 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
     if (state.postEditingController.images.length > 12) return;
 
     final _picker = ImagePicker();
-    List<XFile> images = [];
+    final images = <XFile>[];
 
     if (fromCamera) {
       final result = await _picker.pickImage(source: ImageSource.camera);

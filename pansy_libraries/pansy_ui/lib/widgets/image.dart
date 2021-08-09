@@ -93,7 +93,7 @@ class UImage extends StatelessWidget {
       throw Exception('unknown image provider');
     }
 
-    Widget body = Stack(
+    final Widget body = Stack(
       alignment: Alignment.topRight,
       children: [
         Hero(
@@ -108,13 +108,13 @@ class UImage extends StatelessWidget {
               borderRadius: style.borderRadius,
             ),
             clipBehavior: Clip.antiAlias,
-            child: image,
             onPressed: galleryImages.isEmpty
                 ? null
                 : () => UImageViewer(
                       galleryImages,
                       selectedIndex: galleryImages.indexOf(provider),
                     ).show(context),
+            child: image,
           ),
         ),
         if (onClose != null)
@@ -123,11 +123,11 @@ class UImage extends StatelessWidget {
               padding: DesignConstants.padding5,
               margin: DesignConstants.padding5,
             ),
+            onPressed: onClose,
             child: Icon(
               Icons.close,
               size: 15,
             ),
-            onPressed: onClose,
           ),
       ],
     );

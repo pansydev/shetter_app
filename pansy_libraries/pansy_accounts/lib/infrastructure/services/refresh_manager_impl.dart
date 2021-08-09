@@ -31,7 +31,7 @@ class RefreshManagerImpl implements RefreshManager {
   }
 
   Future<Option<Failure>> refresh() async {
-    assert(_tokenManager.authenticated, "User is not authenticated");
+    assert(_tokenManager.authenticated, 'User is not authenticated');
 
     final options = GQLOptionsMutationRefresh(
       variables: VariablesMutationRefresh(
@@ -39,7 +39,7 @@ class RefreshManagerImpl implements RefreshManager {
       ),
     );
 
-    final client = _provider.resolve<GraphQLClient>(name: "pansy_accounts");
+    final client = _provider.resolve<GraphQLClient>(name: 'pansy_accounts');
 
     final result = await client.mutateRefresh(options);
 

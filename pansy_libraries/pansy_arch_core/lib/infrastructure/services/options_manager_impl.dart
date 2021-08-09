@@ -1,7 +1,7 @@
 import 'package:pansy_arch_core/infrastructure/infrastructure.dart';
 
 class OptionsManagerImpl implements OptionsManager {
-  Map<Type, Object> _optionMap = {};
+  final Map<Type, Object> _optionMap = {};
 
   void add<T extends Object>(T options) {
     _optionMap[T] = options;

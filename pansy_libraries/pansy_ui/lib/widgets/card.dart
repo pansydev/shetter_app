@@ -25,7 +25,6 @@ class UCard extends StatelessWidget {
     Clip clipBehavior = Clip.none,
   }) {
     return UCard(
-      child: child,
       title: title,
       leading: leading,
       trailing: trailing,
@@ -34,6 +33,7 @@ class UCard extends StatelessWidget {
       onLongPress: onLongPress,
       clipBehavior: clipBehavior,
       outline: true,
+      child: child,
     );
   }
 
@@ -82,7 +82,7 @@ class UCard extends StatelessWidget {
       );
     }
 
-    Widget cardChildWithPadding = AnimatedContainer(
+    final Widget cardChildWithPadding = AnimatedContainer(
       duration: 500.milliseconds,
       curve: Curves.linearToEaseOut,
       padding: style.padding ?? DesignConstants.padding,

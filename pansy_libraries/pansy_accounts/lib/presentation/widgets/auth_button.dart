@@ -18,8 +18,8 @@ class AuthButton extends UDialogWidget {
                 ).copyWith(top: DesignConstants.paddingMiniValue),
                 padding: DesignConstants.paddingAlt,
               ),
-              child: Text(localizations.accounts.signin_button),
               onPressed: () => AuthDialog().show(context),
+              child: Text(localizations.accounts.signin_button),
             ),
           ),
         );

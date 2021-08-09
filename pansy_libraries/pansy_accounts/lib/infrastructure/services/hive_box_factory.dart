@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 @module
 abstract class HiveBoxFactory {
   @preResolve
-  @Named("pansy_accounts")
+  @Named('pansy_accounts')
   @singleton
   Future<Box> createHiveBox() async {
     await Hive.initFlutter();

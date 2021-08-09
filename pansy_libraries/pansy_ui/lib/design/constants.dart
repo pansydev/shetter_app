@@ -3,7 +3,7 @@ import 'package:pansy_ui/pansy_ui.dart';
 class DesignConstants {
   // #region sizes
   static const UDesignConstraints constraints = UDesignConstraints(
-    maxPhoneWidth: 600,
+    
   );
   static const double minListTileHeight = 50;
   // #endregion sizes

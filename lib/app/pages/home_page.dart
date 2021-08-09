@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO remove
+    // TODO(cirnok): бляяяядь
     context
         .read<ServiceProvider>()
         .resolve<BuildContextAccessor>()

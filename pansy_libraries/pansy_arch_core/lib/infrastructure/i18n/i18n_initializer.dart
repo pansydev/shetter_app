@@ -13,7 +13,7 @@ extension I18NInitializer on ServiceCollection {
   ) {
     if (!locales.containsKey(LocalizationManager.fallbackLocale)) {
       throw Exception(
-        "Fallback locale $LocalizationManager.fallbackLocale is not provided",
+        'Fallback locale $LocalizationManager.fallbackLocale is not provided',
       );
     }
 
@@ -22,7 +22,7 @@ extension I18NInitializer on ServiceCollection {
 
       for (final locale in locales.entries) {
         localizationManager.getLocalizationStorage(locale.key)
-          ..addLocalization(
+          .addLocalization(
             locale.value.instance,
             locale.value.map,
           );

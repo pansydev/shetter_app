@@ -24,21 +24,21 @@ class PostActionsDialog extends UDialogWidget {
                 post.author.username == state.userInfo.username)
               UListTile(
                 icon: Icon(Icons.edit),
-                child: Text(localizations.shetter.post_form_edit_action),
                 onPressed: () => PostFormDialog(
                   editablePost: post,
                 ).show(context),
+                child: Text(localizations.shetter.post_form_edit_action),
               ),
             UListTile(
               icon: Icon(Icons.copy),
-              child: Text(localizations.shetter.copy_text),
               onPressed: () => _copy(context),
+              child: Text(localizations.shetter.copy_text),
             ),
             if (post.lastModificationTime != null)
               UListTile(
                 icon: Icon(Icons.history),
-                child: Text(localizations.shetter.change_history),
                 onPressed: () => PostHistoryDialog(post).show(context),
+                child: Text(localizations.shetter.change_history),
               ),
           ],
         );
@@ -47,8 +47,8 @@ class PostActionsDialog extends UDialogWidget {
   }
 
   void _copy(BuildContext context) {
-    // TODO add display text
-    Clipboard.setData(ClipboardData(text: ""));
+    // TODO(exeteres): add display text
+    Clipboard.setData(ClipboardData(text: ''));
     Navigator.pop(context);
   }
 }

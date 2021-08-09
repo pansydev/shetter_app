@@ -7,8 +7,8 @@ class PostEditingController {
     this.editablePost,
     TextEditingController? textController,
     List<PostEditingImage>? images,
-  })  : this.textController = textController ?? TextEditingController(),
-        this.images = images ?? [];
+  })  : textController = textController ?? TextEditingController(),
+        images = images ?? [];
 
   factory PostEditingController.editPost(Post post) {
     return PostEditingController(

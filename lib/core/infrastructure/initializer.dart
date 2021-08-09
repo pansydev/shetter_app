@@ -11,8 +11,8 @@ extension ShetterInitializer on ServiceCollection {
     addAsyncInitializer(_configureDependencies);
 
     configureI18N({
-      "en": LocaleDescriptor(Shetter(), shetterMap),
-      "ru": LocaleDescriptor(ShetterRu(), shetterRuMap),
+      'en': LocaleDescriptor(Shetter(), shetterMap),
+      'ru': LocaleDescriptor(ShetterRu(), shetterRuMap),
     });
   }
 }

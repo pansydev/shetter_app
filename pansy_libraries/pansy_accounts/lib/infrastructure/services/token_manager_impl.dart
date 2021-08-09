@@ -21,7 +21,7 @@ class TokenManagerImpl implements TokenManager {
   @override
   TokenPair get tokens {
     if (_tokens == null) {
-      throw Exception("User is not authenticated");
+      throw Exception('User is not authenticated');
     }
 
     return _tokens!;
@@ -33,8 +33,8 @@ class TokenManagerImpl implements TokenManager {
     _updateAuthenticationState();
 
     await _box.putAll({
-      "access_token": tokenPair.accessToken.value,
-      "refresh_token": tokenPair.refreshToken
+      'access_token': tokenPair.accessToken.value,
+      'refresh_token': tokenPair.refreshToken
     });
   }
 
@@ -43,12 +43,12 @@ class TokenManagerImpl implements TokenManager {
     _tokens = null;
     _updateAuthenticationState();
 
-    await _box.deleteAll(["access_token", "refresh_token"]);
+    await _box.deleteAll(['access_token', 'refresh_token']);
   }
 
   Future<void> load() async {
-    final String? accessToken = _box.get("access_token");
-    final String? refreshToken = _box.get("refresh_token");
+    final String? accessToken = _box.get('access_token');
+    final String? refreshToken = _box.get('refresh_token');
 
     if (accessToken == null || refreshToken == null) {
       return;
@@ -98,7 +98,7 @@ class TokenManagerImpl implements TokenManager {
   }
 
   @factoryMethod
-  static Future<TokenManager> create(@Named("pansy_accounts") Box box) async {
+  static Future<TokenManager> create(@Named('pansy_accounts') Box box) async {
     final tokenManager = TokenManagerImpl(box);
     await tokenManager.load();
 

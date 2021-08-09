@@ -13,6 +13,6 @@ extension AuthenticationResultMapper on MutationAuth$auth {
       return Right(result.result.toEntity());
     }
 
-    throw Exception("Invalid result state");
+    throw Exception('Invalid result state');
   }
 }
