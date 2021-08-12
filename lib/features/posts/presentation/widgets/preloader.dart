@@ -16,7 +16,20 @@ class UPreloader extends StatelessWidget {
     Widget child;
 
     if (failure != null) {
-      child = _buildFailureMessage(context);
+      child = Column(
+        children: [
+          Text(
+            localizations.failureLocalizer.localize(failure!),
+            textAlign: TextAlign.center,
+          ),
+          // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+          SizedBox(height: 15),
+          UButton(
+            onPressed: context.read<PostListBloc>().retry,
+            child: Text(localizations.shetter.try_again_action),
+          ),
+        ],
+      );
     } else if (this.visible) {
       child = CupertinoActivityIndicator();
     } else {
@@ -29,24 +42,6 @@ class UPreloader extends StatelessWidget {
         padding: EdgeInsets.all(35).copyWith(top: 45),
         child: child,
       ),
-    );
-  }
-
-  // TODO(cirnok): Get rid of widget on functions, https://github.com/pansydev/shetter_app/issues/7
-  Widget _buildFailureMessage(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          localizations.failureLocalizer.localize(failure!),
-          textAlign: TextAlign.center,
-        ),
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
-        SizedBox(height: 15),
-        UButton(
-          onPressed: context.read<PostListBloc>().retry,
-          child: Text(localizations.shetter.try_again_action),
-        ),
-      ],
     );
   }
 }
