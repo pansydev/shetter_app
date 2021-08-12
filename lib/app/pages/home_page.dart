@@ -1,4 +1,4 @@
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
+import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,10 +30,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO(cirnok): бляяяядь
+    context
+        .read<ServiceProvider>()
+        .resolve<BuildContextAccessor>()
+        .buildContext = context;
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: DesignConstants.maxWindowWidth),
+          constraints: BoxConstraints(
+            maxWidth: context.designConstraints.maxPhoneWidth,
+          ),
           child: _buildBody(),
         ),
       ),
@@ -51,8 +59,7 @@ class _HomePageState extends State<HomePage> {
             onScrollToUp: _scrollController.scrollToUp,
           ),
         ),
-        RefreshFragment(),
-        AuthFragment(),
+        AuthButton(),
         CreatePostFragment(),
         PostListFragment()
       ],

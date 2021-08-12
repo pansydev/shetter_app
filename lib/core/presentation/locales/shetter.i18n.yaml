@@ -1,0 +1,26 @@
+home_page_title: Shetter
+post_form_create_action: Create post
+post_form_edit_action: Edit post
+try_again_action: Try again
+
+error: Error
+error_message(String message): "Error: $message"
+
+unknown_failure: Unknown failure
+unsupported_attachment: unsupported attachment
+
+logout: Log out
+unauthenticated: Unauthenticated
+
+write_a_message: Write a message...
+actions: Actions
+copy_text: Copy text
+
+time_at(String time): ", at $time"
+time_today_at(String time): today, at $time
+time_yesterday_at(String time): yesterday, at $time
+
+total_posts(int totalPosts): "Total posts: $totalPosts"
+profile: Profile
+
+change_history: History of changes

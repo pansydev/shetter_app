@@ -2,13 +2,19 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/core/presentation/presentation.dart';
 import 'package:shetter_app/app/app.dart';
 
-void main() async {
+import 'package:pansy_accounts/infrastructure/infrastructure.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final router = AppRouter();
-  final provider = await ServiceProvider.create();
+  final services = ServiceCollection()
+    ..configureGraphQL()
+    ..configurePansyAccounts(audience: EnumSessionAudience.shetter)
+    ..configureShetter();
 
-  final application = Application(router, provider);
+  final serviceProvider = await services.buildServiceProvider();
 
-  runApp(application);
+  setupGlobalLocalization(serviceProvider);
+
+  runApp(Application(serviceProvider));
 }

@@ -1,0 +1,12 @@
+signin_button: Sign in with Pansy Accounts
+
+dialog:
+  username: Username
+  password: Password
+  signin: Sign in
+  signup: Sign up
+
+failures:
+  Accounts_InvalidCredentials: Incorrect login or password
+  Accounts_InvalidRefreshToken: Session expired
+  Accounts_UsernameAlreadyTaken: A user with the same name already exists

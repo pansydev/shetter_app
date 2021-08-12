@@ -5,7 +5,7 @@ class ProfileDialog extends UDialogWidget {
   ProfileDialog({
     Key? key,
     required this.user,
-  }) : super(key: key, title: Strings.profile.get());
+  }) : super(key: key, title: localizations.shetter.profile);
 
   final PostAuthor user;
 

@@ -1,0 +1,12 @@
+query PostPreviousVersions($postId: UUID!) {
+  post(id: $postId) {
+    previousVersions {
+      nodes {
+        ...PostVersion
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+fragment PostVersion on PostVersion {
+  creationTime
+  textTokens {
+    ...TextToken
+  }
+  images {
+    id
+    url
+    blurHash
+  }
+}

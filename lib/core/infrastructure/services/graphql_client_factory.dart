@@ -7,22 +7,23 @@ abstract class GraphQLClientFactory {
     AuthLinkFactory linkFactory,
     Box box,
   ) {
+    final transportLink = _createTransportLink();
+
+    return GraphQLClientFactoryHelper.createClient(
+      linkFactory,
+      box,
+      transportLink,
+    );
+  }
+
+  Link _createTransportLink() {
     final httpLink = HttpLink(InfrastructureConstants.httpApiUrl);
     final wsLink = WebSocketLink(InfrastructureConstants.wsApiUrl);
 
-    final transportLink = Link.split(
+    return Link.split(
       (request) => request.isSubscription,
       wsLink,
       httpLink,
     );
-
-    final authLink = linkFactory.createAuthLink();
-
-    final link = Link.from([authLink, transportLink]);
-
-    final store = HiveStore(box);
-    final cache = GraphQLCache(store: store);
-
-    return GraphQLClient(link: link, cache: cache);
   }
 }

@@ -64,34 +64,54 @@ directive @authorize(
   apply: ApplyPolicy! = BEFORE_RESOLVER
 ) on SCHEMA | OBJECT | FIELD_DEFINITION
 
+"""
+The `@specifiedBy` directive is used within the type system definition language
+to provide a URL for specifying the behavior of custom scalar definitions.
+"""
+directive @specifiedBy(
+  """
+  The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types.
+  """
+  url: String!
+) on SCALAR
+
 enum ApplyPolicy {
   BEFORE_RESOLVER
   AFTER_RESOLVER
 }
 
-type AuthenticationFailureResult {
-  code: String!
-}
-
-union AuthenticationResult =
-    AuthenticationSuccessResult
-  | AuthenticationFailureResult
-
-type AuthenticationSuccessResult {
-  tokens: TokenPairDto!
+input CreatePostInput {
+  text: String
+  images: [Upload!]
 }
 
 """
-The `Long` scalar type represents non-fractional signed whole 64-bit numeric
-values. Long can represent values between -(2^63) and 2^63 - 1.
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
 """
-scalar Long
+scalar DateTime
+
+input EditPostInput {
+  text: String
+  images: [PostImageInput!]
+}
+
+type LinkTextToken implements TextToken {
+  url: URL!
+  text: String!
+}
+
+type MentionTextToken implements TextToken {
+  authorId: UUID!
+  text: String!
+}
 
 type Mutation {
-  createPost(input: PostInput!): Post!
-  auth(username: String!, password: String!): AuthenticationResult!
-  refresh(refreshToken: String!): RefreshResult!
-  register(username: String!, password: String!): RegistrationResult!
+  createPost(input: CreatePostInput!): PostOperationResult!
+  editPost(postId: UUID!, input: EditPostInput!): PostOperationResult!
+}
+
+type OperationFailureResult {
+  code: String!
 }
 
 """
@@ -119,12 +139,52 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
+type PlainTextToken implements TextToken {
+  modifiers: [TextTokenModifier!]!
   text: String!
-  creationTime: Long!
-  author: User
-  mentionedUsers: [User!]!
-  id: Uuid!
+}
+
+type Post {
+  previousVersions(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostVersionConnection
+  authorId: UUID!
+  creationTime: DateTime!
+  lastModificationTime: DateTime
+  author: PostAuthor!
+  currentVersion: PostVersion!
+  id: UUID!
+}
+
+type PostAuthor {
+  username: String!
+  id: UUID!
+}
+
+union PostAuthorOperationResult =
+    OperationFailureResult
+  | PostAuthorOperationSuccessResult
+
+type PostAuthorOperationSuccessResult {
+  result: PostAuthor!
 }
 
 """
@@ -163,49 +223,113 @@ type PostEdge {
   node: Post!
 }
 
-input PostInput {
+type PostImage {
+  id: UUID!
+  url: URL!
+  blurHash: String!
+}
+
+input PostImageInput {
+  id: UUID
+  file: Upload
+}
+
+union PostOperationResult = OperationFailureResult | PostOperationSuccessResult
+
+type PostOperationSuccessResult {
+  result: Post!
+}
+
+type PostVersion {
   text: String!
+  creationTime: DateTime!
+  textTokens: [TextToken!]!
+  images: [PostImage!]!
+}
+
+"""
+A connection to a list of items.
+"""
+type PostVersionConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [PostVersionEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [PostVersion!]
+  totalCount: Int!
+}
+
+"""
+An edge in a connection.
+"""
+type PostVersionEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: PostVersion!
 }
 
 type Query {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  user(id: Uuid!): User
-}
+  posts(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
 
-type RefreshFailureResult {
-  code: String!
-}
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
 
-union RefreshResult = RefreshSuccessResult | RefreshFailureResult
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
 
-type RefreshSuccessResult {
-  tokens: TokenPairDto!
-}
-
-type RegistrationFailureResult {
-  code: String!
-}
-
-union RegistrationResult = RegistrationSuccessResult | RegistrationFailureResult
-
-type RegistrationSuccessResult {
-  tokens: TokenPairDto!
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostConnection
+  post(id: UUID!): Post
 }
 
 type Subscription {
   postCreated: Post!
+  postEdited: Post!
 }
 
-type TokenPairDto {
-  accessToken: String!
-  refreshToken: String!
+interface TextToken {
+  text: String!
 }
 
-type User {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  username: String!
-  isBot: Boolean!
-  id: Uuid!
+enum TextTokenModifier {
+  BOLD
+  ITALIC
+  UNDERLINE
+  STRIKETHROUGH
+  CODE
 }
 
-scalar Uuid
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+scalar URL
+
+scalar UUID

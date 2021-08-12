@@ -1,2 +1,7 @@
-schema: lib/core/infrastructure/graphql/schema.graphql
-documents: "lib/features/**/infrastructure/graphql/**/*.graphql"
+schema:
+  - lib/**/schema.graphql
+  - pansy_libraries/**/schema.graphql
+
+documents:
+  - lib/**/*.graphql
+  - pansy_libraries/**/*.graphql

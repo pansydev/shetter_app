@@ -1,0 +1,12 @@
+name: pansy_ui
+
+environment:
+  sdk: ">=2.13.4 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_color:
+  cached_network_image:
+  blurhash_dart:

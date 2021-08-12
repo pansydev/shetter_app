@@ -1,5 +1,4 @@
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 
 class CreatePostFragment extends StatelessWidget {
   const CreatePostFragment({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class CreatePostFragment extends StatelessWidget {
           lazySize: false,
           visible: state is AuthStateAuthenticated,
           child: UCard.outline(
-            onPressed: () => CreatePostDialog().show(context),
+            onPressed: () => PostFormDialog().show(context),
             style: UCardStyle(
               margin: EdgeInsets.symmetric(
                 horizontal: DesignConstants.paddingValue,
@@ -42,7 +41,7 @@ class _CreatePostFragmentBody extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                Strings.writeAMessage.get(),
+                localizations.shetter.write_a_message,
                 style: context.textTheme.button,
               ),
               Spacer(),

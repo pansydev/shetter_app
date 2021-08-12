@@ -9,8 +9,12 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     add(PostListEvent.fetchPosts());
 
     _postRepository
-        .subsribeToPosts()
+        .subscribeToNewPosts()
         .listen((post) => add(PostListEvent.postCreated(post)));
+
+    _postRepository
+        .subscribeToEditedPosts()
+        .listen((post) => add(PostListEvent.postEdited(post)));
   }
 
   final PostRepository _postRepository;
@@ -35,6 +39,11 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         loadingMore: (connection) => _postCreated(post, connection),
         orElse: keep(state),
       ),
+      postEdited: (post) => state.maybeWhen(
+        loaded: (connection, failure) => _postEdited(post, connection, failure),
+        loadingMore: (connection) => _postEdited(post, connection),
+        orElse: keep(state),
+      ),
     );
   }
 
@@ -50,11 +59,6 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     if (state is PostListStateLoaded) {
       return add(PostListEvent.fetchMorePosts());
     }
-  }
-
-  Future<void> refresh() async {
-    add(PostListEvent.fetchPosts());
-    await stream.firstWhere((element) => element is PostListStateLoaded);
   }
 
   Stream<PostListState> _fetchPosts([Connection<Post>? connection]) async* {
@@ -91,7 +95,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         (l) => PostListState.loaded(connection: connection, failure: l),
         (r) => PostListState.loaded(
           connection: connection.copyWith(
-            nodes: connection.nodes.plus(r.nodes),
+            nodes: UnmodifiableListView(connection.nodes + r.nodes),
             pageInfo: r.pageInfo,
           ),
         ),
@@ -111,7 +115,28 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
       ),
       (r) => PostListState.loaded(
         connection: connection.copyWith(
-          nodes: connection.nodes.prependElement(r),
+          nodes: UnmodifiableListView(connection.nodes.prepend(r)),
+        ),
+        failure: failure,
+      ),
+    );
+  }
+
+  Stream<PostListState> _postEdited(
+    Either<Failure, Post> post,
+    Connection<Post> connection, [
+    Failure? failure,
+  ]) async* {
+    yield post.fold(
+      (l) => PostListState.loaded(
+        connection: connection,
+        failure: l,
+      ),
+      (edited) => PostListState.loaded(
+        connection: connection.copyWith(
+          nodes: UnmodifiableListView(
+            connection.nodes.map((old) => old.id == edited.id ? edited : old),
+          ),
         ),
         failure: failure,
       ),

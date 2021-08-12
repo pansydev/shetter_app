@@ -1,0 +1,21 @@
+name: pansy_arch_graphql
+
+environment:
+  sdk: ">=2.13.4 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  pansy_arch_core:
+    path: ../pansy_arch_core
+
+  graphql:
+  connectivity_plus: 1.0.6
+  hive_flutter:
+
+dev_dependencies:
+  freezed:
+  build_runner:
+  injectable_generator:
+  json_serializable:

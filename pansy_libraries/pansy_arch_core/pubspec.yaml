@@ -1,0 +1,27 @@
+name: pansy_arch_core
+
+environment:
+  sdk: ">=2.13.4 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+  provider:
+  freezed_annotation:
+
+  fpdart:
+
+  # TODO replace get_it and injectable with own di container
+  get_it:
+  injectable:
+
+  i18n:
+
+dev_dependencies:
+  freezed:
+  build_runner:
+  injectable_generator:

@@ -1,8 +1,4 @@
-fragment PostAuthor on User {
+fragment PostAuthor on PostAuthor {
   id
   username
-  isBot
-  posts {
-    totalCount
-  }
 }

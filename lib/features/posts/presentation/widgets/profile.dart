@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
@@ -49,7 +48,7 @@ class _UserProfileUsername extends StatelessWidget {
         ),
         SizedBox(height: 3),
         Text(
-          Strings.totalPosts.get(author.totalPosts.toString()),
+          localizations.shetter.total_posts(author.totalPosts),
           style: context.textTheme.caption,
         ),
       ],

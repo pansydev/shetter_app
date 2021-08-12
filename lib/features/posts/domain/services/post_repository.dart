@@ -6,6 +6,15 @@ abstract class PostRepository {
     String? after,
   });
 
-  Future<Either<Failure, Post>> createPost(PostInput input);
-  Stream<Either<Failure, Post>> subsribeToPosts();
+  Future<Option<Failure>> createPost(CreatePostInput input);
+  Future<Option<Failure>> editPost(String postId, EditPostInput input);
+
+  Stream<Either<Failure, Post>> subscribeToNewPosts();
+  Stream<Either<Failure, Post>> subscribeToEditedPosts();
+
+  Stream<Either<Failure, Connection<PostVersion>>> getPostPreviousVersions(
+    String postId, {
+    required int pageSize,
+    String? after,
+  });
 }

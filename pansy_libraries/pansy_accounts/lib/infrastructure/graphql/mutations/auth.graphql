@@ -1,0 +1,19 @@
+mutation Auth(
+  $username: String!
+  $password: String!
+  $audience: SessionAudience!
+) {
+  auth(username: $username, password: $password, audience: $audience) {
+    __typename
+
+    ... on TokenPairOperationSuccessResult {
+      result {
+        ...TokenPair
+      }
+    }
+
+    ... on OperationFailureResult {
+      ...OperationFailureResult
+    }
+  }
+}

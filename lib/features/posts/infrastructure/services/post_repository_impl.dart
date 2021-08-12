@@ -9,20 +9,45 @@ class PostRepositoryImpl implements PostRepository {
   final FetchPolicyProvider _fetchPolicyProvider;
 
   @override
-  Future<Either<Failure, Post>> createPost(PostInput input) async {
+  Future<Option<Failure>> createPost(CreatePostInput input) async {
     final options = GQLOptionsMutationCreatePost(
       variables: VariablesMutationCreatePost(
-        input: PostInputMapper.postInputToDto(input),
+        text: input.text,
+        images: await Future.wait(input.images
+            .map((e) => MultipartFile.fromPath('', e.path))
+            .toList()),
       ),
     );
 
     final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
-      return Left(ServerFailure());
+      log('${result.exception}', name: '$this');
+      return Some(ServerFailure());
     }
 
-    return Right(result.parsedDataMutationCreatePost!.createPost.toEntity());
+    return result.parsedDataMutationCreatePost!.createPost.toEntity();
+  }
+
+  @override
+  Future<Option<Failure>> editPost(
+    String postId,
+    EditPostInput input,
+  ) async {
+    final options = GQLOptionsMutationEditPost(
+      variables: VariablesMutationEditPost(
+        postId: postId,
+        input: PostInputMapper.mapEditPostInputToDto(input),
+      ),
+    );
+
+    final result = await _client.mutateEditPost(options);
+
+    if (result.hasException) {
+      return Some(ServerFailure());
+    }
+
+    return result.parsedDataMutationEditPost!.editPost.toEntity();
   }
 
   @override
@@ -40,6 +65,7 @@ class PostRepositoryImpl implements PostRepository {
 
     return result.stream.map((event) {
       if (event.hasException) {
+        log('${event.exception}', name: '$this');
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }
@@ -52,7 +78,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<Either<Failure, Post>> subsribeToPosts() {
+  Stream<Either<Failure, Post>> subscribeToNewPosts() {
     final options = SubscriptionOptions(
       document: SUBSCRIPTION_POST_CREATED,
     );
@@ -61,11 +87,70 @@ class PostRepositoryImpl implements PostRepository {
 
     return stream.map((event) {
       if (event.hasException) {
+        log('${event.exception}', name: '$this');
         return Left(ServerFailure());
       }
+
       final result = SubscriptionPostCreated.fromJson(event.data!);
 
       return Right(result.postCreated.toEntity());
+    });
+  }
+
+  @override
+  Stream<Either<Failure, Post>> subscribeToEditedPosts() {
+    final options = SubscriptionOptions(
+      document: SUBSCRIPTION_POST_EDITED,
+    );
+
+    final stream = _client.subscribe(options);
+
+    return stream.map((event) {
+      if (event.hasException) {
+        log('${event.exception}', name: '$this');
+        return Left(ServerFailure());
+      }
+
+      final result = SubscriptionPostEdited.fromJson(event.data!);
+
+      return Right(result.postEdited.toEntity());
+    });
+  }
+
+  @override
+  Stream<Either<Failure, Connection<PostVersion>>> getPostPreviousVersions(
+    String postId, {
+    required int pageSize,
+    String? after,
+  }) {
+    final options = GQLWatchOptionsQueryPostPreviousVersions(
+      fetchResults: true,
+      variables: VariablesQueryPostPreviousVersions(postId: postId),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
+    );
+
+    final result = _client.watchQueryPostPreviousVersions(options);
+
+    return result.stream.map((event) {
+      if (event.hasException) {
+        log('${event.exception}', name: '$this');
+        if (event.exception!.linkException is CacheMissException) {
+          return Left(CacheFailure());
+        }
+
+        if (event.parsedDataQueryPostPreviousVersions?.post == null) {
+          // TODO(exeteres): handle 404
+          return Left(ServerFailure());
+        }
+
+        return Left(ServerFailure());
+      }
+
+      final connection = event
+          .parsedDataQueryPostPreviousVersions!.post!.previousVersions!
+          .toEntity();
+
+      return Right(connection);
     });
   }
 }
