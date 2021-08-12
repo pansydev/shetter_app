@@ -19,7 +19,7 @@ class Application extends StatelessWidget {
         serviceProvider.createBlocProvider<AuthDialogBloc>(),
         serviceProvider.createBlocProvider<PostListBloc>(),
         serviceProvider.createBlocProvider<PostFormBloc>(),
-        serviceProvider.createBlocProvider<AuthBloc>()
+        serviceProvider.createBlocProvider<AuthBloc>(),
       ],
       child: UDesign(
         constraints: DesignConstants.constraints,

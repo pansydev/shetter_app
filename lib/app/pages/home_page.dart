@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(() {
+      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       if (_scrollController.position.extentAfter <= 500) {
         context.read<PostListBloc>().fetchMore();
       }
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(cirnok): бляяяядь
+    // TODO(exeteres): remove
     context
         .read<ServiceProvider>()
         .resolve<BuildContextAccessor>()
@@ -42,27 +43,23 @@ class _HomePageState extends State<HomePage> {
           constraints: BoxConstraints(
             maxWidth: context.designConstraints.maxPhoneWidth,
           ),
-          child: _buildBody(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    return CustomScrollView(
-      controller: _scrollController,
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: UAppBar(
-            onScrollToUp: _scrollController.scrollToUp,
+          child: CustomScrollView(
+            controller: _scrollController,
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: UAppBar(
+                  onScrollToUp: _scrollController.scrollToUp,
+                ),
+              ),
+              AuthButton(),
+              CreatePostFragment(),
+              PostListFragment(),
+            ],
           ),
         ),
-        AuthButton(),
-        CreatePostFragment(),
-        PostListFragment()
-      ],
+      ),
     );
   }
 }

@@ -52,9 +52,11 @@ class _PostHistoryDialogBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       height: 323,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         padding: EdgeInsets.only(bottom: 5),
         itemBuilder: (_, index) {
           if (index == connection.nodes.length - 1) {

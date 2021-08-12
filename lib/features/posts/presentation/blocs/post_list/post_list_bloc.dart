@@ -148,6 +148,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     Stream<PostListEvent> events,
     transitionFn,
   ) {
+    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
     return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }

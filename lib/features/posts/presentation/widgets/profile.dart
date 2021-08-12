@@ -12,7 +12,11 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 8, bottom: 15),
+      padding: EdgeInsets.only(
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+        top: 8,
+        bottom: 15,
+      ),
       child: Row(
         children: [
           CircleAvatar(

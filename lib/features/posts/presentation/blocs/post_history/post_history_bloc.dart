@@ -55,7 +55,9 @@ class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
         add(PostHistoryEvent.fetchHistory(post));
         await stream.firstWhere((element) => element is PostHistoryStateLoaded);
       },
-      orElse: () {},
+      orElse: () {
+        return;
+      },
     );
   }
 
@@ -109,7 +111,10 @@ class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
     yield* nextConnectionStream.map((event) {
       return event.fold(
         (l) => PostHistoryState.loaded(
-            post: _post, connection: connection, failure: l),
+          post: _post,
+          connection: connection,
+          failure: l,
+        ),
         (r) => PostHistoryState.loaded(
           post: _post,
           connection: connection.copyWith(
@@ -126,6 +131,7 @@ class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
     Stream<PostHistoryEvent> events,
     transitionFn,
   ) {
+    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
     return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }

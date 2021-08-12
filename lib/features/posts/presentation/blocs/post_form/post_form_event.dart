@@ -7,6 +7,6 @@ part 'post_form_event.freezed.dart';
 class PostFormEvent with _$PostFormEvent {
   const factory PostFormEvent.sendPost() = PostFormEventCreatePost;
   const factory PostFormEvent.update(
-          PostEditingController newPostEditingController) =
-      PostFormEventUpdateImages;
+    PostEditingController newPostEditingController,
+  ) = PostFormEventUpdateImages;
 }

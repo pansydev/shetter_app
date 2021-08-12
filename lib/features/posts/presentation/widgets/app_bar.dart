@@ -65,6 +65,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
 
   @override
   void initState() {
+    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
     _opacityAnimation = 1.0.tweenTo(-5.5).animatedBy(controller);
     super.initState();
   }
@@ -87,15 +88,17 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
       clipBehavior: Clip.antiAlias,
       onPressed: isMinimized ? widget.onScrollToUp : null,
       child: AnimatedContainer(
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         duration: 500.milliseconds,
         curve: Curves.fastLinearToSlowEaseIn,
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         width: isMinimized ? 60 : context.width,
         height: isMinimized ? 41 : _maxHeight,
         child: Stack(
           children: [
             FadeTransition(
               opacity: _opacityAnimation,
-              child: _buildBody(context),
+              child: _buildBody(),
             ),
             Visibility(
               visible: controller.value > 0.19,
@@ -112,16 +115,19 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
     );
   }
 
+  // TODO(cirnok): Get rid of widget on functions, https://github.com/pansydev/shetter_app/issues/7
   Widget _buildBackButton() {
     return Center(
       child: Icon(
         Icons.arrow_upward_sharp,
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         size: 20,
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+// TODO(cirnok): Get rid of widget on functions, https://github.com/pansydev/shetter_app/issues/7
+  Widget _buildBody() {
     return Padding(
       padding: DesignConstants.paddingAlt.copyWith(bottom: 0),
       child: BlocBuilder<AuthBloc, AuthState>(

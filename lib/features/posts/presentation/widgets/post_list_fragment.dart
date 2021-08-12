@@ -6,6 +6,7 @@ class PostListFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
+      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       padding: DesignConstants.padding.copyWith(top: 10),
       sliver: BlocBuilder<PostListBloc, PostListState>(
         builder: (context, state) {
