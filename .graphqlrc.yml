@@ -1,7 +1,8 @@
-schema:
-  - lib/**/schema.graphql
-  - pansy_libraries/**/schema.graphql
+projects:
+  shetter:
+    schema: lib/**/schema.graphql
+    documents: lib/**/*.graphql
 
-documents:
-  - lib/**/*.graphql
-  - pansy_libraries/**/*.graphql
+  accounts:
+    schema: pansy_libraries/pansy_accounts/**/schema.graphql
+    documents: pansy_libraries/pansy_accounts/**/*.graphql

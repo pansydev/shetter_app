@@ -301,7 +301,7 @@ packages:
       name: dart_code_metrics
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -405,7 +405,7 @@ packages:
       name: fpdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.10"
   freezed:
     dependency: "direct dev"
     description:
@@ -589,7 +589,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.3"
+    version: "0.8.3+2"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -610,7 +610,7 @@ packages:
       name: index_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.2"
   injectable:
     dependency: transitive
     description:
