@@ -17,8 +17,8 @@ dependencies:
   flutter_bloc:
 
 dev_dependencies:
-  freezed:
   build_runner:
+  freezed:
   injectable_generator:
   json_serializable:
 

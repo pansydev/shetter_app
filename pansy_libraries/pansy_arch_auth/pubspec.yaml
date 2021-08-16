@@ -4,10 +4,13 @@ environment:
   sdk: ">=2.13.4 <3.0.0"
 
 dependencies:
+  flutter:
+    sdk: flutter
+
   pansy_arch_core:
     path: ../pansy_arch_core
 
 dev_dependencies:
-  freezed:
   build_runner:
+  freezed:
   json_serializable:
