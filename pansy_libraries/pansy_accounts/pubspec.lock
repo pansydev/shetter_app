@@ -621,7 +621,7 @@ packages:
     source: path
     version: "0.0.0"
   pansy_ui:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../pansy_ui"
       relative: true

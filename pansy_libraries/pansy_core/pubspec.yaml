@@ -10,6 +10,9 @@ dependencies:
   pansy_arch_graphql:
     path: ../pansy_arch_graphql
 
+  pansy_ui:
+    path: ../pansy_ui
+
 dev_dependencies:
   freezed:
   build_runner:
