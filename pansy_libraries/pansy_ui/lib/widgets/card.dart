@@ -3,7 +3,8 @@ import 'package:pansy_ui/pansy_ui.dart';
 class UCard extends StatelessWidget {
   const UCard({
     Key? key,
-    required this.child,
+    this.child,
+    this.children,
     this.title,
     this.leading,
     this.trailing,
@@ -11,8 +12,10 @@ class UCard extends StatelessWidget {
     this.style = const UCardStyle(),
     this.onPressed,
     this.onLongPress,
-    this.clipBehavior = Clip.none,
-  }) : super(key: key);
+  })  : assert(child != null || children != null, 'not specified widgets'),
+        assert(!(child != null && children != null),
+            'child incompatible with children'),
+        super(key: key);
 
   factory UCard.outline({
     required Widget child,
@@ -22,7 +25,6 @@ class UCard extends StatelessWidget {
     UCardStyle style = const UCardStyle(),
     VoidCallback? onPressed,
     VoidCallback? onLongPress,
-    Clip clipBehavior = Clip.none,
   }) {
     return UCard(
       title: title,
@@ -31,13 +33,13 @@ class UCard extends StatelessWidget {
       style: style,
       onPressed: onPressed,
       onLongPress: onLongPress,
-      clipBehavior: clipBehavior,
       outline: true,
       child: child,
     );
   }
 
-  final Widget child;
+  final Widget? child;
+  final List<Widget>? children;
   final Widget? title;
   final Widget? leading;
   final Widget? trailing;
@@ -45,14 +47,32 @@ class UCard extends StatelessWidget {
   final UCardStyle style;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
-  final Clip clipBehavior;
 
   @override
   Widget build(BuildContext context) {
     Widget cardChild;
 
     if (title == null) {
-      cardChild = child;
+      cardChild = child!;
+    } else if (children != null) {
+      cardChild = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (title != null)
+            _UCardHeader(
+              padding: style.padding ?? DesignConstants.padding,
+              color: style.backgroundColor ?? context.theme.primaryColor,
+              title: title!,
+              leading: leading,
+              trailing: trailing,
+            ),
+          USliverConstructor(
+            padding:
+                (style.padding ?? DesignConstants.padding).copyWith(top: 0),
+            children: children!,
+          ),
+        ],
+      );
     } else {
       cardChild = Row(
         children: [
@@ -70,7 +90,7 @@ class UCard extends StatelessWidget {
                   child: title!,
                 ),
                 SizedBox(height: 4),
-                child,
+                child!,
               ],
             ),
           ),
@@ -82,12 +102,14 @@ class UCard extends StatelessWidget {
       );
     }
 
-    final Widget cardChildWithPadding = AnimatedContainer(
-      duration: 500.milliseconds,
-      curve: Curves.linearToEaseOut,
-      padding: style.padding ?? DesignConstants.padding,
-      child: cardChild,
-    );
+    final cardChildWithPadding = children != null
+        ? cardChild
+        : AnimatedContainer(
+            duration: 500.milliseconds,
+            curve: Curves.linearToEaseOut,
+            padding: style.padding ?? DesignConstants.padding,
+            child: cardChild,
+          );
 
     Widget cardDecoration;
     if (!outline) {
@@ -96,7 +118,7 @@ class UCard extends StatelessWidget {
         shadowColor: style.shadowColor ?? Colors.black38,
         elevation: style.elevation ?? 2,
         borderRadius: style.borderRadius ?? DesignConstants.borderRadius,
-        clipBehavior: clipBehavior,
+        clipBehavior: Clip.antiAlias,
         child: cardChildWithPadding,
       );
     } else {
@@ -110,7 +132,7 @@ class UCard extends StatelessWidget {
               color: style.borderColor ?? context.theme.dividerColor,
             ),
           ),
-          clipBehavior: clipBehavior,
+          clipBehavior: Clip.antiAlias,
           child: cardChildWithPadding,
         ),
       );
@@ -121,10 +143,58 @@ class UCard extends StatelessWidget {
       onLongPress: onLongPress,
       isTransparent: false,
       child: AnimatedContainer(
+        constraints: style.constraints,
         duration: 500.milliseconds,
         curve: Curves.linearToEaseOut,
         padding: style.margin ?? EdgeInsets.zero,
         child: cardDecoration,
+      ),
+    );
+  }
+}
+
+class _UCardHeader extends StatelessWidget {
+  const _UCardHeader({
+    Key? key,
+    required this.title,
+    this.leading,
+    this.trailing,
+    this.padding = EdgeInsets.zero,
+    this.color,
+  }) : super(key: key);
+
+  final Widget title;
+  final Widget? leading;
+  final Widget? trailing;
+  final EdgeInsets padding;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    var paddingAdaptive = padding;
+
+    if (leading != null || trailing != null) {
+      paddingAdaptive = padding.copyWith(
+          bottom: 0, right: padding.right / 2, top: padding.top / 2);
+    } else {
+      paddingAdaptive = padding.copyWith(bottom: padding.bottom / 2);
+    }
+
+    return Container(
+      padding: paddingAdaptive,
+      decoration: BoxDecoration(color: color),
+      child: Row(
+        children: [
+          if (leading != null) ...[
+            leading!,
+            SizedBox(width: 5),
+          ],
+          Expanded(child: title),
+          if (trailing != null) ...[
+            SizedBox(width: 5),
+            trailing!,
+          ],
+        ],
       ),
     );
   }
@@ -139,6 +209,7 @@ class UCardStyle {
     this.padding,
     this.margin,
     this.borderRadius,
+    this.constraints,
   });
 
   final Color? backgroundColor;
@@ -148,4 +219,5 @@ class UCardStyle {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final BorderRadius? borderRadius;
+  final BoxConstraints? constraints;
 }

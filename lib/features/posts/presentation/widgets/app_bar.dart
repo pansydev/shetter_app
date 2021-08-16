@@ -86,7 +86,6 @@ class _UAppBarScaffoldState extends State<_UAppBarScaffold>
         margin: DesignConstants.padding.copyWith(bottom: 0),
         padding: EdgeInsets.zero,
       ),
-      clipBehavior: Clip.antiAlias,
       onPressed: isMinimized ? widget.onScrollToUp : null,
       child: AnimatedContainer(
         // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29

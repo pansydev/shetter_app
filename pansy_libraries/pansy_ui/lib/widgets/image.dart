@@ -107,7 +107,6 @@ class UImage extends StatelessWidget {
               margin: style.margin,
               borderRadius: style.borderRadius,
             ),
-            clipBehavior: Clip.antiAlias,
             onPressed: galleryImages.isEmpty
                 ? null
                 : () => UImageViewer(

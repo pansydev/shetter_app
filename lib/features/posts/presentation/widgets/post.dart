@@ -13,25 +13,26 @@ class UPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final version = post.currentVersion;
+
     return UCard(
-      onLongPress: context.isDesktop
-          ? null
-          : () => PostActionsDialog(post).show(context),
-      trailing: !context.isDesktop
-          ? null
-          : UIconButton(
-              // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
-              Icon(Icons.more_vert, size: 20),
-              onPressed: () => PostActionsDialog(post).show(context),
-            ),
+      style: UCardStyle(constraints: BoxConstraints(maxHeight: 300)),
+      trailing: UIconButton(
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+        Icon(Icons.more_vert, size: 15),
+        onPressed: () => PostActionsDialog(post).show(context),
+      ),
       title: _PostTitle(
         author: post.author,
         creationTime: post.creationTime,
         lastModificationTime: post.lastModificationTime,
       ),
-      child: _PostInfo(
-        post.currentVersion,
-      ),
+      children: [
+        if (version.textTokens.isNotEmpty)
+          _PostText(post.currentVersion).sliverBox,
+        if (version.images.isNotEmpty)
+          _PostImages(version.images).sliverBox.sliverPaddingZero,
+      ],
     );
   }
 }
@@ -53,34 +54,9 @@ class UPostVersion extends StatelessWidget {
         author: author,
         creationTime: version.creationTime,
       ),
-      child: _PostInfo(
+      child: _PostText(
         version,
       ),
-    );
-  }
-}
-
-class _PostInfo extends StatelessWidget {
-  const _PostInfo(
-    this.version, {
-    Key? key,
-  }) : super(key: key);
-
-  final PostVersion version;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (version.textTokens.isNotEmpty)
-              _PostContent(version, authState: state),
-            _PostImagesFragment(version.images),
-          ],
-        );
-      },
     );
   }
 }
@@ -103,9 +79,7 @@ class _PostTitle extends StatelessWidget {
       TextSpan(
         style: context.textTheme.subtitle2,
         children: [
-          TextSpan(
-            text: author.username,
-          ),
+          TextSpan(text: author.username),
           if (author.isBot)
             WidgetSpan(
               child: Container(
@@ -148,32 +122,33 @@ class _PostTitle extends StatelessWidget {
   }
 }
 
-class _PostContent extends StatelessWidget {
-  const _PostContent(
+class _PostText extends StatelessWidget {
+  const _PostText(
     this.version, {
     Key? key,
-    required this.authState,
   }) : super(key: key);
 
   final PostVersion version;
-  final AuthState authState;
-
   @override
   Widget build(BuildContext context) {
-    final widgets = version.textTokens
-        .map((e) => _textTokenToSpan(
-              context,
-              textToken: e,
-              authState: authState,
-            ))
-        .toList();
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, authState) {
+        final widgets = version.textTokens
+            .map((e) => _textTokenToSpan(
+                  context,
+                  textToken: e,
+                  authState: authState,
+                ))
+            .toList();
 
-    return RichText(
-      text: TextSpan(
-        style: context.textTheme.bodyText2,
-        children: widgets,
-      ),
-      textScaleFactor: context.textScaleFactor,
+        return RichText(
+          text: TextSpan(
+            style: context.textTheme.bodyText2,
+            children: widgets,
+          ),
+          textScaleFactor: context.textScaleFactor,
+        );
+      },
     );
   }
 
@@ -318,28 +293,6 @@ InlineSpan _unsupportedTextSpan(BuildContext context) {
   );
 }
 
-class _PostImagesFragment extends StatelessWidget {
-  const _PostImagesFragment(
-    this.images, {
-    Key? key,
-  }) : super(key: key);
-
-  final UnmodifiableListView<PostImage> images;
-
-  @override
-  Widget build(BuildContext context) {
-    return UAnimatedVisibility(
-      visible: images.isNotEmpty,
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          _PostImages(images),
-        ],
-      ),
-    );
-  }
-}
-
 class _PostImages extends StatelessWidget {
   const _PostImages(
     this.images, {
@@ -351,8 +304,9 @@ class _PostImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 80 + 15 * 2,
       child: ListView.separated(
+        padding: DesignConstants.padding,
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) => _PostImagesItem(images, index),
