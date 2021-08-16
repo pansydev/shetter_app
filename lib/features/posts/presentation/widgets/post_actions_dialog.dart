@@ -47,8 +47,11 @@ class PostActionsDialog extends UDialogWidget {
   }
 
   void _copy(BuildContext context) {
-    // TODO(exeteres): add display text
-    Clipboard.setData(ClipboardData(text: ''));
+    Clipboard.setData(
+      ClipboardData(
+        text: post.currentVersion.textTokens.map((e) => e.text).join(),
+      ),
+    );
     Navigator.pop(context);
   }
 }

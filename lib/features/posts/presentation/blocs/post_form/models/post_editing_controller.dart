@@ -14,7 +14,7 @@ class PostEditingController {
     return PostEditingController(
       editablePost: post,
       textController: TextEditingController(
-        text: post.currentVersion.textTokens.map((e) => e.text).join(),
+        text: post.currentVersion.text,
       ),
       images: PostEditingImage.fromPostImagesList(post.currentVersion.images),
     );
