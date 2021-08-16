@@ -10,10 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_bloc:
-  graphql:
+  flutter_localizations:
+    sdk: flutter
+
   url_launcher:
-  hive_flutter:
   simple_animations:
   auto_route:
   image_picker:
@@ -26,10 +26,6 @@ dev_dependencies:
   dart_code_metrics:
   auto_route_generator:
   injectable_generator:
-  cider:
-
-  pansy_core:
-    path: pansy_libraries/pansy_core
 
   pansy_accounts:
     path: pansy_libraries/pansy_accounts
@@ -39,9 +35,6 @@ dev_dependencies:
       url: https://github.com/exeteres/graphql_codegen
       ref: main
       path: graphql_codegen
-
-  flutter_test:
-    sdk: flutter
 
   ubuntu_font_flutter:
 

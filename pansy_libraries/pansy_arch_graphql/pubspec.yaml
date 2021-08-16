@@ -10,12 +10,18 @@ dependencies:
   pansy_arch_core:
     path: ../pansy_arch_core
 
+  normalize: 0.5.2
+  connectivity_plus:
   graphql:
-  connectivity_plus: 1.0.6
   hive_flutter:
 
 dev_dependencies:
-  freezed:
   build_runner:
+  freezed:
   injectable_generator:
   json_serializable:
+  graphql_codegen:
+    git:
+      url: https://github.com/exeteres/graphql_codegen
+      ref: main
+      path: graphql_codegen
