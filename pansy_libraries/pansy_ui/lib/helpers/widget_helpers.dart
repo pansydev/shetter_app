@@ -1,5 +1,19 @@
 import 'package:pansy_ui/pansy_ui.dart';
 
-extension UWidgetExtensions on Widget {
+extension UWidgetListExtensions on Widget {
+  Iterable<Widget> operator *(int times) {
+    return [this] * times;
+  }
+}
+
+extension UWidgetSliverExtensions on Widget {
   Widget get sliverBox => SliverToBoxAdapter(child: this);
+
+  SliverPadding sliverPadding(EdgeInsets padding) {
+    return SliverPadding(padding: padding, sliver: this);
+  }
+
+  SliverPadding get sliverPaddingZero {
+    return SliverPadding(padding: EdgeInsets.zero, sliver: this);
+  }
 }
