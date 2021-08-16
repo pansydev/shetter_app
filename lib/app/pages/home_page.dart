@@ -1,4 +1,3 @@
-import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
