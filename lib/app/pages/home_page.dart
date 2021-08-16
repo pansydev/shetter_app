@@ -31,12 +31,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(exeteres): remove
-    context
-        .read<ServiceProvider>()
-        .resolve<BuildContextAccessor>()
-        .buildContext = context;
-
     return Scaffold(
       body: Center(
         child: ConstrainedBox(

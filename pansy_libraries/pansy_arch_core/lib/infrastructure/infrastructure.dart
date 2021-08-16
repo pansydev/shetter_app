@@ -13,6 +13,6 @@ export 'i18n/localization_register_module.dart';
 export 'i18n/localization_storage.dart';
 export 'i18n/localization_storage_impl.dart';
 export 'initializer.dart';
-export 'services/build_context_accessor.dart';
+export 'services/current_locale_provider_impl.dart';
 export 'services/options_manager.dart';
 export 'services/options_manager_impl.dart';

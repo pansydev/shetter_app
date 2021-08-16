@@ -16,8 +16,6 @@ class PansyArchApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    serviceProvider.resolve<BuildContextAccessor>().buildContext = context;
-
     return MultiProvider(
       providers: providers != null
           ? [Provider.value(value: serviceProvider), ...providers!]
