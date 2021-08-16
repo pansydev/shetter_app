@@ -28,15 +28,6 @@ dev_dependencies:
   injectable_generator:
   cider:
 
-  pansy_arch_core:
-    path: pansy_libraries/pansy_arch_core
-
-  pansy_arch_graphql:
-    path: pansy_libraries/pansy_arch_graphql
-
-  pansy_ui:
-    path: pansy_libraries/pansy_ui
-
   pansy_core:
     path: pansy_libraries/pansy_core
 

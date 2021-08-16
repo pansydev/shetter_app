@@ -13,9 +13,6 @@ dependencies:
   pansy_arch_auth:
     path: ../pansy_arch_auth
 
-  pansy_ui:
-    path: ../pansy_ui
-
   hive_flutter:
   flutter_bloc:
 

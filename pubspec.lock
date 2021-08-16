@@ -752,14 +752,14 @@ packages:
     source: path
     version: "0.0.0"
   pansy_arch_core:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       path: "pansy_libraries/pansy_arch_core"
       relative: true
     source: path
     version: "0.0.0"
   pansy_arch_graphql:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       path: "pansy_libraries/pansy_arch_graphql"
       relative: true
@@ -773,7 +773,7 @@ packages:
     source: path
     version: "0.0.0"
   pansy_ui:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       path: "pansy_libraries/pansy_ui"
       relative: true
