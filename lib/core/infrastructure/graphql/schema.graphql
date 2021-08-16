@@ -55,7 +55,7 @@ type OperationFailureResult {
 }
 
 type PostVersion {
-  text: String!
+  originalText: String!
   creationTime: DateTime!
   textTokens: [TextToken!]!
   images: [PostImage!]!

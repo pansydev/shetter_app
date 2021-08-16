@@ -14,7 +14,7 @@ class PostEditingController {
     return PostEditingController(
       editablePost: post,
       textController: TextEditingController(
-        text: post.currentVersion.text,
+        text: post.currentVersion.originalText,
       ),
       images: PostEditingImage.fromPostImagesList(post.currentVersion.images),
     );

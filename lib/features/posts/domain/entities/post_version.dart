@@ -6,7 +6,7 @@ part 'post_version.freezed.dart';
 class PostVersion with _$PostVersion {
   factory PostVersion({
     required DateTime creationTime,
-    required String text,
+    required String originalText,
     required UnmodifiableListView<TextToken> textTokens,
     required UnmodifiableListView<PostImage> images,
   }) = _PostVersion;

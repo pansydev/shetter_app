@@ -1,6 +1,6 @@
 fragment PostVersion on PostVersion {
   creationTime
-  text
+  originalText
   textTokens {
     ...TextToken
   }
