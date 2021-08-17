@@ -9,7 +9,7 @@ class AuthDialog extends UDialogWidget {
         );
 
   @override
-  Widget buildBody({required Widget body}) {
+  Widget buildBody(BuildContext context, {required Widget body}) {
     return UPansyTheme(child: body);
   }
 

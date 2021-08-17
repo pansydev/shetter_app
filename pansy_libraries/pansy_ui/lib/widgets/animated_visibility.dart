@@ -72,6 +72,7 @@ class _UAnimatedVisibilityState extends State<UAnimatedVisibility>
 
   @override
   Widget build(BuildContext context) {
+    // TODO(cirnok): Add visiblity
     return AnimatedSize(
       vsync: this,
       duration: _animationDuration,

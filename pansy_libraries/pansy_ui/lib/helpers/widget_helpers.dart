@@ -17,3 +17,13 @@ extension UWidgetSliverExtensions on Widget {
     return SliverPadding(padding: EdgeInsets.zero, sliver: this);
   }
 }
+
+extension UWidgetIterableSliverExtensions on Iterable<Widget> {
+  Iterable<Widget> get sliverBox => map((e) => e.sliverBox);
+
+  Iterable<Widget> sliverPadding(EdgeInsets padding) {
+    return map((e) => e.sliverPadding(padding));
+  }
+
+  Iterable<Widget> get sliverPaddingZero => map((e) => e.sliverPaddingZero);
+}
