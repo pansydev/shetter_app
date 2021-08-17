@@ -66,22 +66,17 @@ class PostRepositoryImpl implements PostRepository {
       fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
 
-    final result = _client.watchQueryPosts(options);
+    final query = _client.watchQueryPosts(options);
 
-    return result.stream.where((event) => event.data != null).map((event) {
-      if (event.hasException) {
-        log('An error occurred while fetching the post list',
-            name: '$this', error: event.exception);
-
-        if (event.exception!.linkException is CacheMissException) {
-          return Left(CacheFailure());
-        }
-
-        return Left(ServerFailure());
-      }
-
-      return Right(event.parsedDataQueryPosts!.posts!.toEntity());
-    });
+    return mapObservableQuery(
+      query,
+      (event) => event.parsedDataQueryPosts!.posts!.toEntity(),
+      (exception) => log(
+        'An error occurred while fetching the post list',
+        name: '$this',
+        error: exception,
+      ),
+    );
   }
 
   @override
@@ -92,18 +87,18 @@ class PostRepositoryImpl implements PostRepository {
 
     final stream = _client.subscribe(options);
 
-    return stream.map((event) {
-      if (event.hasException) {
-        log('An error occurred while obtaining the created post',
-            name: '$this', error: event.exception);
-
-        return Left(ServerFailure());
-      }
-
-      final result = SubscriptionPostCreated.fromJson(event.data!);
-
-      return Right(result.postCreated.toEntity());
-    });
+    return mapResultStream(
+      stream,
+      (event) {
+        final result = SubscriptionPostCreated.fromJson(event.data!);
+        return result.postCreated.toEntity();
+      },
+      (exception) => log(
+        'An error occurred while obtaining the created post',
+        name: '$this',
+        error: exception,
+      ),
+    );
   }
 
   @override
@@ -114,18 +109,18 @@ class PostRepositoryImpl implements PostRepository {
 
     final stream = _client.subscribe(options);
 
-    return stream.map((event) {
-      if (event.hasException) {
-        log('An error occurred while obtaining the edited post',
-            name: '$this', error: event.exception);
-
-        return Left(ServerFailure());
-      }
-
-      final result = SubscriptionPostEdited.fromJson(event.data!);
-
-      return Right(result.postEdited.toEntity());
-    });
+    return mapResultStream(
+      stream,
+      (event) {
+        final result = SubscriptionPostEdited.fromJson(event.data!);
+        return result.postEdited.toEntity();
+      },
+      (exception) => log(
+        'An error occurred while obtaining the edited post',
+        name: '$this',
+        error: exception,
+      ),
+    );
   }
 
   @override
@@ -140,30 +135,25 @@ class PostRepositoryImpl implements PostRepository {
       fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
 
-    final result = _client.watchQueryPostPreviousVersions(options);
+    final query = _client.watchQueryPostPreviousVersions(options);
 
-    return result.stream.map((event) {
-      if (event.hasException) {
-        log('An error occurred while fetching the post change history',
-            name: '$this', error: event.exception);
+    return mapObservableQuery(
+      query,
+      (event) {
+        final post = event.parsedDataQueryPostPreviousVersions!.post;
 
-        if (event.exception!.linkException is CacheMissException) {
-          return Left(CacheFailure());
-        }
-
-        if (event.parsedDataQueryPostPreviousVersions?.post == null) {
+        if (post == null) {
           // TODO(exeteres): handle 404
-          return Left(ServerFailure());
+          throw Exception('Post not found');
         }
 
-        return Left(ServerFailure());
-      }
-
-      final connection = event
-          .parsedDataQueryPostPreviousVersions!.post!.previousVersions!
-          .toEntity();
-
-      return Right(connection);
-    });
+        return post.previousVersions!.toEntity();
+      },
+      (exception) => log(
+        'An error occurred while fetching the post change history',
+        name: '$this',
+        error: exception,
+      ),
+    );
   }
 }
