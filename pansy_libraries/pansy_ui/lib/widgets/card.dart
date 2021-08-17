@@ -95,8 +95,8 @@ class UCard extends StatelessWidget {
             trailing: trailing,
           ),
           Padding(
-            padding:
-                (style.padding ?? DesignConstants.padding).copyWith(top: 0),
+            padding: (style.padding ?? DesignConstants.padding)
+                .copyWith(top: 5, bottom: 10),
             child: child,
           ),
         ],
@@ -208,21 +208,24 @@ class _UCardHeader extends StatelessWidget {
       paddingAdaptive = padding.copyWith(bottom: padding.bottom / 2);
     }
 
-    return Container(
-      padding: paddingAdaptive,
-      decoration: BoxDecoration(color: color),
-      child: Row(
-        children: [
-          if (leading != null) ...[
-            leading!,
-            SizedBox(width: 5),
+    return DefaultTextStyle(
+      style: context.textTheme.subtitle2!,
+      child: Container(
+        padding: paddingAdaptive,
+        decoration: BoxDecoration(color: color),
+        child: Row(
+          children: [
+            if (leading != null) ...[
+              leading!,
+              SizedBox(width: 5),
+            ],
+            Expanded(child: title),
+            if (trailing != null) ...[
+              SizedBox(width: 5),
+              trailing!,
+            ],
           ],
-          Expanded(child: title),
-          if (trailing != null) ...[
-            SizedBox(width: 5),
-            trailing!,
-          ],
-        ],
+        ),
       ),
     );
   }
