@@ -22,7 +22,9 @@ class PostRepositoryImpl implements PostRepository {
     final result = await _client.mutateCreatePost(options);
 
     if (result.hasException) {
-      log('${result.exception}', name: '$this');
+      log('An error occurred while creating the post',
+          name: '$this', error: result.exception);
+
       return Some(ServerFailure());
     }
 
@@ -44,6 +46,9 @@ class PostRepositoryImpl implements PostRepository {
     final result = await _client.mutateEditPost(options);
 
     if (result.hasException) {
+      log('An error occurred while editing the post',
+          name: '$this', error: result.exception);
+
       return Some(ServerFailure());
     }
 
@@ -65,7 +70,9 @@ class PostRepositoryImpl implements PostRepository {
 
     return result.stream.where((event) => event.data != null).map((event) {
       if (event.hasException) {
-        log('${event.exception}', name: '$this');
+        log('An error occurred while fetching the post list',
+            name: '$this', error: event.exception);
+
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }
@@ -87,7 +94,9 @@ class PostRepositoryImpl implements PostRepository {
 
     return stream.map((event) {
       if (event.hasException) {
-        log('${event.exception}', name: '$this');
+        log('An error occurred while obtaining the created post',
+            name: '$this', error: event.exception);
+
         return Left(ServerFailure());
       }
 
@@ -107,7 +116,9 @@ class PostRepositoryImpl implements PostRepository {
 
     return stream.map((event) {
       if (event.hasException) {
-        log('${event.exception}', name: '$this');
+        log('An error occurred while obtaining the edited post',
+            name: '$this', error: event.exception);
+
         return Left(ServerFailure());
       }
 
@@ -133,7 +144,9 @@ class PostRepositoryImpl implements PostRepository {
 
     return result.stream.map((event) {
       if (event.hasException) {
-        log('${event.exception}', name: '$this');
+        log('An error occurred while fetching the post change history',
+            name: '$this', error: event.exception);
+
         if (event.exception!.linkException is CacheMissException) {
           return Left(CacheFailure());
         }
