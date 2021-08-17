@@ -63,7 +63,7 @@ class PostRepositoryImpl implements PostRepository {
 
     final result = _client.watchQueryPosts(options);
 
-    return result.stream.map((event) {
+    return result.stream.where((event) => event.data != null).map((event) {
       if (event.hasException) {
         log('${event.exception}', name: '$this');
         if (event.exception!.linkException is CacheMissException) {
