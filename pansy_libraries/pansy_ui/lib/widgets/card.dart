@@ -6,6 +6,7 @@ class UCard extends StatelessWidget {
     this.child,
     this.children,
     this.title,
+    this.titleVariant = false,
     this.leading,
     this.trailing,
     this.outline = false,
@@ -15,11 +16,17 @@ class UCard extends StatelessWidget {
   })  : assert(child != null || children != null, 'not specified widgets'),
         assert(!(child != null && children != null),
             'child incompatible with children'),
+        assert(!(titleVariant && children != null),
+            'titleVariant incompatible with children'),
+        assert(!(titleVariant && title == null),
+            'titleVariant not be without title'),
         super(key: key);
 
   factory UCard.outline({
-    required Widget child,
+    Widget? child,
+    List<Widget>? children,
     Widget? title,
+    bool titleVariant = false,
     Widget? leading,
     Widget? trailing,
     UCardStyle style = const UCardStyle(),
@@ -34,13 +41,16 @@ class UCard extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       outline: true,
+      titleVariant: titleVariant,
       child: child,
+      children: children,
     );
   }
 
   final Widget? child;
   final List<Widget>? children;
   final Widget? title;
+  final bool titleVariant;
   final Widget? leading;
   final Widget? trailing;
   final bool outline;
@@ -52,7 +62,7 @@ class UCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget cardChild;
 
-    if (title == null) {
+    if (title == null && children == null) {
       cardChild = child!;
     } else if (children != null) {
       cardChild = Column(
@@ -70,6 +80,24 @@ class UCard extends StatelessWidget {
             padding:
                 (style.padding ?? DesignConstants.padding).copyWith(top: 0),
             children: children!,
+          ),
+        ],
+      );
+    } else if (titleVariant) {
+      cardChild = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _UCardHeader(
+            padding: style.padding ?? DesignConstants.padding,
+            color: style.backgroundColor ?? context.theme.primaryColor,
+            title: title!,
+            leading: leading,
+            trailing: trailing,
+          ),
+          Padding(
+            padding:
+                (style.padding ?? DesignConstants.padding).copyWith(top: 0),
+            child: child,
           ),
         ],
       );
@@ -102,7 +130,7 @@ class UCard extends StatelessWidget {
       );
     }
 
-    final cardChildWithPadding = children != null
+    final cardChildWithPadding = children != null || titleVariant
         ? cardChild
         : AnimatedContainer(
             duration: 500.milliseconds,

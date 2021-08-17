@@ -10,18 +10,27 @@ abstract class UDialogWidget extends StatelessWidget {
   final String? title;
   final bool outline;
 
-  Widget buildBody({required Widget body}) => body;
+  Widget buildBody(BuildContext context, {required Widget body}) => body;
 
   Future<T?> show<T>(BuildContext context) {
+    final body = build(context);
+    List<Widget>? slivers;
+
+    if (body is USliverConstructor) {
+      slivers = body.children;
+    }
+
     if (!context.isDesktop) {
       return showCupertinoModalPopup<T>(
         context: context,
         builder: (context) => buildBody(
+          context,
           body: _UDialogWidgetContainerForPhone(
-            child: _UDialogWidgetBody(
+            child: _UDialogWidgetBodyDecorator(
               title: title,
               outline: outline,
-              body: this,
+              body: body,
+              slivers: slivers,
             ),
           ),
         ),
@@ -31,8 +40,9 @@ abstract class UDialogWidget extends StatelessWidget {
         context: context,
         barrierDismissible: true,
         builder: (context) => buildBody(
+          context,
           body: _UDialogWidgetContainerForDesktop(
-            child: _UDialogWidgetBody(
+            child: _UDialogWidgetBodyDecorator(
               title: title,
               outline: outline,
               body: this,
@@ -93,45 +103,38 @@ class _UDialogWidgetContainerForDesktop extends StatelessWidget {
   }
 }
 
-class _UDialogWidgetBody extends StatelessWidget {
-  const _UDialogWidgetBody({
+// TODO(cirnok): DraggableScrollableSheet
+class _UDialogWidgetBodyDecorator extends StatelessWidget {
+  const _UDialogWidgetBodyDecorator({
     Key? key,
     this.title,
     required this.outline,
     required this.body,
+    this.slivers,
+    this.padding,
   }) : super(key: key);
 
   final String? title;
   final bool outline;
   final Widget body;
+  final List<Widget>? slivers;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
-    final padding =
-        DesignConstants.paddingValue - DesignConstants.paddingMiniValue;
     return UCard(
-      title: Row(
-        children: [
-          SizedBox(width: padding),
-          if (title != null) Text(title!),
-          Spacer(),
-          UIconButton(
-            Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
+      title: Text(title!),
+      titleVariant: slivers == null,
+      trailing: UIconButton(
+        Icon(Icons.close),
+        onPressed: () => Navigator.pop(context),
       ),
       style: UCardStyle(
         margin: DesignConstants.padding10,
-        borderRadius: DesignConstants.borderRadius,
-        padding: DesignConstants.padding10,
+        padding: padding,
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: padding,
-        ).copyWith(top: 3),
-        child: body,
-      ),
+      child: slivers == null ? body : null,
+      children: slivers,
     );
   }
 }
