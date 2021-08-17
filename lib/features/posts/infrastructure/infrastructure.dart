@@ -22,4 +22,5 @@ export 'mapping/post_previous_version_connection_mapper.dart';
 export 'mapping/post_result_mapper.dart';
 export 'mapping/post_text_token_mapper.dart';
 export 'mapping/post_version_mapper.dart';
+export 'mapping/text_token_modifiers_mapper.dart';
 export 'services/post_repository_impl.dart';

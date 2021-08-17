@@ -16,5 +16,4 @@ export 'entities/text_tokens/text_token.dart';
 export 'entities/text_tokens/text_token_modifier.dart';
 export 'entities/text_tokens/unsupported_text_token.dart';
 export 'exports.dart';
-export 'mapping/text_token_modifiers_mapper.dart';
 export 'services/post_repository.dart';
