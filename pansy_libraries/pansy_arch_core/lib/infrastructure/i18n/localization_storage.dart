@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-typedef LocalizationMap = UnmodifiableMapView<String, String>;
+typedef LocalizationMap = Map<String, String>;
 
 abstract class LocalizationStorage {
   LocalizationMap get localizationMap;

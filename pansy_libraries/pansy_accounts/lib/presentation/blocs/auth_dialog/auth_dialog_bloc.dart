@@ -1,5 +1,6 @@
 import 'package:pansy_accounts/domain/domain.dart';
 import 'package:pansy_accounts/presentation/presentation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 @injectable
 class AuthDialogBloc extends Bloc<AuthDialogEvent, AuthDialogState> {
@@ -62,6 +63,9 @@ class AuthDialogBloc extends Bloc<AuthDialogEvent, AuthDialogState> {
 
     yield result.match(
       (l) {
+        Fluttertoast.showToast(
+          msg: localizations.failureLocalizer.localize(l),
+        );
         passwordController.clear();
         return AuthDialogState.error(
           usernameController: usernameController,
