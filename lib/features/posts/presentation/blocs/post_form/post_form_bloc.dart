@@ -98,6 +98,9 @@ class PostFormBloc extends Bloc<PostFormEvent, PostFormState> {
 
     yield result.match(
       (l) {
+        Fluttertoast.showToast(
+          msg: localizations.failureLocalizer.localize(l),
+        );
         return PostFormState.error(
           postEditingController,
           failure: l,
