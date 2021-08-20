@@ -61,26 +61,10 @@ class AuthDialogBloc extends Bloc<AuthDialogEvent, AuthDialogState> {
       passwordController.text,
     );
 
-    yield result.match(
-      (l) {
-        Fluttertoast.showToast(
-          msg: localizations.failureLocalizer.localize(l),
-        );
-        passwordController.clear();
-        return AuthDialogState.error(
-          usernameController: usernameController,
-          passwordController: passwordController,
-          failure: l,
-        );
-      },
-      () {
-        usernameController.clear();
-        passwordController.clear();
-        return AuthDialogState.initial(
-          usernameController: usernameController,
-          passwordController: passwordController,
-        );
-      },
+    yield _applyAuthenticationResult(
+      usernameController,
+      passwordController,
+      result,
     );
   }
 
@@ -99,8 +83,23 @@ class AuthDialogBloc extends Bloc<AuthDialogEvent, AuthDialogState> {
       passwordController.text,
     );
 
-    yield result.match(
+    yield _applyAuthenticationResult(
+      usernameController,
+      passwordController,
+      result,
+    );
+  }
+
+  AuthDialogState _applyAuthenticationResult(
+    TextEditingController usernameController,
+    TextEditingController passwordController,
+    Option<Failure> result,
+  ) {
+    return result.match(
       (l) {
+        Fluttertoast.showToast(
+          msg: localizations.failureLocalizer.localize(l),
+        );
         passwordController.clear();
         return AuthDialogState.error(
           usernameController: usernameController,
