@@ -18,7 +18,7 @@ class FailureLocalizerImpl implements FailureLocalizer {
     final localizationKey = "failures.${code.replaceAll(':', '_')}";
 
     return localizationStorage.localizationMap[localizationKey] ??
-        _localization.unknown_failure;
+        _localization.unknown_failure_with_code(code);
   }
 
   @override
