@@ -16,11 +16,13 @@ class PansyArchApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: providers != null
-          ? [Provider.value(value: serviceProvider), ...providers!]
-          : [Provider.value(value: serviceProvider)],
-      child: child,
+    return PansyLocalizatedApp(
+      child: MultiProvider(
+        providers: providers != null
+            ? [Provider.value(value: serviceProvider), ...providers!]
+            : [Provider.value(value: serviceProvider)],
+        child: child,
+      ),
     );
   }
 }

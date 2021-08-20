@@ -8,3 +8,4 @@ packages:
   - "pansy_core/*"
   - "pansy_accounts/*"
   - "pansy_ui/*"
+  - "pansy_localization/*"

@@ -10,6 +10,10 @@ class Application extends StatelessWidget {
   final ServiceProvider serviceProvider;
 
   final AppRouter router = AppRouter();
+  final supportedLocales = const [
+    Locale('en'),
+    Locale('ru'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +32,13 @@ class Application extends StatelessWidget {
           routeInformationParser: router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           title: PresentationConstants.appName,
-          localizationsDelegates: const [
+          localizationsDelegates: [
+            PansyLocalizationDelegate(supportedLocales),
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en'),
-            Locale('ru'),
-          ],
+          supportedLocales: supportedLocales,
           locale: Locale('ru'),
           theme: themeData(),
         ),

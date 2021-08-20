@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 typedef LocalizationMap = Map<String, String>;
 
 abstract class LocalizationStorage {

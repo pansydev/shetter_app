@@ -114,6 +114,9 @@ index_generator:
     - path: pansy_libraries/pansy_ui/lib
       name: pansy_ui
 
+    - path: pansy_libraries/pansy_localization/lib
+      name: pansy_localization
+
 cider:
   link_template:
     tag: https://github.com/pansydev/shetter_app/releases/tag/v%tag%

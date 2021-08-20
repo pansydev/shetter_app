@@ -496,6 +496,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  pansy_localization:
+    dependency: transitive
+    description:
+      path: "../pansy_localization"
+      relative: true
+    source: path
+    version: "0.0.0"
   path:
     dependency: transitive
     description:

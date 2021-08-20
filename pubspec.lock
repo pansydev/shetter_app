@@ -725,6 +725,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  pansy_localization:
+    dependency: transitive
+    description:
+      path: "pansy_libraries/pansy_localization"
+      relative: true
+    source: path
+    version: "0.0.0"
   pansy_ui:
     dependency: transitive
     description:

@@ -16,6 +16,9 @@ dependencies:
   get_it:
   injectable:
 
+  pansy_localization:
+    path: ../pansy_localization
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -15,5 +15,5 @@ class LocalizationStorageImpl implements LocalizationStorage {
   }
 
   @override
-  LocalizationMap get localizationMap => _localizationMap as LocalizationMap;
+  LocalizationMap get localizationMap => _localizationMap;
 }
