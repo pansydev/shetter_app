@@ -76,10 +76,12 @@ class UCard extends StatelessWidget {
               leading: leading,
               trailing: trailing,
             ),
-          USliverConstructor(
-            padding:
-                (style.padding ?? DesignConstants.padding).copyWith(top: 0),
-            children: children!,
+          Flexible(
+            child: USliverConstructor(
+              padding:
+                  (style.padding ?? DesignConstants.padding).copyWith(top: 0),
+              children: children!,
+            ),
           ),
         ],
       );
