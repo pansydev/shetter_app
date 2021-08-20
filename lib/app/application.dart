@@ -34,6 +34,7 @@ class Application extends StatelessWidget {
           title: PresentationConstants.appName,
           localizationsDelegates: [
             PansyLocalizationDelegate(supportedLocales),
+            PansyUILocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,

@@ -63,7 +63,9 @@ class _UImageViewerState extends State<UImageViewer> {
         child: Column(
           children: [
             _ImageViewerOverlay(
-              title: '$_currentPage из ${widget.images.length}',
+              title: PansyUILocalizations.of(context)
+                  .localizations
+                  .number_of_number(_currentPage, widget.images.length),
               show: !_interaction,
             ),
             Expanded(
