@@ -5,12 +5,12 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application(this.serviceProvider) : super(key: Key('Application'));
+  Application(this._serviceProvider) : super(key: Key('Application'));
 
-  final ServiceProvider serviceProvider;
+  final ServiceProvider _serviceProvider;
 
-  final AppRouter router = AppRouter();
-  final supportedLocales = const [
+  final AppRouter _router = AppRouter();
+  final _supportedLocales = const [
     Locale('en'),
     Locale('ru'),
   ];
@@ -18,28 +18,28 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PansyArchApplication(
-      serviceProvider: serviceProvider,
+      serviceProvider: _serviceProvider,
       providers: [
-        serviceProvider.createBlocProvider<AuthDialogBloc>(),
-        serviceProvider.createBlocProvider<PostListBloc>(),
-        serviceProvider.createBlocProvider<PostFormBloc>(),
-        serviceProvider.createBlocProvider<AuthBloc>(),
+        _serviceProvider.createBlocProvider<AuthDialogBloc>(),
+        _serviceProvider.createBlocProvider<PostListBloc>(),
+        _serviceProvider.createBlocProvider<PostFormBloc>(),
+        _serviceProvider.createBlocProvider<AuthBloc>(),
       ],
       child: UDesign(
         constraints: DesignConstants.constraints,
         child: MaterialApp.router(
-          routerDelegate: router.delegate(),
-          routeInformationParser: router.defaultRouteParser(),
+          routerDelegate: _router.delegate(),
+          routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           title: PresentationConstants.appName,
           localizationsDelegates: [
-            PansyLocalizationDelegate(supportedLocales),
+            PansyLocalizationDelegate(_supportedLocales),
             PansyUILocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: supportedLocales,
+          supportedLocales: _supportedLocales,
           locale: Locale('ru'),
           theme: themeData(),
         ),
