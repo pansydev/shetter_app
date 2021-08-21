@@ -1,34 +1,37 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class PostActionsDialog extends UDialogWidget {
-  PostActionsDialog(
+class PostActionsDialog extends StatelessWidget {
+  const PostActionsDialog(
     this.post, {
     Key? key,
-  }) : super(key: key, title: localizations.shetter.actions);
+  }) : super(key: key);
 
   final Post post;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        UserProfile(post.author),
-        Divider(),
-        _EditButton(post),
-        UListTile(
-          icon: Icon(Icons.copy),
-          onPressed: () => _copy(context),
-          child: Text(localizations.shetter.copy_text),
-        ),
-        if (post.lastModificationTime != null)
+    return UDialog(
+      title: localizations.shetter.actions,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          UserProfile(post.author),
+          Divider(),
+          _EditButton(post),
           UListTile(
-            icon: Icon(Icons.history),
-            onPressed: () => PostHistoryDialog(post).show(context),
-            child: Text(localizations.shetter.change_history),
+            icon: Icon(Icons.copy),
+            onPressed: () => _copy(context),
+            child: Text(localizations.shetter.copy_text),
           ),
-      ],
+          if (post.lastModificationTime != null)
+            UListTile(
+              icon: Icon(Icons.history),
+              onPressed: () => UDialog.show(context, PostHistoryDialog(post)),
+              child: Text(localizations.shetter.change_history),
+            ),
+        ],
+      ),
     );
   }
 
@@ -59,9 +62,10 @@ class _EditButton extends StatelessWidget {
             visible: post.author.username == userInfo.username,
             child: UListTile(
               icon: Icon(Icons.edit),
-              onPressed: () => PostFormDialog(
-                editablePost: post,
-              ).show(context),
+              onPressed: () => UDialog.show(
+                context,
+                PostFormDialog(editablePost: post),
+              ),
               child: Text(localizations.shetter.post_form_edit_action),
             ),
           );

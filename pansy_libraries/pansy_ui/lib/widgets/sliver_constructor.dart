@@ -6,11 +6,13 @@ class USliverConstructor extends StatefulWidget {
     required this.children,
     this.controller,
     this.padding = EdgeInsets.zero,
+    this.shrinkWrap = true,
   }) : super(key: key);
 
   final List<Widget> children;
   final ScrollController? controller;
   final EdgeInsets padding;
+  final bool shrinkWrap;
 
   @override
   _USliverConstructorState createState() => _USliverConstructorState();
@@ -43,7 +45,7 @@ class _USliverConstructorState extends State<USliverConstructor> {
     return CustomScrollView(
       controller: widget.controller,
       physics: BouncingScrollPhysics(),
-      shrinkWrap: true,
+      shrinkWrap: widget.shrinkWrap,
       slivers: children,
     );
   }

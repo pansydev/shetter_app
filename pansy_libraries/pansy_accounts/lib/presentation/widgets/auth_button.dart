@@ -1,6 +1,6 @@
 import 'package:pansy_accounts/presentation/presentation.dart';
 
-class AuthButton extends UDialogWidget {
+class AuthButton extends StatelessWidget {
   const AuthButton({Key? key}) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class AuthButton extends UDialogWidget {
                 ).copyWith(top: DesignConstants.paddingMiniValue),
                 padding: DesignConstants.paddingAlt,
               ),
-              onPressed: () => AuthDialog().show(context),
+              onPressed: () => UDialog.show(context, AuthDialog()),
               child: Text(localizations.accounts.signin_button),
             ),
           ),

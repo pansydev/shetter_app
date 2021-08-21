@@ -2,48 +2,48 @@ import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class PostFormDialog extends UDialogWidget {
-  PostFormDialog({
+class PostFormDialog extends StatelessWidget {
+  const PostFormDialog({
     Key? key,
     this.editablePost,
-  }) : super(
-          key: key,
-          title: editablePost != null
-              ? localizations.shetter.post_form_edit_action
-              : localizations.shetter.post_form_create_action,
-        );
+  }) : super(key: key);
 
   final Post? editablePost;
 
   @override
   Widget build(BuildContext context) {
-    return _PostFormDialogEditablePostProvider(
-      editablePost,
-      child: BlocBuilder<PostFormBloc, PostFormState>(
-        builder: (context, state) {
-          return UFrameLoader(
-            state: state.maybeMap(
-              loading: (_) => UFrameLoaderState.loading,
-              orElse: () => UFrameLoaderState.initial,
-            ),
-            child: Column(
-              children: [
-                UTextField(
-                  controller: state.postEditingController.textController,
-                  hintText: localizations.shetter.write_a_message,
-                  minLines: 5,
-                  maxLines: 10,
-                  autofocus: true,
-                ),
-                SizedBox(height: DesignConstants.paddingMiniValue),
-                _PostFormDialogImagesAdapter(
-                  state.postEditingController.images,
-                ),
-                _PostFormDialogToolbar(),
-              ],
-            ),
-          );
-        },
+    return UDialog(
+      title: editablePost != null
+          ? localizations.shetter.post_form_edit_action
+          : localizations.shetter.post_form_create_action,
+      child: _PostFormDialogEditablePostProvider(
+        editablePost,
+        child: BlocBuilder<PostFormBloc, PostFormState>(
+          builder: (context, state) {
+            return UFrameLoader(
+              state: state.maybeMap(
+                loading: (_) => UFrameLoaderState.loading,
+                orElse: () => UFrameLoaderState.initial,
+              ),
+              child: Column(
+                children: [
+                  UTextField(
+                    controller: state.postEditingController.textController,
+                    hintText: localizations.shetter.write_a_message,
+                    minLines: 5,
+                    maxLines: 10,
+                    autofocus: true,
+                  ),
+                  SizedBox(height: DesignConstants.paddingMiniValue),
+                  _PostFormDialogImagesAdapter(
+                    state.postEditingController.images,
+                  ),
+                  _PostFormDialogToolbar(),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -6,10 +6,12 @@ class UPreloader extends StatelessWidget {
     Key? key,
     this.visible = true,
     this.failure,
+    this.onTryAgain,
   }) : super(key: key);
 
   final bool visible;
   final Failure? failure;
+  final VoidCallback? onTryAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +24,14 @@ class UPreloader extends StatelessWidget {
             localizations.failureLocalizer.localize(failure!),
             textAlign: TextAlign.center,
           ),
-          // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
-          SizedBox(height: 15),
-          UButton(
-            onPressed: () => context.read<PostListBloc>().retry(context),
-            child: Text(localizations.shetter.try_again_action),
-          ),
+          if (onTryAgain != null) ...[
+            // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+            SizedBox(height: 15),
+            UButton(
+              onPressed: onTryAgain!,
+              child: Text(localizations.shetter.try_again_action),
+            ),
+          ],
         ],
       );
     } else if (this.visible) {

@@ -77,7 +77,10 @@ class UCard extends StatelessWidget {
           if (title != null)
             _UCardHeader(
               padding: style.padding ?? DesignConstants.padding,
-              color: style.backgroundColor ?? context.theme.primaryColor,
+              color: style.backgroundColor ??
+                  (outline
+                      ? context.theme.primaryColorDark
+                      : context.theme.primaryColor),
               title: title!,
               leading: leading,
               trailing: trailing,

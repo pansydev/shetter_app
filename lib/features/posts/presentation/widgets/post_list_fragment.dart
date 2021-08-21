@@ -39,7 +39,10 @@ class _PostListFragmentPreloader extends StatelessWidget {
   Widget build(BuildContext context) {
     return state.when(
       empty: (failure) => failure != null
-          ? UPreloader(failure: failure).sliverBox
+          ? UPreloader(
+              failure: failure,
+              onTryAgain: () => onTryAgain(context),
+            ).sliverBox
           : UPreloader().sliverBox,
       loaded: builder,
       loading: (connection) =>
@@ -47,4 +50,6 @@ class _PostListFragmentPreloader extends StatelessWidget {
       loadingMore: builder,
     );
   }
+
+  void onTryAgain(context) => context.read<PostListBloc>().retry(context);
 }

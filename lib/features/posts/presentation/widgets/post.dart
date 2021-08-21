@@ -23,7 +23,7 @@ class UPost extends StatelessWidget {
       trailing: UIconButton(
         // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         Icon(Icons.more_vert, size: 16),
-        onPressed: () => PostActionsDialog(post).show(context),
+        onPressed: () => UDialog.show(context, PostActionsDialog(post)),
       ),
       title: _PostTitle(
         author: post.author,

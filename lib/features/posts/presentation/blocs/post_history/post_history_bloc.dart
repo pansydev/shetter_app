@@ -11,67 +11,62 @@ typedef PostHistoryBuilder = Widget Function(
 class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
   PostHistoryBloc(this._postRepository, @factoryParam Post? post)
       : assert(post != null, 'parameter post can not be null'),
-        super(PostHistoryState.empty(post: post!)) {
-    add(PostHistoryEvent.fetchHistory(post));
-  }
+        super(PostHistoryState.empty(post: post!));
 
   final PostRepository _postRepository;
+
+  static const double minChildHeight = uPostMinHeight;
 
   @override
   Stream<PostHistoryState> mapEventToState(PostHistoryEvent event) {
     return event.when(
-      fetchHistory: (post) => state.maybeWhen(
-        empty: (_, __) => _fetchHistory(post: post),
+      fetchHistory: (post, size) => state.maybeWhen(
+        empty: (_, __) => _fetchHistory(size, post),
         loaded: (_, connection, __) => _fetchHistory(
-          post: post,
-          connection: connection,
+          size,
+          post,
+          connection,
         ),
         orElse: keep(state),
       ),
-      fetchMoreHistory: () => state.maybeWhen(
-        loaded: (_, connection, __) => _fetchMoreHistory(connection),
+      fetchMoreHistory: (size) => state.maybeWhen(
+        loaded: (_, connection, __) => _fetchMoreHistory(size, connection),
         orElse: keep(state),
       ),
     );
   }
 
-  void fetchMore() {
-    add(PostHistoryEvent.fetchMoreHistory());
-  }
-
-  void retry() {
+  void fetchMore(int size) {
     if (state is PostHistoryStateEmpty) {
-      return add(PostHistoryEvent.fetchHistory(state.post));
+      return add(PostHistoryEvent.fetchHistory(state.post, size));
     }
 
     if (state is PostHistoryStateLoaded) {
-      return add(PostHistoryEvent.fetchMoreHistory());
+      return add(PostHistoryEvent.fetchMoreHistory(size));
     }
   }
 
-  Future<void> refresh() async {
-    await state.maybeWhen(
-      loaded: (post, _, __) async {
-        add(PostHistoryEvent.fetchHistory(post));
-        await stream.firstWhere((element) => element is PostHistoryStateLoaded);
-      },
-      orElse: () {
-        return;
-      },
+  void retry(BuildContext context) {
+    final size = UPaginate.getPageSizeWithContext(
+      context,
+      minChildHeight: minChildHeight,
     );
+
+    fetchMore(size);
   }
 
-  Stream<PostHistoryState> _fetchHistory({
+  Stream<PostHistoryState> _fetchHistory(
+    int size, [
     Post? post,
     Connection<PostVersion>? connection,
-  }) async* {
+  ]) async* {
     final _post = post ?? state.post;
 
     yield PostHistoryState.loading(post: _post, connection: connection);
 
     final nextConnectionStream = _postRepository.getPostPreviousVersions(
       state.post.id,
-      pageSize: 1,
+      pageSize: size,
     );
 
     yield* nextConnectionStream.map((event) {
@@ -92,31 +87,32 @@ class PostHistoryBloc extends Bloc<PostHistoryEvent, PostHistoryState> {
   }
 
   Stream<PostHistoryState> _fetchMoreHistory(
+    int size,
     Connection<PostVersion> connection,
   ) async* {
     if (!connection.pageInfo.hasNextPage) {
       return;
     }
 
-    final _post = state.post;
+    final post = state.post;
 
-    yield PostHistoryState.loading(post: _post, connection: connection);
+    yield PostHistoryState.loading(post: post, connection: connection);
 
     final nextConnectionStream = _postRepository.getPostPreviousVersions(
-      _post.id,
-      pageSize: 1,
+      post.id,
+      pageSize: size,
       after: connection.pageInfo.endCursor,
     );
 
     yield* nextConnectionStream.map((event) {
       return event.fold(
         (l) => PostHistoryState.loaded(
-          post: _post,
+          post: post,
           connection: connection,
           failure: l,
         ),
         (r) => PostHistoryState.loaded(
-          post: _post,
+          post: post,
           connection: connection.copyWith(
             nodes: UnmodifiableListView(connection.nodes + r.nodes),
             pageInfo: r.pageInfo,
