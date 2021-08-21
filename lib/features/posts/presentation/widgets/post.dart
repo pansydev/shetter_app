@@ -3,6 +3,9 @@ import 'package:shetter_app/features/posts/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const double uPostMinHeight = 80;
+const double uPostMaxHeight = 300;
+
 class UPost extends StatelessWidget {
   const UPost(
     this.post, {
@@ -16,7 +19,7 @@ class UPost extends StatelessWidget {
     final version = post.currentVersion;
 
     return UCard(
-      style: UCardStyle(constraints: BoxConstraints(maxHeight: 300)),
+      style: UCardStyle(constraints: BoxConstraints(maxHeight: uPostMaxHeight)),
       trailing: UIconButton(
         // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         Icon(Icons.more_vert, size: 16),
@@ -50,13 +53,16 @@ class UPostVersion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UCard.outline(
+      style: UCardStyle(constraints: BoxConstraints(maxHeight: uPostMaxHeight)),
       title: _PostTitle(
         author: author,
         creationTime: version.creationTime,
       ),
-      child: _PostText(
-        version,
-      ),
+      children: [
+        if (version.textTokens.isNotEmpty) _PostText(version).sliverBox,
+        if (version.images.isNotEmpty)
+          _PostImages(version.images).sliverBox.sliverPaddingZero,
+      ],
     );
   }
 }

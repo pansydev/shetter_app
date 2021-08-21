@@ -6,8 +6,6 @@ typedef PostListBuilder = Widget Function(Connection<Post>, [Failure?]);
 @injectable
 class PostListBloc extends Bloc<PostListEvent, PostListState> {
   PostListBloc(this._postRepository) : super(PostListState.empty()) {
-    add(PostListEvent.fetchPosts());
-
     _postRepository
         .subscribeToNewPosts()
         .listen((post) => add(PostListEvent.postCreated(post)));
@@ -19,18 +17,18 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
 
   final PostRepository _postRepository;
 
-  static const int _pageSize = 35;
+  static const double minChildHeight = uPostMinHeight;
 
   @override
   Stream<PostListState> mapEventToState(PostListEvent event) {
     return event.when(
-      fetchPosts: () => state.maybeWhen(
-        empty: (_) => _fetchPosts(),
-        loaded: (connection, _) => _fetchPosts(connection),
+      fetchPosts: (size) => state.maybeWhen(
+        empty: (_) => _fetchPosts(size),
+        loaded: (connection, _) => _fetchPosts(size, connection),
         orElse: keep(state),
       ),
-      fetchMorePosts: () => state.maybeWhen(
-        loaded: (connection, _) => _fetchMorePosts(connection),
+      fetchMorePosts: (size) => state.maybeWhen(
+        loaded: (connection, _) => _fetchMorePosts(size, connection),
         orElse: keep(state),
       ),
       postCreated: (post) => state.maybeWhen(
@@ -47,25 +45,33 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     );
   }
 
-  void fetchMore() {
-    add(PostListEvent.fetchMorePosts());
-  }
-
-  void retry() {
+  void fetchMore(int size) {
     if (state is PostListStateEmpty) {
-      return add(PostListEvent.fetchPosts());
+      return add(PostListEvent.fetchPosts(size));
     }
 
     if (state is PostListStateLoaded) {
-      return add(PostListEvent.fetchMorePosts());
+      return add(PostListEvent.fetchMorePosts(size));
     }
   }
 
-  Stream<PostListState> _fetchPosts([Connection<Post>? connection]) async* {
+  void retry(BuildContext context) {
+    final size = UPaginate.getPageSizeWithContext(
+      context,
+      minChildHeight: minChildHeight,
+    );
+
+    fetchMore(size);
+  }
+
+  Stream<PostListState> _fetchPosts(
+    int size, [
+    Connection<Post>? connection,
+  ]) async* {
     yield PostListState.loading(connection: connection);
 
     final nextConnectionStream = _postRepository.getPosts(
-      pageSize: _pageSize,
+      pageSize: size,
     );
 
     yield* nextConnectionStream.map((event) {
@@ -78,7 +84,10 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     });
   }
 
-  Stream<PostListState> _fetchMorePosts(Connection<Post> connection) async* {
+  Stream<PostListState> _fetchMorePosts(
+    int size,
+    Connection<Post> connection,
+  ) async* {
     if (!connection.pageInfo.hasNextPage) {
       return;
     }
@@ -86,7 +95,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     yield PostListState.loading(connection: connection);
 
     final nextConnectionStream = _postRepository.getPosts(
-      pageSize: _pageSize,
+      pageSize: size,
       after: connection.pageInfo.endCursor,
     );
 

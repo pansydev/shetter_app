@@ -5,6 +5,7 @@ class UCard extends StatelessWidget {
     Key? key,
     this.child,
     this.children,
+    this.scrollController,
     this.title,
     this.titleVariant = false,
     this.leading,
@@ -20,11 +21,14 @@ class UCard extends StatelessWidget {
             'titleVariant incompatible with children'),
         assert(!(titleVariant && title == null),
             'titleVariant not be without title'),
+        assert(!(scrollController != null && children == null),
+            'scrollController not be without children'),
         super(key: key);
 
   factory UCard.outline({
     Widget? child,
     List<Widget>? children,
+    ScrollController? scrollController,
     Widget? title,
     bool titleVariant = false,
     Widget? leading,
@@ -42,6 +46,7 @@ class UCard extends StatelessWidget {
       onLongPress: onLongPress,
       outline: true,
       titleVariant: titleVariant,
+      scrollController: scrollController,
       child: child,
       children: children,
     );
@@ -49,6 +54,7 @@ class UCard extends StatelessWidget {
 
   final Widget? child;
   final List<Widget>? children;
+  final ScrollController? scrollController;
   final Widget? title;
   final bool titleVariant;
   final Widget? leading;
@@ -78,6 +84,7 @@ class UCard extends StatelessWidget {
             ),
           Flexible(
             child: USliverConstructor(
+              controller: scrollController,
               padding:
                   (style.padding ?? DesignConstants.padding).copyWith(top: 0),
               children: children!,

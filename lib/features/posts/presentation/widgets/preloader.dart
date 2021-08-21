@@ -25,7 +25,7 @@ class UPreloader extends StatelessWidget {
           // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
           SizedBox(height: 15),
           UButton(
-            onPressed: context.read<PostListBloc>().retry,
+            onPressed: () => context.read<PostListBloc>().retry(context),
             child: Text(localizations.shetter.try_again_action),
           ),
         ],
