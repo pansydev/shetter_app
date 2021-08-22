@@ -1,54 +1,56 @@
 import 'package:pansy_ui/pansy_ui.dart';
 
-abstract class UDialogWidget extends StatelessWidget {
-  const UDialogWidget({
+class UDialog extends StatelessWidget {
+  const UDialog({
     Key? key,
     this.title,
     this.outline = false,
+    required this.child,
   }) : super(key: key);
 
+  final Widget child;
   final String? title;
   final bool outline;
 
-  Widget buildBody(BuildContext context, {required Widget body}) => body;
-
-  Future<T?> show<T>(BuildContext context) {
-    final body = build(context);
+  @override
+  Widget build(BuildContext context) {
+    final body = child;
     List<Widget>? slivers;
+    ScrollController? controller;
 
     if (body is USliverConstructor) {
       slivers = body.children;
+      controller = body.controller;
     }
 
+    return _UDialogWidgetBodyDecorator(
+      title: title,
+      outline: outline,
+      body: body,
+      slivers: slivers,
+      scrollController: controller,
+    );
+  }
+
+  static Future<T?> show<T>(BuildContext context, Widget child) {
     if (!context.isDesktop) {
       return showCupertinoModalPopup<T>(
         context: context,
-        builder: (context) => buildBody(
-          context,
-          body: _UDialogWidgetContainerForPhone(
-            child: _UDialogWidgetBodyDecorator(
-              title: title,
-              outline: outline,
-              body: body,
-              slivers: slivers,
-            ),
-          ),
-        ),
+        builder: (context) {
+          return _UDialogWidgetContainerForPhone(
+            child: child,
+          );
+        },
       );
     } else {
       return showCupertinoDialog<T>(
         context: context,
         barrierDismissible: true,
-        builder: (context) => buildBody(
-          context,
-          body: _UDialogWidgetContainerForDesktop(
-            child: _UDialogWidgetBodyDecorator(
-              title: title,
-              outline: outline,
-              body: this,
-            ),
-          ),
-        ),
+        builder: (context) {
+          return _UDialogWidgetContainerForDesktop(
+            child: child,
+          );
+        },
       );
     }
   }
@@ -111,6 +113,7 @@ class _UDialogWidgetBodyDecorator extends StatelessWidget {
     required this.outline,
     required this.body,
     this.slivers,
+    this.scrollController,
     this.padding,
   }) : super(key: key);
 
@@ -118,6 +121,7 @@ class _UDialogWidgetBodyDecorator extends StatelessWidget {
   final bool outline;
   final Widget body;
   final List<Widget>? slivers;
+  final ScrollController? scrollController;
   final EdgeInsets? padding;
 
   @override
@@ -133,6 +137,7 @@ class _UDialogWidgetBodyDecorator extends StatelessWidget {
         margin: DesignConstants.padding10,
         padding: padding,
       ),
+      scrollController: scrollController,
       child: slivers == null ? body : null,
       children: slivers,
     );

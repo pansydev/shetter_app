@@ -24,6 +24,7 @@ class UPostList extends StatelessWidget {
                 UPreloader(
                   visible: connection.pageInfo.hasNextPage,
                   failure: failure,
+                  onTryAgain: () => context.read<PostListBloc>().retry(context),
                 ),
               ],
             );

@@ -37,8 +37,9 @@ class _PansyLocalizatedAppState extends State<PansyLocalizatedApp> {
   }
 
   void _rebuildElement(Element element) {
-    element.markNeedsBuild();
-    element.visitChildren(_rebuildElement);
+    element
+      ..markNeedsBuild()
+      ..visitChildren(_rebuildElement);
   }
 
   @override

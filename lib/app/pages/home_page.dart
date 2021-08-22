@@ -8,23 +8,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late ScrollController _scrollController;
+  late UPaginate _paginate;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
-      if (_scrollController.position.extentAfter <= 500) {
-        context.read<PostListBloc>().fetchMore();
-      }
-    });
+    _paginate = UPaginate(
+      minChildHeight: PostListBloc.minChildHeight,
+      onFetchRequest: onFetchRequest,
+    );
+  }
+
+  void onFetchRequest(int size) {
+    context.read<PostListBloc>().fetchMore(size);
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _paginate.dispose();
     super.dispose();
   }
 
@@ -37,13 +38,13 @@ class _HomePageState extends State<HomePage> {
             maxWidth: context.designConstraints.maxPhoneWidth,
           ),
           child: CustomScrollView(
-            controller: _scrollController,
+            controller: _paginate.controller,
             physics: BouncingScrollPhysics(),
             slivers: [
               SliverPersistentHeader(
                 pinned: true,
                 delegate: UAppBar(
-                  onScrollToUp: _scrollController.scrollToUp,
+                  onScrollToUp: _paginate.controller.scrollToUp,
                 ),
               ),
               AuthButton(),

@@ -1,16 +1,19 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class ProfileDialog extends UDialogWidget {
-  ProfileDialog({
+class ProfileDialog extends StatelessWidget {
+  const ProfileDialog({
     Key? key,
     required this.user,
-  }) : super(key: key, title: localizations.shetter.profile);
+  }) : super(key: key);
 
   final PostAuthor user;
 
   @override
   Widget build(BuildContext context) {
-    return UserProfile(user);
+    return UDialog(
+      title: localizations.shetter.profile,
+      child: UserProfile(user),
+    );
   }
 }

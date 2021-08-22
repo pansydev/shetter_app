@@ -11,7 +11,7 @@ class CreatePostFragment extends StatelessWidget {
           lazySize: false,
           visible: state is AuthStateAuthenticated,
           child: UCard.outline(
-            onPressed: () => PostFormDialog().show(context),
+            onPressed: () => UDialog.show(context, PostFormDialog()),
             style: UCardStyle(
               margin: EdgeInsets.symmetric(
                 horizontal: DesignConstants.paddingValue,

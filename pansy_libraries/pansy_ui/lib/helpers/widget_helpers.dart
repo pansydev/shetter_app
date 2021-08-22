@@ -18,12 +18,14 @@ extension UWidgetSliverExtensions on Widget {
   }
 }
 
-extension UWidgetIterableSliverExtensions on Iterable<Widget> {
-  Iterable<Widget> get sliverBox => map((e) => e.sliverBox);
+extension UWidgetIterableSliverExtensions on List<Widget> {
+  List<Widget> get sliverBox => map((e) => e.sliverBox).toList();
 
-  Iterable<Widget> sliverPadding(EdgeInsets padding) {
-    return map((e) => e.sliverPadding(padding));
+  List<Widget> sliverPadding(EdgeInsets padding) {
+    return map((e) => e.sliverPadding(padding)).toList();
   }
 
-  Iterable<Widget> get sliverPaddingZero => map((e) => e.sliverPaddingZero);
+  List<Widget> get sliverPaddingZero {
+    return map((e) => e.sliverPaddingZero).toList();
+  }
 }

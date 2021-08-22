@@ -13,8 +13,9 @@ class PansyLocalization {
 
   static void updateLocale(Locale locale) {
     instance.locale = locale;
-    instance._onLocaleUpdateCallbacks
-        .forEach((element) => element.call(locale));
+    for (final element in instance._onLocaleUpdateCallbacks) {
+      element.call(locale);
+    }
   }
 
   static void addOnLocaleChangeCallback(LocaleUpdateCallback onChange) {
