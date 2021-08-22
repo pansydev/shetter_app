@@ -137,7 +137,11 @@ class PostRepositoryImpl implements PostRepository {
   }) {
     final options = GQLWatchOptionsQueryPostPreviousVersions(
       fetchResults: true,
-      variables: VariablesQueryPostPreviousVersions(postId: postId),
+      variables: VariablesQueryPostPreviousVersions(
+        postId: postId,
+        after: after,
+        pageSize: pageSize,
+      ),
       fetchPolicy: _fetchPolicyProvider.fetchPolicy,
     );
 
