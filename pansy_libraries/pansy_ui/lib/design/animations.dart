@@ -5,13 +5,13 @@ const Duration _animationDuration = Duration(milliseconds: 300);
 
 extension UScrollConrtollerAnimations on ScrollController {
   void scrollToUp() {
-    if (offset < _scrollPosition) {
+    if (offset > _scrollPosition) {
       jumpTo(_scrollPosition);
     }
     animateTo(
       0,
       duration: _animationDuration,
-      curve: Curves.ease,
+      curve: Curves.linearToEaseOut,
     );
   }
 }
