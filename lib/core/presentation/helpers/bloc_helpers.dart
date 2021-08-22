@@ -1,14 +1,20 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/core/presentation/presentation.dart';
 
-Stream<T> Function() keep<T>(T state) {
-  return () async* {
-    yield state;
-  };
-}
+extension BlocFactory on ServiceProvider {
+  T createBloc<T extends BlocBase<Object>>({
+    param1,
+    param2,
+  }) {
+    return resolve<T>(param1: param1, param2: param2);
+  }
 
-extension BlocProviderFactory on ServiceProvider {
-  BlocProvider<T> createBlocProvider<T extends BlocBase<Object>>() {
-    return BlocProvider(create: (_) => resolve<T>());
+  BlocProvider<T> createBlocProvider<T extends BlocBase<Object>>({
+    param1,
+    param2,
+  }) {
+    return BlocProvider(
+      create: (_) => createBloc<T>(param1: param1, param2: param2),
+    );
   }
 }

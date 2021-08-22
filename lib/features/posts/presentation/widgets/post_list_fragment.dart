@@ -6,10 +6,11 @@ class PostListFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
+      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       padding: DesignConstants.padding.copyWith(top: 10),
       sliver: BlocBuilder<PostListBloc, PostListState>(
         builder: (context, state) {
-          return _buildPreloader(
+          return _PostListFragmentPreloader(
             state,
             builder: (connection, [failure]) {
               return UPostList(
@@ -22,19 +23,33 @@ class PostListFragment extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildPreloader(
-    PostListState state, {
-    required PostListBuilder builder,
-  }) {
+class _PostListFragmentPreloader extends StatelessWidget {
+  const _PostListFragmentPreloader(
+    this.state, {
+    Key? key,
+    required this.builder,
+  }) : super(key: key);
+
+  final PostListState state;
+  final PostListBuilder builder;
+
+  @override
+  Widget build(BuildContext context) {
     return state.when(
       empty: (failure) => failure != null
-          ? UPreloader(failure: failure).sliverBox
+          ? UPreloader(
+              failure: failure,
+              onTryAgain: () => onTryAgain(context),
+            ).sliverBox
           : UPreloader().sliverBox,
-      loaded: (connection, failure) => builder(connection, failure),
+      loaded: builder,
       loading: (connection) =>
           connection != null ? builder(connection) : UPreloader().sliverBox,
-      loadingMore: (connection) => builder(connection),
+      loadingMore: builder,
     );
   }
+
+  void onTryAgain(context) => context.read<PostListBloc>().retry(context);
 }

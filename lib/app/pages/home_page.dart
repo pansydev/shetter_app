@@ -1,4 +1,3 @@
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,22 +8,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late ScrollController _scrollController;
+  late UPaginate _paginate;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (_scrollController.position.extentAfter <= 500) {
-        context.read<PostListBloc>().fetchMore();
-      }
-    });
+    _paginate = UPaginate(
+      minChildHeight: PostListBloc.minChildHeight,
+      onFetchRequest: onFetchRequest,
+    );
+  }
+
+  void onFetchRequest(int size) {
+    context.read<PostListBloc>().fetchMore(size);
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _paginate.dispose();
     super.dispose();
   }
 
@@ -33,29 +34,26 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: DesignConstants.maxWindowWidth),
-          child: _buildBody(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    return CustomScrollView(
-      controller: _scrollController,
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: UAppBar(
-            onScrollToUp: _scrollController.scrollToUp,
+          constraints: BoxConstraints(
+            maxWidth: context.designConstraints.maxPhoneWidth,
+          ),
+          child: CustomScrollView(
+            controller: _paginate.controller,
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: UAppBar(
+                  onScrollToUp: _paginate.controller.scrollToUp,
+                ),
+              ),
+              AuthButton(),
+              CreatePostFragment(),
+              PostListFragment(),
+            ],
           ),
         ),
-        RefreshFragment(),
-        AuthFragment(),
-        CreatePostFragment(),
-        PostListFragment()
-      ],
+      ),
     );
   }
 }

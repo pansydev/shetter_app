@@ -1,0 +1,11 @@
+name: pansy_libraries
+
+packages:
+  - "pansy_arch_core/*"
+  - "pansy_arch_graphql/*"
+  - "pansy_arch_auth/*"
+
+  - "pansy_core/*"
+  - "pansy_accounts/*"
+  - "pansy_ui/*"
+  - "pansy_localization/*"

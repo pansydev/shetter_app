@@ -1,2 +1,16 @@
-schema: lib/core/infrastructure/graphql/schema.graphql
-documents: "lib/features/**/infrastructure/graphql/**/*.graphql"
+projects:
+  shetter:
+    schema: lib/**/schema.graphql
+    documents: lib/**/*.graphql
+    extensions:
+      endpoints:
+        default:
+          url: https://api.pansy.dev/shetter-next/graphql
+
+  accounts:
+    schema: pansy_libraries/pansy_accounts/**/schema.graphql
+    documents: pansy_libraries/pansy_accounts/**/*.graphql
+    extensions:
+      endpoints:
+        default:
+          url: https://api.pansy.dev/accounts/graphql

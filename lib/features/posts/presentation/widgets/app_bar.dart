@@ -1,7 +1,10 @@
+import 'dart:ui' show window;
+
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-final maxHeight = (Get.statusBarHeight / Get.pixelRatio) + 89.0;
-final minHeight = (Get.statusBarHeight / Get.pixelRatio) + 60.0;
+final _statusBarHeight = window.padding.top / window.devicePixelRatio;
+final _maxHeight = _statusBarHeight + 89.0;
+final _minHeight = _statusBarHeight + 60.0;
 
 class UAppBar extends SliverPersistentHeaderDelegate {
   const UAppBar({
@@ -20,12 +23,12 @@ class UAppBar extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final offset = shrinkOffset / maxHeight;
+    final offset = shrinkOffset / _maxHeight;
 
     return SafeArea(
       child: Align(
         alignment: Alignment.topRight,
-        child: _UAppBarBody(
+        child: _UAppBarScaffold(
           value: offset,
           onScrollToUp: onScrollToUp,
         ),
@@ -34,17 +37,17 @@ class UAppBar extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => maxHeight;
+  double get maxExtent => _maxHeight;
 
   @override
-  double get minExtent => minHeight;
+  double get minExtent => _minHeight;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }
 
-class _UAppBarBody extends StatefulWidget {
-  const _UAppBarBody({
+class _UAppBarScaffold extends StatefulWidget {
+  const _UAppBarScaffold({
     Key? key,
     required this.value,
     this.onScrollToUp,
@@ -54,20 +57,22 @@ class _UAppBarBody extends StatefulWidget {
   final VoidCallback? onScrollToUp;
 
   @override
-  _UAppBarBodyState createState() => _UAppBarBodyState();
+  _UAppBarScaffoldState createState() => _UAppBarScaffoldState();
 }
 
-class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
+class _UAppBarScaffoldState extends State<_UAppBarScaffold>
+    with AnimationMixin {
   late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
+    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
     _opacityAnimation = 1.0.tweenTo(-5.5).animatedBy(controller);
     super.initState();
   }
 
   @override
-  void didUpdateWidget(_UAppBarBody oldWidget) {
+  void didUpdateWidget(_UAppBarScaffold oldWidget) {
     super.didUpdateWidget(oldWidget);
     controller.value = widget.value;
   }
@@ -81,26 +86,33 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
         margin: DesignConstants.padding.copyWith(bottom: 0),
         padding: EdgeInsets.zero,
       ),
-      clipBehavior: Clip.antiAlias,
       onPressed: isMinimized ? widget.onScrollToUp : null,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+        duration: 500.milliseconds,
         curve: Curves.fastLinearToSlowEaseIn,
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         width: isMinimized ? 60 : context.width,
-        height: isMinimized ? 41 : maxHeight,
+        height: isMinimized ? 41 : _maxHeight,
         child: Stack(
           children: [
             FadeTransition(
               opacity: _opacityAnimation,
-              child: _buildBody(context),
+              child: _UAppBarBody(),
             ),
             Visibility(
               visible: controller.value > 0.19,
               child: AnimatedOpacity(
                 opacity: isMinimized ? 1 : 0,
-                duration: Duration(milliseconds: 300),
+                duration: 300.milliseconds,
                 curve: Curves.fastLinearToSlowEaseIn,
-                child: _buildBackButton(),
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_upward_sharp,
+                    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+                    size: 20,
+                  ),
+                ),
               ),
             ),
           ],
@@ -108,17 +120,13 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
       ),
     );
   }
+}
 
-  Widget _buildBackButton() {
-    return Center(
-      child: Icon(
-        Icons.arrow_upward_sharp,
-        size: 20,
-      ),
-    );
-  }
+class _UAppBarBody extends StatelessWidget {
+  const _UAppBarBody({Key? key}) : super(key: key);
 
-  Widget _buildBody(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: DesignConstants.paddingAlt.copyWith(bottom: 0),
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -130,14 +138,15 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.homePageTitle.get(),
+                    localizations.shetter.home_page_title,
                     style: context.textTheme.headline6,
                   ),
                   SizedBox(height: 2),
                   Text(
                     state.when(
-                      authenticated: (userInfo) => "@${userInfo.username}",
-                      unauthenticated: () => Strings.unauthenticated.get(),
+                      authenticated: (userInfo) => '@${userInfo.username}',
+                      unauthenticated: () =>
+                          localizations.shetter.unauthenticated,
                     ),
                     style: context.textTheme.subtitle2?.copyWith(
                       fontSize: 13,
@@ -156,7 +165,7 @@ class _UAppBarBodyState extends State<_UAppBarBody> with AnimationMixin {
                     size: 22,
                   ),
                   style: UIconButtonStyle(padding: DesignConstants.padding5),
-                  tooltip: Strings.logout.get(),
+                  tooltip: localizations.shetter.logout,
                   onPressed: context.read<AuthBloc>().logout,
                 ),
               ),

@@ -6,44 +6,46 @@ class UPreloader extends StatelessWidget {
     Key? key,
     this.visible = true,
     this.failure,
+    this.onTryAgain,
   }) : super(key: key);
 
   final bool visible;
   final Failure? failure;
+  final VoidCallback? onTryAgain;
 
   @override
   Widget build(BuildContext context) {
     Widget child;
 
     if (failure != null) {
-      child = _buildFailureMessage(context);
+      child = Column(
+        children: [
+          Text(
+            localizations.failureLocalizer.localize(failure!),
+            textAlign: TextAlign.center,
+          ),
+          if (onTryAgain != null) ...[
+            // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+            SizedBox(height: 15),
+            UButton(
+              onPressed: onTryAgain!,
+              child: Text(localizations.shetter.try_again_action),
+            ),
+          ],
+        ],
+      );
     } else if (this.visible) {
       child = CupertinoActivityIndicator();
     } else {
-      return Container();
+      return SizedBox();
     }
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(35).copyWith(top: 45),
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+        padding: EdgeInsets.all(35).copyWith(top: 45),
         child: child,
       ),
-    );
-  }
-
-  Widget _buildFailureMessage(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          FailureLocalizer.localize(failure!),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 15),
-        UButton(
-          onPressed: context.read<PostListBloc>().retry,
-          child: Text(Strings.tryAgainAction.get()),
-        ),
-      ],
     );
   }
 }

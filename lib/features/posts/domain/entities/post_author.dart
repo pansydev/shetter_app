@@ -8,5 +8,6 @@ class PostAuthor with _$PostAuthor {
     required String id,
     required String username,
     required bool isBot,
+    required int totalPosts,
   }) = _PostAuthor;
 }

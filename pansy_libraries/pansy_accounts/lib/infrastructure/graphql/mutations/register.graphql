@@ -1,0 +1,19 @@
+mutation Register(
+  $username: String!
+  $password: String!
+  $audience: SessionAudience!
+) {
+  register(username: $username, password: $password, audience: $audience) {
+    __typename
+
+    ... on TokenPairOperationSuccessResult {
+      result {
+        ...TokenPair
+      }
+    }
+
+    ... on OperationFailureResult {
+      ...OperationFailureResult
+    }
+  }
+}

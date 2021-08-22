@@ -1,0 +1,7 @@
+fragment PostOperationResult on PostOperationResult {
+  __typename
+
+  ... on OperationFailureResult {
+    ...OperationFailureResult
+  }
+}

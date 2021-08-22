@@ -1,0 +1,25 @@
+home_page_title: Shetter
+post_form_create_action: Создать пост
+post_form_edit_action: Редактировать пост
+try_again_action: Попробовать снова
+
+error: Ошибка
+error_message(String message): "Ошибка: $message"
+
+unsupported_attachment: неподдерживаемое вложение
+
+logout: Выйти из аккаунта
+unauthenticated: Не авторизован
+
+write_a_message: Введите сообщение...
+actions: Действия
+copy_text: Скопировать текст
+
+time_at(String time): ", в $time"
+time_today_at(String time): "сегодня, в $time"
+time_yesterday_at(String time): "вчера, в $time"
+
+total_posts(int totalPosts): "Всего постов: $totalPosts"
+profile: Профиль
+
+change_history: История изменений

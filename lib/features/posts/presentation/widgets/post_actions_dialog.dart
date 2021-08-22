@@ -1,111 +1,76 @@
-import 'package:flutter/services.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
-class PostActionsDialog extends UDialogWidget {
-  PostActionsDialog({
+class PostActionsDialog extends StatelessWidget {
+  const PostActionsDialog(
+    this.post, {
     Key? key,
-    required this.post,
-  }) : super(key: key, title: Strings.actions.get());
+  }) : super(key: key);
 
   final Post post;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (post.author != null) ...[
-          _UserProfile(post.author!),
-          Divider(),
-        ],
-        UListTile(
-          icon: Icon(Icons.copy),
-          child: Text(Strings.copyText.get()),
-          onPressed: () => _copy(context),
-        )
-      ],
-    );
-  }
-
-  void _copy(BuildContext context) {
-    Clipboard.setData(ClipboardData(text: post.text));
-    Navigator.pop(context);
-  }
-}
-
-class _UserProfile extends StatelessWidget {
-  const _UserProfile(
-    this.author, {
-    Key? key,
-  }) : super(key: key);
-
-  final PostAuthor author;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 8, bottom: 15),
-      child: Row(
+    return UDialog(
+      title: localizations.shetter.actions,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          CircleAvatar(
-            child: Text(
-              author.username.substring(0, 2).toUpperCase(),
-              style: context.textTheme.bodyText1,
-            ),
+          UserProfile(post.author),
+          Divider(),
+          _EditButton(post),
+          UListTile(
+            icon: Icon(Icons.copy),
+            onPressed: () => _copy(context),
+            child: Text(localizations.shetter.copy_text),
           ),
-          SizedBox(width: 8),
-          Expanded(child: _UserProfileUsername(author)),
+          if (post.lastModificationTime != null)
+            UListTile(
+              icon: Icon(Icons.history),
+              onPressed: () => UDialog.show(context, PostHistoryDialog(post)),
+              child: Text(localizations.shetter.change_history),
+            ),
         ],
       ),
     );
   }
-}
 
-class _UserProfileUsername extends StatelessWidget {
-  const _UserProfileUsername(
-    this.author, {
-    Key? key,
-  }) : super(key: key);
-
-  final PostAuthor author;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _CopytableText(
-          author.username,
-          style: context.textTheme.bodyText1,
-        ),
-        SizedBox(height: 3),
-        _CopytableText(
-          author.id,
-          style: context.textTheme.overline,
-        )
-      ],
+  void _copy(BuildContext context) {
+    Clipboard.setData(
+      ClipboardData(
+        text: post.currentVersion.textTokens.map((e) => e.text).join(),
+      ),
     );
+    Navigator.pop(context);
   }
 }
 
-class _CopytableText extends StatelessWidget {
-  const _CopytableText(
-    this.data, {
+class _EditButton extends StatelessWidget {
+  const _EditButton(
+    this.post, {
     Key? key,
-    this.style,
   }) : super(key: key);
 
-  final String data;
-  final TextStyle? style;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
-    return UPressable(
-      showBorder: true,
-      onLongPress: () => Clipboard.setData(ClipboardData(text: data)),
-      child: Text(
-        data,
-        style: style,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) => state.maybeWhen(
+        authenticated: (userInfo) {
+          return Visibility(
+            visible: post.author.username == userInfo.username,
+            child: UListTile(
+              icon: Icon(Icons.edit),
+              onPressed: () => UDialog.show(
+                context,
+                PostFormDialog(editablePost: post),
+              ),
+              child: Text(localizations.shetter.post_form_edit_action),
+            ),
+          );
+        },
+        orElse: () => SizedBox(),
       ),
     );
   }

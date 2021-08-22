@@ -1,0 +1,17 @@
+fragment TextToken on TextToken {
+  __typename
+  text
+
+  ... on PlainTextToken {
+    text
+    modifiers
+  }
+
+  ... on MentionTextToken {
+    authorId
+  }
+
+  ... on LinkTextToken {
+    url
+  }
+}

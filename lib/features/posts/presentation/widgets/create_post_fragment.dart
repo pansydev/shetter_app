@@ -1,5 +1,4 @@
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 
 class CreatePostFragment extends StatelessWidget {
   const CreatePostFragment({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class CreatePostFragment extends StatelessWidget {
           lazySize: false,
           visible: state is AuthStateAuthenticated,
           child: UCard.outline(
-            onPressed: () => CreatePostDialog().show(context),
+            onPressed: () => UDialog.show(context, PostFormDialog()),
             style: UCardStyle(
               margin: EdgeInsets.symmetric(
                 horizontal: DesignConstants.paddingValue,
@@ -32,17 +31,20 @@ class _CreatePostFragmentBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
+      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       opacity: 0.7,
       child: SizedBox(
+        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         height: 25,
         child: IconTheme(
           data: context.theme.iconTheme.copyWith(
+            // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
             size: 22,
           ),
           child: Row(
             children: [
               Text(
-                Strings.writeAMessage.get(),
+                localizations.shetter.write_a_message,
                 style: context.textTheme.button,
               ),
               Spacer(),

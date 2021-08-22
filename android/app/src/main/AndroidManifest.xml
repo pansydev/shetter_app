@@ -9,6 +9,9 @@
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="https" />
         </intent>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
     </queries>
    <application
         android:label="shetter_app"

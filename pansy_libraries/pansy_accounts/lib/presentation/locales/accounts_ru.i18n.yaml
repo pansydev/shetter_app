@@ -1,0 +1,12 @@
+signin_button: Войти с помощью Pansy Accounts
+
+dialog:
+  username: Имя пользователя
+  password: Пароль
+  signin: Войти
+  signup: Зарегистрироваться
+
+failures:
+  Accounts_InvalidCredentials: Неправильный логин или пароль
+  Accounts_InvalidRefreshToken: Сессия завершена
+  Accounts_UsernameAlreadyTaken: Пользователь с таким именем уже существует

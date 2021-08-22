@@ -6,27 +6,29 @@ typedef PostListBuilder = Widget Function(Connection<Post>, [Failure?]);
 @injectable
 class PostListBloc extends Bloc<PostListEvent, PostListState> {
   PostListBloc(this._postRepository) : super(PostListState.empty()) {
-    add(PostListEvent.fetchPosts());
+    _postRepository
+        .subscribeToNewPosts()
+        .listen((post) => add(PostListEvent.postCreated(post)));
 
     _postRepository
-        .subsribeToPosts()
-        .listen((post) => add(PostListEvent.postCreated(post)));
+        .subscribeToEditedPosts()
+        .listen((post) => add(PostListEvent.postEdited(post)));
   }
 
   final PostRepository _postRepository;
 
-  static const int _pageSize = 35;
+  static const double minChildHeight = uPostMinHeight;
 
   @override
   Stream<PostListState> mapEventToState(PostListEvent event) {
     return event.when(
-      fetchPosts: () => state.maybeWhen(
-        empty: (_) => _fetchPosts(),
-        loaded: (connection, _) => _fetchPosts(connection),
+      fetchPosts: (size) => state.maybeWhen(
+        empty: (_) => _fetchPosts(size),
+        loaded: (connection, _) => _fetchPosts(size, connection),
         orElse: keep(state),
       ),
-      fetchMorePosts: () => state.maybeWhen(
-        loaded: (connection, _) => _fetchMorePosts(connection),
+      fetchMorePosts: (size) => state.maybeWhen(
+        loaded: (connection, _) => _fetchMorePosts(size, connection),
         orElse: keep(state),
       ),
       postCreated: (post) => state.maybeWhen(
@@ -35,33 +37,41 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         loadingMore: (connection) => _postCreated(post, connection),
         orElse: keep(state),
       ),
+      postEdited: (post) => state.maybeWhen(
+        loaded: (connection, failure) => _postEdited(post, connection, failure),
+        loadingMore: (connection) => _postEdited(post, connection),
+        orElse: keep(state),
+      ),
     );
   }
 
-  void fetchMore() {
-    add(PostListEvent.fetchMorePosts());
-  }
-
-  void retry() {
+  void fetchMore(int size) {
     if (state is PostListStateEmpty) {
-      return add(PostListEvent.fetchPosts());
+      return add(PostListEvent.fetchPosts(size));
     }
 
     if (state is PostListStateLoaded) {
-      return add(PostListEvent.fetchMorePosts());
+      return add(PostListEvent.fetchMorePosts(size));
     }
   }
 
-  Future<void> refresh() async {
-    add(PostListEvent.fetchPosts());
-    await stream.firstWhere((element) => element is PostListStateLoaded);
+  void retry(BuildContext context) {
+    final size = UPaginate.getPageSizeWithContext(
+      context,
+      minChildHeight: minChildHeight,
+    );
+
+    fetchMore(size);
   }
 
-  Stream<PostListState> _fetchPosts([Connection<Post>? connection]) async* {
+  Stream<PostListState> _fetchPosts(
+    int size, [
+    Connection<Post>? connection,
+  ]) async* {
     yield PostListState.loading(connection: connection);
 
     final nextConnectionStream = _postRepository.getPosts(
-      pageSize: _pageSize,
+      pageSize: size,
     );
 
     yield* nextConnectionStream.map((event) {
@@ -74,7 +84,10 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     });
   }
 
-  Stream<PostListState> _fetchMorePosts(Connection<Post> connection) async* {
+  Stream<PostListState> _fetchMorePosts(
+    int size,
+    Connection<Post> connection,
+  ) async* {
     if (!connection.pageInfo.hasNextPage) {
       return;
     }
@@ -82,7 +95,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     yield PostListState.loading(connection: connection);
 
     final nextConnectionStream = _postRepository.getPosts(
-      pageSize: _pageSize,
+      pageSize: size,
       after: connection.pageInfo.endCursor,
     );
 
@@ -91,7 +104,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
         (l) => PostListState.loaded(connection: connection, failure: l),
         (r) => PostListState.loaded(
           connection: connection.copyWith(
-            nodes: connection.nodes.plus(r.nodes),
+            nodes: UnmodifiableListView(connection.nodes + r.nodes),
             pageInfo: r.pageInfo,
           ),
         ),
@@ -111,7 +124,28 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
       ),
       (r) => PostListState.loaded(
         connection: connection.copyWith(
-          nodes: connection.nodes.prependElement(r),
+          nodes: UnmodifiableListView(connection.nodes.prepend(r)),
+        ),
+        failure: failure,
+      ),
+    );
+  }
+
+  Stream<PostListState> _postEdited(
+    Either<Failure, Post> post,
+    Connection<Post> connection, [
+    Failure? failure,
+  ]) async* {
+    yield post.fold(
+      (l) => PostListState.loaded(
+        connection: connection,
+        failure: l,
+      ),
+      (edited) => PostListState.loaded(
+        connection: connection.copyWith(
+          nodes: UnmodifiableListView(
+            connection.nodes.map((old) => old.id == edited.id ? edited : old),
+          ),
         ),
         failure: failure,
       ),
@@ -123,8 +157,7 @@ class PostListBloc extends Bloc<PostListEvent, PostListState> {
     Stream<PostListEvent> events,
     transitionFn,
   ) {
-    return events
-        .debounceTime(const Duration(milliseconds: 100))
-        .switchMap(transitionFn);
+    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
+    return events.debounceTime(100.milliseconds).switchMap(transitionFn);
   }
 }

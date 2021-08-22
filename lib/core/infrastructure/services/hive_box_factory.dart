@@ -6,8 +6,6 @@ abstract class HiveBoxFactory {
   @preResolve
   @singleton
   Future<Box> createHiveBox() async {
-    await Hive.initFlutter();
-
     return Hive.openBox(InfrastructureConstants.appId);
   }
 }

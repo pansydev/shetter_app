@@ -1,46 +1,48 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:shetter_app/app/app.dart';
-
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-import 'package:shetter_app/features/auth/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application(
-    this.router,
-    this.provider,
-  ) : super(key: Key("Application"));
+  Application(this._serviceProvider) : super(key: Key('Application'));
 
-  final AppRouter router;
-  final ServiceProvider provider;
+  final ServiceProvider _serviceProvider;
+
+  final AppRouter _router = AppRouter();
+  final _supportedLocales = const [
+    Locale('en'),
+    Locale('ru'),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return PansyArchApplication(
+      serviceProvider: _serviceProvider,
       providers: [
-        provider.createBlocProvider<AuthFragmentBloc>(),
-        provider.createBlocProvider<PostListBloc>(),
-        provider.createBlocProvider<PostFormBloc>(),
-        provider.createBlocProvider<AuthBloc>()
+        _serviceProvider.createBlocProvider<AuthDialogBloc>(),
+        _serviceProvider.createBlocProvider<PostListBloc>(),
+        _serviceProvider.createBlocProvider<PostFormBloc>(),
+        _serviceProvider.createBlocProvider<AuthBloc>(),
       ],
-      child: GetMaterialApp.router(
-        routerDelegate: router.delegate(),
-        routeInformationParser: router.defaultRouteParser(),
-        debugShowCheckedModeBanner: false,
-        title: PresentationConstants.appName,
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: [
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          ...context.localizationsDelegates,
-        ],
-        locale: Locale('ru'),
-        theme: lightThemeData,
-        darkTheme: darkThemeData,
+      child: UDesign(
+        constraints: DesignConstants.constraints,
+        child: MaterialApp.router(
+          routerDelegate: _router.delegate(),
+          routeInformationParser: _router.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+          title: PresentationConstants.appName,
+          localizationsDelegates: [
+            PansyLocalizationDelegate(_supportedLocales),
+            PansyUILocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: _supportedLocales,
+          locale: Locale('ru'),
+          theme: themeData(),
+        ),
       ),
     );
   }

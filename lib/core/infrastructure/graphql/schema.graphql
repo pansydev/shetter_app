@@ -1,16 +1,9 @@
 """
-The `@defer` directive may be provided for fragment spreads and inline fragments
-to inform the executor to delay the execution of the current fragment to
-indicate deprioritization of the current fragment. A query with `@defer`
-directive will cause the request to potentially return multiple responses, where
-non-deferred data is delivered in the initial response and data deferred is
-delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`.
+The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`.
 """
 directive @defer(
   """
-  If this argument label has a value other than null, it will be passed on to
-  the result of this defer directive. This label is intended to give client
-  applications a way to identify to which fragment a deferred result belongs to.
+  If this argument label has a value other than null, it will be passed on to the result of this defer directive. This label is intended to give client applications a way to identify to which fragment a deferred result belongs to.
   """
   label: String
 
@@ -21,16 +14,11 @@ directive @defer(
 ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 """
-The `@stream` directive may be provided for a field of `List` type so that the
-backend can leverage technology such as asynchronous iterators to provide a
-partial list in the initial response, and additional list items in subsequent
-responses. `@include` and `@skip` take precedence over `@stream`.
+The `@stream` directive may be provided for a field of `List` type so that the backend can leverage technology such as asynchronous iterators to provide a partial list in the initial response, and additional list items in subsequent responses. `@include` and `@skip` take precedence over `@stream`.
 """
 directive @stream(
   """
-  If this argument label has a value other than null, it will be passed on to
-  the result of this stream directive. This label is intended to give client
-  applications a way to identify to which fragment a streamed result belongs to.
+  If this argument label has a value other than null, it will be passed on to the result of this stream directive. This label is intended to give client applications a way to identify to which fragment a streamed result belongs to.
   """
   label: String
 
@@ -57,41 +45,220 @@ directive @authorize(
   roles: [String!]
 
   """
-  Defines when when the resolver shall be executed.By default the resolver is
-  executed after the policy has determined that the current user is allowed to
-  access the field.
+  Defines when when the resolver shall be executed.By default the resolver is executed after the policy has determined that the current user is allowed to access the field.
   """
   apply: ApplyPolicy! = BEFORE_RESOLVER
-) on SCHEMA | OBJECT | FIELD_DEFINITION
+) repeatable on SCHEMA | OBJECT | FIELD_DEFINITION
+
+type OperationFailureResult {
+  code: String!
+}
+
+type PostVersion {
+  originalText: String!
+  creationTime: DateTime!
+  textTokens: [TextToken!]!
+  images: [PostImage!]!
+}
+
+input EditPostInput {
+  text: String
+  images: [PostImageInput!]
+}
+
+input CreatePostInput {
+  text: String
+  images: [Upload!]
+}
+
+input PostImageInput {
+  id: UUID
+  file: Upload
+}
+
+union PostOperationResult = OperationFailureResult | PostOperationSuccessResult
+
+type PostOperationSuccessResult {
+  result: Post!
+}
+
+union PostAuthorOperationResult =
+    OperationFailureResult
+  | PostAuthorOperationSuccessResult
+
+type PostAuthorOperationSuccessResult {
+  result: PostAuthor!
+}
+
+interface TextToken {
+  text: String!
+}
+
+type PlainTextToken implements TextToken {
+  modifiers: [TextTokenModifier!]!
+  text: String!
+}
+
+type LinkTextToken implements TextToken {
+  url: URL!
+  text: String!
+}
+
+type MentionTextToken implements TextToken {
+  authorId: UUID!
+  text: String!
+}
+
+type Query {
+  posts(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostConnection
+  post(id: UUID!): Post
+  author(id: UUID!): PostAuthor
+}
+
+type Mutation {
+  createPost(input: CreatePostInput!): PostOperationResult!
+  editPost(postId: UUID!, input: EditPostInput!): PostOperationResult!
+}
+
+type Subscription {
+  postCreated: Post!
+  postEdited: Post!
+}
+
+type Post {
+  previousVersions(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostVersionConnection
+  authorId: UUID!
+  creationTime: DateTime!
+  lastModificationTime: DateTime
+  author: PostAuthor!
+  currentVersion: PostVersion!
+  id: UUID!
+}
+
+type PostAuthor {
+  posts(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostConnection
+  username: String!
+  id: UUID!
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+enum TextTokenModifier {
+  BOLD
+  ITALIC
+  UNDERLINE
+  STRIKETHROUGH
+  CODE
+}
 
 enum ApplyPolicy {
   BEFORE_RESOLVER
   AFTER_RESOLVER
 }
 
-type AuthenticationFailureResult {
-  code: String!
-}
+"""
+A connection to a list of items.
+"""
+type PostVersionConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
 
-union AuthenticationResult =
-    AuthenticationSuccessResult
-  | AuthenticationFailureResult
+  """
+  A list of edges.
+  """
+  edges: [PostVersionEdge!]
 
-type AuthenticationSuccessResult {
-  tokens: TokenPairDto!
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [PostVersion!]
+  totalCount: Int!
 }
 
 """
-The `Long` scalar type represents non-fractional signed whole 64-bit numeric
-values. Long can represent values between -(2^63) and 2^63 - 1.
+A connection to a list of items.
 """
-scalar Long
+type PostConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
 
-type Mutation {
-  createPost(input: PostInput!): Post!
-  auth(username: String!, password: String!): AuthenticationResult!
-  refresh(refreshToken: String!): RefreshResult!
-  register(username: String!, password: String!): RegistrationResult!
+  """
+  A list of edges.
+  """
+  edges: [PostEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [Post!]
+  totalCount: Int!
 }
 
 """
@@ -119,33 +286,19 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
-  text: String!
-  creationTime: Long!
-  author: User
-  mentionedUsers: [User!]!
-  id: Uuid!
-}
-
 """
-A connection to a list of items.
+An edge in a connection.
 """
-type PostConnection {
+type PostVersionEdge {
   """
-  Information to aid in pagination.
+  A cursor for use in pagination.
   """
-  pageInfo: PageInfo!
+  cursor: String!
 
   """
-  A list of edges.
+  The item at the end of the edge.
   """
-  edges: [PostEdge!]
-
-  """
-  A flattened list of the nodes.
-  """
-  nodes: [Post!]
-  totalCount: Int!
+  node: PostVersion!
 }
 
 """
@@ -163,49 +316,17 @@ type PostEdge {
   node: Post!
 }
 
-input PostInput {
-  text: String!
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime
+
+type PostImage {
+  id: UUID!
+  url: URL!
+  blurHash: String!
 }
 
-type Query {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  user(id: Uuid!): User
-}
+scalar UUID
 
-type RefreshFailureResult {
-  code: String!
-}
-
-union RefreshResult = RefreshSuccessResult | RefreshFailureResult
-
-type RefreshSuccessResult {
-  tokens: TokenPairDto!
-}
-
-type RegistrationFailureResult {
-  code: String!
-}
-
-union RegistrationResult = RegistrationSuccessResult | RegistrationFailureResult
-
-type RegistrationSuccessResult {
-  tokens: TokenPairDto!
-}
-
-type Subscription {
-  postCreated: Post!
-}
-
-type TokenPairDto {
-  accessToken: String!
-  refreshToken: String!
-}
-
-type User {
-  posts(first: Int, after: String, last: Int, before: String): PostConnection
-  username: String!
-  isBot: Boolean!
-  id: Uuid!
-}
-
-scalar Uuid
+scalar URL

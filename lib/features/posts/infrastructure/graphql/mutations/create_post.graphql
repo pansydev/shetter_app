@@ -1,5 +1,5 @@
-mutation CreatePost($input: PostInput!) {
-  createPost(input: $input) {
-    ...Post
+mutation CreatePost($text: String!, $images: [Upload!]!) {
+  createPost(input: { text: $text, images: $images }) {
+    ...PostOperationResult
   }
 }
