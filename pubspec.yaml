@@ -37,7 +37,9 @@ dev_dependencies:
       path: graphql_codegen
 
   ubuntu_font_flutter:
+
   melos:
+  cider:
 
 flutter:
   uses-material-design: true
