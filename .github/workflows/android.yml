@@ -18,13 +18,22 @@ jobs:
         with:
           channel: "stable"
 
+      - name: Activate melos
+        run: flutter pub global activate melos
+
+      - name: Get dependencies (packages)
+        working-directory: ./pansy_libraries
+        run: melos exec 'flutter pub get'
+
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Code generation (packages)
+        working-directory: ./pansy_libraries
+        run: melos exec 'flutter pub run build_runner build --delete-conflicting-outputs && exit'
+
       - name: Code generation
-        run: |
-          cd pansy_libraries && flutter pub run melos exec 'flutter pub run build_runner build --delete-conflicting-outputs' && cd ../
-          flutter pub run build_runner build --delete-conflicting-outputs
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       # - name: Passing tests
       #   run: flutter test
