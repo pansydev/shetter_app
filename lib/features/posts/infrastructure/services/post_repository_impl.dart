@@ -90,6 +90,9 @@ class PostRepositoryImpl implements PostRepository {
     return mapResultStream(
       stream,
       (event) {
+        // TODO(exeteres): Update cache rather than clear
+        _client.cache.store.reset();
+
         final result = SubscriptionPostCreated.fromJson(event.data!);
         return result.postCreated.toEntity();
       },
@@ -112,6 +115,9 @@ class PostRepositoryImpl implements PostRepository {
     return mapResultStream(
       stream,
       (event) {
+        // TODO(exeteres): Update cache rather than clear
+        _client.cache.store.reset();
+
         final result = SubscriptionPostEdited.fromJson(event.data!);
         return result.postEdited.toEntity();
       },

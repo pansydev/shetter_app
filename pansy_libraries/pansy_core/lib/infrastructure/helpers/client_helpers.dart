@@ -1,8 +1,6 @@
 import 'package:pansy_core/domain/domain.dart';
 import 'package:pansy_core/infrastructure/exports.dart';
 
-void unawaited(Future future) {}
-
 Stream<Either<Failure, T>> mapObservableQuery<T extends Object>(
   ObservableQuery query,
   T Function(QueryResult) resultTransformer, [
@@ -11,21 +9,8 @@ Stream<Either<Failure, T>> mapObservableQuery<T extends Object>(
   await for (final queryResult in query.stream) {
     if (queryResult.data == null) continue;
 
-    if (queryResult.hasException) {
-      onException?.call(queryResult.exception!);
-
-      final exception = queryResult.exception!.linkException!.originalException;
-
-      if (exception is PartialDataException && !queryResult.isLoading) {
-        log('Rerunning query because of partial data');
-
-        unawaited(query.refetch());
-        continue;
-      }
-    }
-
     try {
-      yield mapResult(queryResult, resultTransformer);
+      yield mapResult(queryResult, resultTransformer, onException);
     } on Exception {
       yield Left(ServerFailure());
     }

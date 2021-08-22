@@ -41,10 +41,13 @@ class AuthRepositoryImpl implements AuthRepository {
     String username,
     String password,
   ) async {
+    final pansyAccountsOptions = _optionsManager.get<PansyAccountsOptions>();
+
     final options = GQLOptionsMutationRegister(
       variables: VariablesMutationRegister(
         username: username,
         password: password,
+        audience: pansyAccountsOptions.audience,
       ),
     );
 

@@ -25,11 +25,11 @@ class AuthLinkFactoryImpl implements AuthLinkFactory {
         return null;
       }
 
-      final isRefreshError = response.errors!.any(
+      final shouldRefresh = response.errors!.any(
         (element) => element.extensions?['code'] == 'AUTH_NOT_AUTHENTICATED',
       );
 
-      if (!isRefreshError) {
+      if (!shouldRefresh) {
         return null;
       }
 
