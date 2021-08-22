@@ -1,5 +1,5 @@
 name: shetter_app
-version: 0.1.2
+version: 0.2.2
 publish_to: none
 description: Shetter App written in Flutter
 
@@ -37,6 +37,7 @@ dev_dependencies:
       path: graphql_codegen
 
   ubuntu_font_flutter:
+  melos:
 
 flutter:
   uses-material-design: true

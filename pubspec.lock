@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.0"
+  ansi_styles:
+    dependency: transitive
+    description:
+      name: ansi_styles
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1-dev.0"
   ansicolor:
     dependency: transitive
     description:
@@ -246,6 +253,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  conventional_commit:
+    dependency: transitive
+    description:
+      name: conventional_commit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1-dev.0"
   convert:
     dependency: transitive
     description:
@@ -648,6 +662,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.10"
+  melos:
+    dependency: "direct dev"
+    description:
+      name: melos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-dev.2"
   meta:
     dependency: transitive
     description:
@@ -662,6 +683,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  mustache_template:
+    dependency: transitive
+    description:
+      name: mustache_template
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   nested:
     dependency: transitive
     description:
@@ -837,6 +865,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  pubspec:
+    dependency: transitive
+    description:
+      name: pubspec
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   pubspec_parse:
     dependency: transitive
     description:
@@ -1003,6 +1038,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.1"
+  uri:
+    dependency: transitive
+    description:
+      name: uri
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   url_launcher:
     dependency: "direct main"
     description:
