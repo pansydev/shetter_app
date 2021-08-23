@@ -27,8 +27,11 @@ dev_dependencies:
   auto_route_generator:
   injectable_generator:
 
+  pansy_core:
+    path: pansy_libraries/packages/pansy_core
+
   pansy_accounts:
-    path: pansy_libraries/pansy_accounts
+    path: pansy_libraries/packages/pansy_accounts
 
   graphql_codegen:
     git:
@@ -96,28 +99,28 @@ index_generator:
 
     # Pansy libraries
 
-    - path: pansy_libraries/pansy_arch_core/lib/domain
-    - path: pansy_libraries/pansy_arch_core/lib/infrastructure
-    - path: pansy_libraries/pansy_arch_core/lib/presentation
+    - path: pansy_libraries/packages/pansy_arch_core/lib/domain
+    - path: pansy_libraries/packages/pansy_arch_core/lib/infrastructure
+    - path: pansy_libraries/packages/pansy_arch_core/lib/presentation
 
-    - path: pansy_libraries/pansy_arch_graphql/lib/domain
-    - path: pansy_libraries/pansy_arch_graphql/lib/infrastructure
+    - path: pansy_libraries/packages/pansy_arch_graphql/lib/domain
+    - path: pansy_libraries/packages/pansy_arch_graphql/lib/infrastructure
 
-    - path: pansy_libraries/pansy_arch_auth/lib/domain
-    - path: pansy_libraries/pansy_arch_auth/lib/infrastructure
+    - path: pansy_libraries/packages/pansy_arch_auth/lib/domain
+    - path: pansy_libraries/packages/pansy_arch_auth/lib/infrastructure
 
-    - path: pansy_libraries/pansy_core/lib/domain
-    - path: pansy_libraries/pansy_core/lib/infrastructure
-    - path: pansy_libraries/pansy_core/lib/presentation
+    - path: pansy_libraries/packages/pansy_core/lib/domain
+    - path: pansy_libraries/packages/pansy_core/lib/infrastructure
+    - path: pansy_libraries/packages/pansy_core/lib/presentation
 
-    - path: pansy_libraries/pansy_accounts/lib/domain
-    - path: pansy_libraries/pansy_accounts/lib/infrastructure
-    - path: pansy_libraries/pansy_accounts/lib/presentation
+    - path: pansy_libraries/packages/pansy_accounts/lib/domain
+    - path: pansy_libraries/packages/pansy_accounts/lib/infrastructure
+    - path: pansy_libraries/packages/pansy_accounts/lib/presentation
 
-    - path: pansy_libraries/pansy_ui/lib
+    - path: pansy_libraries/packages/pansy_ui/lib
       name: pansy_ui
 
-    - path: pansy_libraries/pansy_localization/lib
+    - path: pansy_libraries/packages/pansy_localization/lib
       name: pansy_localization
 
 cider:

@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  change:
+    dependency: transitive
+    description:
+      name: change
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   characters:
     dependency: transitive
     description:
@@ -183,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  cider:
+    dependency: "direct dev"
+    description:
+      name: cider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   cli_util:
     dependency: transitive
     description:
@@ -648,6 +662,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.4"
+  klizma:
+    dependency: transitive
+    description:
+      name: klizma
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   logging:
     dependency: transitive
     description:
@@ -655,6 +676,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  markdown:
+    dependency: transitive
+    description:
+      name: markdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
+  marker:
+    dependency: transitive
+    description:
+      name: marker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   matcher:
     dependency: transitive
     description:
@@ -721,49 +756,49 @@ packages:
   pansy_accounts:
     dependency: "direct dev"
     description:
-      path: "pansy_libraries/pansy_accounts"
+      path: "pansy_libraries/packages/pansy_accounts"
       relative: true
     source: path
     version: "0.0.0"
   pansy_arch_auth:
     dependency: transitive
     description:
-      path: "pansy_libraries/pansy_arch_auth"
+      path: "pansy_libraries/packages/pansy_arch_auth"
       relative: true
     source: path
     version: "0.0.0"
   pansy_arch_core:
     dependency: transitive
     description:
-      path: "pansy_libraries/pansy_arch_core"
+      path: "pansy_libraries/packages/pansy_arch_core"
       relative: true
     source: path
     version: "0.0.0"
   pansy_arch_graphql:
     dependency: transitive
     description:
-      path: "pansy_libraries/pansy_arch_graphql"
+      path: "pansy_libraries/packages/pansy_arch_graphql"
       relative: true
     source: path
     version: "0.0.0"
   pansy_core:
-    dependency: transitive
+    dependency: "direct dev"
     description:
-      path: "pansy_libraries/pansy_core"
+      path: "pansy_libraries/packages/pansy_core"
       relative: true
     source: path
     version: "0.0.0"
   pansy_localization:
     dependency: transitive
     description:
-      path: "pansy_libraries/pansy_localization"
+      path: "pansy_libraries/packages/pansy_localization"
       relative: true
     source: path
     version: "0.0.0"
   pansy_ui:
     dependency: transitive
     description:
-      path: "pansy_libraries/pansy_ui"
+      path: "pansy_libraries/packages/pansy_ui"
       relative: true
     source: path
     version: "0.0.0"
@@ -900,6 +935,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  rfc_6901:
+    dependency: transitive
+    description:
+      name: rfc_6901
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   rxdart:
     dependency: transitive
     description:
@@ -1101,6 +1143,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  version_manipulation:
+    dependency: transitive
+    description:
+      name: version_manipulation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   watcher:
     dependency: transitive
     description:
