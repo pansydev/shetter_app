@@ -1,4 +1,0 @@
-unknown_failure: Unknown error
-unknown_failure_with_code(String code): "Unknown error (code: $code)"
-server_failure_message: An error occurred while requesting the server
-cache_failure_message: The device is offline and the data cannot be displayed

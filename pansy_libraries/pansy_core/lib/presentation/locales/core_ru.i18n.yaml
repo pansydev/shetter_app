@@ -1,4 +1,0 @@
-unknown_failure: Неизвестная ошибка
-unknown_failure_with_code(String code): "Неизвестная ошибка (code: $code)"
-server_failure_message: Произошла ошибка при обращении к серверу
-cache_failure_message: Устройство не подключено к интернету, данные не могут быть отображены

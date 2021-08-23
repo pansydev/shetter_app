@@ -1,1 +1,0 @@
-number_of_number(int one, int two): "$one at $two"
