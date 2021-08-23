@@ -1,0 +1,3 @@
+[submodule "pansy_libraries"]
+	path = pansy_libraries
+	url = https://github.com/pansydev/pansy_libraries
