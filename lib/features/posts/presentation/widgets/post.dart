@@ -92,7 +92,7 @@ class _PostTitle extends StatelessWidget {
                 margin: EdgeInsets.only(left: 5),
                 padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
                 decoration: BoxDecoration(
-                  color: context.theme.accentColor.withOpacity(0.6),
+                  color: context.colorScheme.secondary.withOpacity(0.6),
                   borderRadius: DesignConstants.borderRadiusCircle,
                 ),
                 child: Text(
@@ -271,7 +271,9 @@ InlineSpan _mentionTextSpan(
         margin: EdgeInsets.only(right: 2),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
         decoration: BoxDecoration(
-          color: !isMe ? context.theme.primaryColor : context.theme.accentColor,
+          color: !isMe
+              ? context.theme.primaryColor
+              : context.colorScheme.secondary,
           borderRadius: DesignConstants.borderRadiusCircle,
           border: Border.all(color: context.theme.dividerColor),
         ),
