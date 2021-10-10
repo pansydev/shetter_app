@@ -10,5 +10,6 @@ class Post with _$Post {
     required DateTime creationTime,
     required DateTime? lastModificationTime,
     required PostVersion currentVersion,
+    required PostLikes likes,
   }) = _Post;
 }

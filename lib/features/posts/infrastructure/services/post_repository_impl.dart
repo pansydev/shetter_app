@@ -56,6 +56,26 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, PostLikes>> likePost(
+    String postId,
+  ) async {
+    await Future.delayed(Duration(seconds: 1));
+    return Right(
+      PostLikes(isLiked: true, count: 10),
+    );
+  }
+
+  @override
+  Future<Either<Failure, PostLikes>> dislikePost(
+    String postId,
+  ) async {
+    await Future.delayed(Duration(seconds: 1));
+    return Right(
+      PostLikes(isLiked: false, count: 9),
+    );
+  }
+
+  @override
   Stream<Either<Failure, Connection<Post>>> getPosts({
     required int pageSize,
     String? after,

@@ -9,6 +9,9 @@ abstract class PostRepository {
   Future<Option<Failure>> createPost(CreatePostInput input);
   Future<Option<Failure>> editPost(String postId, EditPostInput input);
 
+  Future<Either<Failure, PostLikes>> likePost(String postId);
+  Future<Either<Failure, PostLikes>> dislikePost(String postId);
+
   Stream<Either<Failure, Post>> subscribeToNewPosts();
   Stream<Either<Failure, Post>> subscribeToEditedPosts();
 

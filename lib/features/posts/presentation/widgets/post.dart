@@ -34,6 +34,9 @@ class UPost extends StatelessWidget {
           _PostText(post.currentVersion).sliverBox,
         if (version.images.isNotEmpty)
           _PostImages(version.images).sliverBox.sliverPaddingZero,
+        _PostLikes(post.likes)
+            .sliverBox
+            .sliverPadding(DesignConstants.paddingMini),
       ],
     );
   }
@@ -308,9 +311,9 @@ class _PostImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80 + 15 * 2,
+      height: 80 + 9 * 2,
       child: ListView.separated(
-        padding: DesignConstants.padding,
+        padding: DesignConstants.padding.copyWith(bottom: 0),
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) => _PostImagesItem(images, index),
@@ -345,5 +348,68 @@ class _PostImagesItem extends StatelessWidget {
       hero: true,
       galleryImages: images.map((e) => UNetworkImageProvider(e.url)).toList(),
     );
+  }
+}
+
+class _PostLikes extends StatefulWidget {
+  const _PostLikes(
+    this.likes, {
+    Key? key,
+  }) : super(key: key);
+
+  final PostLikes likes;
+
+  @override
+  State<_PostLikes> createState() => _PostLikesState();
+}
+
+class _PostLikesState extends State<_PostLikes> {
+  bool liked = false;
+  int count = 0;
+  bool locked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    liked = widget.likes.isLiked;
+    count = widget.likes.count;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        UChip(
+          icon: Icon(
+            !liked ? Icons.favorite_border : Icons.favorite,
+            size: 14,
+          ),
+          outline: !liked,
+          style: !liked
+              ? UChipStyle(
+                  borderColor: context.theme.dividerColor,
+                  backgroundColor: context.theme.primaryColor,
+                )
+              : UChipStyle(backgroundColor: context.theme.buttonColor),
+          onPressed: like,
+          child: Text('$count'),
+        ),
+      ],
+    );
+  }
+
+  void like() {
+    if (locked) return;
+
+    // TODO(exeteres): add repository logic
+
+    setState(() {
+      locked = true;
+      liked = !liked;
+      if (liked) count++;
+      if (!liked) count--;
+    });
+
+    Future.delayed(500.milliseconds).then((value) => locked = false);
   }
 }
