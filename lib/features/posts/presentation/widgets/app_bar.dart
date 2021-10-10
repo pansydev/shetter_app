@@ -66,7 +66,6 @@ class _UAppBarScaffoldState extends State<_UAppBarScaffold>
 
   @override
   void initState() {
-    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
     _opacityAnimation = 1.0.tweenTo(-5.5).animatedBy(controller);
     super.initState();
   }
@@ -88,10 +87,8 @@ class _UAppBarScaffoldState extends State<_UAppBarScaffold>
       ),
       onPressed: isMinimized ? widget.onScrollToUp : null,
       child: AnimatedContainer(
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         duration: 500.milliseconds,
         curve: Curves.fastLinearToSlowEaseIn,
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         width: isMinimized ? 60 : context.width,
         height: isMinimized ? 41 : _maxHeight,
         child: Stack(
@@ -109,7 +106,6 @@ class _UAppBarScaffoldState extends State<_UAppBarScaffold>
                 child: Center(
                   child: Icon(
                     Icons.arrow_upward_sharp,
-                    // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
                     size: 20,
                   ),
                 ),

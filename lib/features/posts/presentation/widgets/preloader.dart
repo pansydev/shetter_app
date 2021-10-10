@@ -25,7 +25,6 @@ class UPreloader extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (onTryAgain != null) ...[
-            // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
             SizedBox(height: 15),
             UButton(
               onPressed: onTryAgain!,
@@ -42,7 +41,6 @@ class UPreloader extends StatelessWidget {
 
     return Center(
       child: Padding(
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         padding: EdgeInsets.all(35).copyWith(top: 45),
         child: child,
       ),

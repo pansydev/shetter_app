@@ -21,7 +21,6 @@ class UPost extends StatelessWidget {
     return UCard(
       style: UCardStyle(constraints: BoxConstraints(maxHeight: uPostMaxHeight)),
       trailing: UIconButton(
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         Icon(Icons.more_vert, size: 16),
         onPressed: () => UDialog.show(context, PostActionsDialog(post)),
       ),
@@ -104,7 +103,6 @@ class _PostTitle extends StatelessWidget {
           TextSpan(
             text: '  •  ${creationTime.toFormattedString()}',
             style: context.textTheme.subtitle2?.copyWith(
-              // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
               fontSize: 13,
               color: context.textTheme.subtitle2?.color?.withOpacity(0.5),
             ),
@@ -115,7 +113,6 @@ class _PostTitle extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 7),
                 child: Icon(
-                  // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
                   Icons.edit,
                   size: 12,
                   color: context.textTheme.subtitle2?.color?.withOpacity(0.8),
@@ -212,7 +209,6 @@ TextStyle _generateTextStyle(
 
       case TextTokenModifier.code:
         return context.textTheme.overline!.copyWith(
-          // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
           fontSize: 12,
           backgroundColor: context.theme.scaffoldBackgroundColor,
         );

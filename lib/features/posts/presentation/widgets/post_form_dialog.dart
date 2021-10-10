@@ -104,14 +104,12 @@ class _PostFormDialogImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       constraints: BoxConstraints(maxHeight: 80),
       child: ReorderableListView.builder(
         scrollDirection: Axis.horizontal,
         proxyDecorator: (child, _, animation) {
           return ScaleTransition(
             scale: animation.drive(
-              // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
               1.0.tweenTo(0.8).curved(Curves.easeInOutCubic),
             ),
             child: child,
@@ -156,7 +154,6 @@ class _PostFormDialogImagesItem extends StatelessWidget {
       image.fileImage != null
           ? UFileImageProvider(image.fileImage!)
           : UNetworkImageProvider(image.networkImage!.url),
-      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       width: 80,
       height: 80,
       onClose: () => removeImage(context),
@@ -174,7 +171,6 @@ class _PostFormDialogToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconTheme(
-      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       data: context.theme.iconTheme.copyWith(size: 22),
       child: Row(
         children: [

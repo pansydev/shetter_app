@@ -13,7 +13,6 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         top: 8,
         bottom: 15,
       ),

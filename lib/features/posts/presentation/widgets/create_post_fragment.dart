@@ -31,14 +31,11 @@ class _CreatePostFragmentBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
       opacity: 0.7,
       child: SizedBox(
-        // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
         height: 25,
         child: IconTheme(
           data: context.theme.iconTheme.copyWith(
-            // TODO(cirnok): magic numbers, https://github.com/pansydev/shetter_app/issues/29
             size: 22,
           ),
           child: Row(
