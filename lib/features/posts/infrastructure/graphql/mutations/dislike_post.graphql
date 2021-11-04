@@ -1,0 +1,5 @@
+mutation DislikePost($postId: UUID!) {
+  dislikePost(postId: $postId) {
+    ...OperationResult
+  }
+}

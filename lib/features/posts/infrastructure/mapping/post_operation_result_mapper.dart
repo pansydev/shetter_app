@@ -1,7 +1,7 @@
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:shetter_app/features/posts/infrastructure/infrastructure.dart';
 
-extension PostResultMapper on FragmentPostOperationResult {
+extension PostOperationResultMapper on FragmentPostOperationResult {
   Option<Failure> toEntity() {
     final result = this;
 
@@ -9,10 +9,6 @@ extension PostResultMapper on FragmentPostOperationResult {
       return Some(OperationFailure(result.code));
     }
 
-    if (result is FragmentPostOperationResult) {
-      return None();
-    }
-
-    throw Exception('Invalid result state');
+    return None();
   }
 }

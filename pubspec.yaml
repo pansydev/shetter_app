@@ -82,10 +82,10 @@ flutter:
         - asset: packages/ubuntu_font_flutter/Ubuntu-C.ttf
 
 index_generator:
-  filters:
-    - black: .*\.g\.dart$
-    - black: .*\.freezed\.dart$
-    - black: initializer.config.dart
+  exclude:
+    - "**.g.dart"
+    - "**.freezed.dart"
+    - initializer.config.dart
   indexes:
     - path: lib/app
 

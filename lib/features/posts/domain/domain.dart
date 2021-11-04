@@ -8,7 +8,7 @@ export 'entities/inputs/post_image_input.dart';
 export 'entities/post.dart';
 export 'entities/post_author.dart';
 export 'entities/post_image.dart';
-export 'entities/post_likes.dart';
+export 'entities/post_like.dart';
 export 'entities/post_version.dart';
 export 'entities/text_tokens/link_text_token.dart';
 export 'entities/text_tokens/mention_text_token.dart';

@@ -8,4 +8,8 @@ fragment Post on Post {
   author {
     ...PostAuthor
   }
+  isLiked
+  likes {
+    totalCount
+  }
 }

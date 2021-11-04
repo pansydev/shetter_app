@@ -11,7 +11,8 @@ extension PostMapper on FragmentPost {
           ? DateTime.parse(lastModificationTime!)
           : null,
       currentVersion: currentVersion.toEntity(),
-      likes: PostLikes(isLiked: false, count: 2),
+      isLiked: isLiked,
+      totalLikes: likes!.totalCount,
     );
   }
 }

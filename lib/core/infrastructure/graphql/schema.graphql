@@ -52,13 +52,25 @@ directive @authorize(
 
 type OperationFailureResult {
   code: String!
+  success: Boolean!
 }
+
+type OperationSuccessResult {
+  success: Boolean!
+}
+
+union OperationResult = OperationFailureResult | OperationSuccessResult
 
 type PostVersion {
   originalText: String!
   creationTime: DateTime!
   textTokens: [TextToken!]!
   images: [PostImage!]!
+}
+
+type PostLike {
+  authorId: UUID!
+  author: PostAuthor!
 }
 
 input EditPostInput {
@@ -80,6 +92,7 @@ union PostOperationResult = OperationFailureResult | PostOperationSuccessResult
 
 type PostOperationSuccessResult {
   result: Post!
+  success: Boolean!
 }
 
 union PostAuthorOperationResult =
@@ -88,6 +101,7 @@ union PostAuthorOperationResult =
 
 type PostAuthorOperationSuccessResult {
   result: PostAuthor!
+  success: Boolean!
 }
 
 interface TextToken {
@@ -138,6 +152,8 @@ type Query {
 type Mutation {
   createPost(input: CreatePostInput!): PostOperationResult!
   editPost(postId: UUID!, input: EditPostInput!): PostOperationResult!
+  likePost(postId: UUID!): OperationResult!
+  dislikePost(postId: UUID!): OperationResult!
 }
 
 type Subscription {
@@ -167,11 +183,33 @@ type Post {
     """
     before: String
   ): PostVersionConnection
+  likes(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): PostLikeConnection
   authorId: UUID!
   creationTime: DateTime!
   lastModificationTime: DateTime
   author: PostAuthor!
   currentVersion: PostVersion!
+  isLiked: Boolean!
   id: UUID!
 }
 
@@ -206,14 +244,6 @@ The `Upload` scalar type represents a file upload.
 """
 scalar Upload
 
-enum TextTokenModifier {
-  BOLD
-  ITALIC
-  UNDERLINE
-  STRIKETHROUGH
-  CODE
-}
-
 enum ApplyPolicy {
   BEFORE_RESOLVER
   AFTER_RESOLVER
@@ -237,6 +267,27 @@ type PostVersionConnection {
   A flattened list of the nodes.
   """
   nodes: [PostVersion!]
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type PostLikeConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [PostLikeEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [PostLike!]
   totalCount: Int!
 }
 
@@ -304,6 +355,21 @@ type PostVersionEdge {
 """
 An edge in a connection.
 """
+type PostLikeEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: PostLike!
+}
+
+"""
+An edge in a connection.
+"""
 type PostEdge {
   """
   A cursor for use in pagination.
@@ -328,5 +394,13 @@ type PostImage {
 }
 
 scalar UUID
+
+enum TextTokenModifier {
+  BOLD
+  ITALIC
+  UNDERLINE
+  STRIKETHROUGH
+  CODE
+}
 
 scalar URL

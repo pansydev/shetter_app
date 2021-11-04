@@ -1,0 +1,12 @@
+query PostLikes($postId: UUID!, $after: String, $pageSize: Int!) {
+  post(id: $postId) {
+    likes(first: $pageSize, after: $after) {
+      nodes {
+        ...PostLike
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}

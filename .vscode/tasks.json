@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "Generate indexes",
-      "command": "flutter pub run index_generator:main",
+      "command": "flutter pub run index_generator",
       "type": "shell",
       "args": [],
       "presentation": {

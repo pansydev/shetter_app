@@ -56,23 +56,43 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, PostLikes>> likePost(
+  Future<Option<Failure>> likePost(
     String postId,
   ) async {
-    await Future.delayed(Duration(seconds: 1));
-    return Right(
-      PostLikes(isLiked: true, count: 10),
+    final options = GQLOptionsMutationLikePost(
+      variables: VariablesMutationLikePost(postId: postId),
     );
+
+    final result = await _client.mutateLikePost(options);
+
+    if (result.hasException) {
+      log('An error occurred while liking the post',
+          name: '$this', error: result.exception);
+
+      return Some(ServerFailure());
+    }
+
+    return result.parsedDataMutationLikePost!.likePost.toEntity();
   }
 
   @override
-  Future<Either<Failure, PostLikes>> dislikePost(
+  Future<Option<Failure>> dislikePost(
     String postId,
   ) async {
-    await Future.delayed(Duration(seconds: 1));
-    return Right(
-      PostLikes(isLiked: false, count: 9),
+    final options = GQLOptionsMutationDislikePost(
+      variables: VariablesMutationDislikePost(postId: postId),
     );
+
+    final result = await _client.mutateDislikePost(options);
+
+    if (result.hasException) {
+      log('An error occurred while disliking the post',
+          name: '$this', error: result.exception);
+
+      return Some(ServerFailure());
+    }
+
+    return result.parsedDataMutationDislikePost!.dislikePost.toEntity();
   }
 
   @override
@@ -181,6 +201,44 @@ class PostRepositoryImpl implements PostRepository {
       },
       (exception) => log(
         'An error occurred while fetching the post change history',
+        name: '$this',
+        error: exception,
+      ),
+    );
+  }
+
+  @override
+  Stream<Either<Failure, Connection<PostLike>>> getPostLikes(
+    String postId, {
+    required int pageSize,
+    String? after,
+  }) {
+    final options = GQLWatchOptionsQueryPostLikes(
+      fetchResults: true,
+      variables: VariablesQueryPostLikes(
+        postId: postId,
+        after: after,
+        pageSize: pageSize,
+      ),
+      fetchPolicy: _fetchPolicyProvider.fetchPolicy,
+    );
+
+    final query = _client.watchQueryPostLikes(options);
+
+    return mapObservableQuery(
+      query,
+      (event) {
+        final post = event.parsedDataQueryPostLikes!.post;
+
+        if (post == null) {
+          // TODO(exeteres): handle 404
+          throw Exception('Post not found');
+        }
+
+        return post.likes!.toEntity();
+      },
+      (exception) => log(
+        'An error occurred while fetching the post like list',
         name: '$this',
         error: exception,
       ),

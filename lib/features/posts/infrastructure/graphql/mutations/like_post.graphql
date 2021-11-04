@@ -1,0 +1,5 @@
+mutation LikePost($postId: UUID!) {
+  likePost(postId: $postId) {
+    ...OperationResult
+  }
+}

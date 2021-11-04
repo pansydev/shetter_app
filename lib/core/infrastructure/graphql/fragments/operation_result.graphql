@@ -1,4 +1,4 @@
-fragment PostOperationResult on PostOperationResult {
+fragment OperationResult on OperationResult {
   __typename
 
   ... on OperationFailureResult {

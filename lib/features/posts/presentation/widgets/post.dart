@@ -1,4 +1,5 @@
 import 'package:flutter/gestures.dart';
+import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 import 'package:shetter_app/features/posts/presentation/presentation.dart';
 import 'package:shetter_app/features/posts/domain/domain.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +35,7 @@ class UPost extends StatelessWidget {
           _PostText(post.currentVersion).sliverBox,
         if (version.images.isNotEmpty)
           _PostImages(version.images).sliverBox.sliverPaddingZero,
-        _PostLikes(post.likes)
+        _PostLikes(post.id, post.isLiked, post.totalLikes)
             .sliverBox
             .sliverPadding(DesignConstants.paddingMini),
       ],
@@ -353,11 +354,15 @@ class _PostImagesItem extends StatelessWidget {
 
 class _PostLikes extends StatefulWidget {
   const _PostLikes(
-    this.likes, {
+    this.postId,
+    this.isLiked,
+    this.totalLikes, {
     Key? key,
   }) : super(key: key);
 
-  final PostLikes likes;
+  final String postId;
+  final bool isLiked;
+  final int totalLikes;
 
   @override
   State<_PostLikes> createState() => _PostLikesState();
@@ -371,8 +376,9 @@ class _PostLikesState extends State<_PostLikes> {
   @override
   void initState() {
     super.initState();
-    liked = widget.likes.isLiked;
-    count = widget.likes.count;
+
+    liked = widget.isLiked;
+    count = widget.totalLikes;
   }
 
   @override
@@ -398,18 +404,32 @@ class _PostLikesState extends State<_PostLikes> {
     );
   }
 
-  void like() {
+  Future like() async {
     if (locked) return;
 
-    // TODO(exeteres): add repository logic
+    final postRepository =
+        context.read<ServiceProvider>().resolve<PostRepository>();
 
-    setState(() {
-      locked = true;
-      liked = !liked;
-      if (liked) count++;
-      if (!liked) count--;
-    });
+    setState(() => locked = true);
 
-    Future.delayed(500.milliseconds).then((value) => locked = false);
+    Option<Failure> result;
+
+    if (liked) {
+      result = await postRepository.dislikePost(widget.postId);
+    } else {
+      result = await postRepository.likePost(widget.postId);
+    }
+
+    if (result.isNone()) {
+      setState(() {
+        liked = !liked;
+        if (liked) count++;
+        if (!liked) count--;
+      });
+    }
+
+    // TODO(cirnok): handle failure
+
+    setState(() => locked = false);
   }
 }

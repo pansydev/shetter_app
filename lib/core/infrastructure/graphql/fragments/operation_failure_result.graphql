@@ -1,3 +1,0 @@
-fragment OperationFailureResult on OperationFailureResult {
-  code
-}
