@@ -2,12 +2,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:shetter_app/app/app.dart';
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
-import 'package:shetter_app/features/posts/presentation/presentation.dart';
+import 'package:shetter_app/modules/posts/presentation/presentation.dart';
 
 class Application extends StatelessWidget {
-  Application(this._serviceProvider) : super(key: Key('Application'));
-
-  final ServiceProvider _serviceProvider;
+  Application({super.key});
 
   final AppRouter _router = AppRouter();
   final _supportedLocales = const [
@@ -17,13 +15,13 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PansyArchApplication(
-      serviceProvider: _serviceProvider,
+    return MultiProvider(
       providers: [
-        _serviceProvider.createBlocProvider<AuthDialogBloc>(),
-        _serviceProvider.createBlocProvider<PostListBloc>(),
-        _serviceProvider.createBlocProvider<PostFormBloc>(),
-        _serviceProvider.createBlocProvider<AuthBloc>(),
+        AuthDialogBlocProvider(),
+        PostHistoryBlocProvider(),
+        PostListBlocProvider(),
+        PostFormBlocProvider(),
+        AuthBlocProvider(),
       ],
       child: UDesign(
         constraints: DesignConstants.constraints,
@@ -40,7 +38,7 @@ class Application extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: _supportedLocales,
-          locale: Locale('ru'),
+          locale: const Locale('ru'),
           theme: themeData(),
         ),
       ),

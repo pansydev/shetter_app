@@ -1,10 +1,10 @@
-import 'package:shetter_app/features/posts/presentation/presentation.dart';
+import 'package:shetter_app/modules/posts/presentation/presentation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: CustomScrollView(
             controller: _paginate.controller,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverPersistentHeader(
                 pinned: true,
@@ -47,9 +47,9 @@ class _HomePageState extends State<HomePage> {
                   onScrollToUp: _paginate.controller.scrollToUp,
                 ),
               ),
-              AuthButton(),
-              CreatePostFragment(),
-              PostListFragment(),
+              const AuthButton(),
+              const CreatePostFragment(),
+              const PostListFragment(),
             ],
           ),
         ),

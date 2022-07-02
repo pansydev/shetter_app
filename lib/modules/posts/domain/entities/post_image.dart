@@ -1,0 +1,12 @@
+import 'package:shetter_app/modules/posts/domain/domain.dart';
+
+part 'post_image.freezed.dart';
+
+@freezed
+class PostImage with _$PostImage {
+  factory PostImage({
+    required String id,
+    required String url,
+    required String blurHash,
+  }) = _PostImage;
+}

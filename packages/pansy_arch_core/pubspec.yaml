@@ -1,0 +1,36 @@
+name: pansy_arch_core
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^6.0.3
+  flutter_bloc: 7.3.3
+  hive_flutter: ^1.1.0
+  fpdart: ^0.1.0
+  freezed_annotation: ^2.0.3
+  i18n: ^3.4.1
+
+  dino:
+    git:
+      url: https://github.com/pansydev/dino
+      path: packages/dino
+
+  pansy_localization:
+    path: ../pansy_localization
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  freezed: ^2.0.3+1
+  build_runner: ^2.1.11
+  json_serializable: ^6.2.0
+  dino_generator:
+    git:
+      url: https://github.com/pansydev/dino
+      path: packages/dino_generator
+  index_generator: ^3.3.0

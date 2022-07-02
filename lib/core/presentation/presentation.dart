@@ -4,7 +4,6 @@ library presentation;
 
 export 'constants.dart';
 export 'exports.dart';
-export 'helpers/bloc_helpers.dart';
 export 'helpers/date_time_helpers.dart';
 export 'helpers/i18n_helpers.dart';
 export 'locales/shetter.i18n.dart';

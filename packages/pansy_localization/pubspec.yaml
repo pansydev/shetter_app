@@ -1,0 +1,10 @@
+name: pansy_localization
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  build_runner: ^2.1.11

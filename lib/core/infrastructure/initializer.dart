@@ -1,18 +1,22 @@
-import 'package:shetter_app/core/infrastructure/infrastructure.dart';
-import 'package:shetter_app/core/presentation/presentation.dart';
-
-import 'initializer.config.dart';
-
-@injectableInit
-Future<void> _configureDependencies(GetIt container) => $initGetIt(container);
+import 'package:shetter_app/modules/posts/infrastructure/infrastructure.dart';
+import 'package:shetter_app/modules/posts/presentation/presentation.dart';
 
 extension ShetterInitializer on ServiceCollection {
   void configureShetter() {
-    addAsyncInitializer(_configureDependencies);
+    addSingleton<HiveBoxFactory>();
+    addSingletonFactory(HiveBoxFactory.create);
+
+    addSingleton<GraphQLClientFactory>();
+    addSingletonFactory(GraphQLClientFactory.create);
+
+    addSingleton<PostRepositoryImpl>();
+    addSingleton<PostFormBloc>();
+    addSingleton<PostHistoryBloc>();
+    addSingleton<PostListBloc>();
 
     configureI18N({
-      'en': LocaleDescriptor(Shetter(), shetterMap),
-      'ru': LocaleDescriptor(ShetterRu(), shetterRuMap),
+      'en': LocaleDescriptor(const Shetter(), shetterMap),
+      'ru': LocaleDescriptor(const ShetterRu(), shetterRuMap),
     });
   }
 }

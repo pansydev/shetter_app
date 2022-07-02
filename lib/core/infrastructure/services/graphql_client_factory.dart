@@ -1,11 +1,9 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
 
-@module
-abstract class GraphQLClientFactory {
-  @lazySingleton
-  GraphQLClient createClient(
+class GraphQLClientFactory {
+  static GraphQLClient _createClient(
     AuthLinkFactory linkFactory,
-    Box box,
+    Box<Map> box,
   ) {
     final transportLink = _createTransportLink();
 
@@ -16,7 +14,7 @@ abstract class GraphQLClientFactory {
     );
   }
 
-  Link _createTransportLink() {
+  static Link _createTransportLink() {
     final httpLink = HttpLink(InfrastructureConstants.httpApiUrl);
     final wsLink = WebSocketLink(InfrastructureConstants.wsApiUrl);
 
@@ -24,6 +22,13 @@ abstract class GraphQLClientFactory {
       (request) => request.isSubscription,
       wsLink,
       httpLink,
+    );
+  }
+
+  static GraphQLClient create(ServiceProvider sp) {
+    return _createClient(
+      sp.getRequired<AuthLinkFactory>(),
+      sp.getRequired<Box<Map>>(),
     );
   }
 }

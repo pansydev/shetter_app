@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "Generate indexes",
-      "command": "flutter pub run index_generator:main",
+      "command": "flutter pub run index_generator",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -14,7 +14,7 @@
     },
     {
       "label": "Generate code",
-      "command": "flutter pub run build_runner build --delete-conflicting-outputs",
+      "command": "flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -25,7 +25,7 @@
     },
     {
       "label": "Generate code (packages)",
-      "command": "cd pansy_libraries && flutter pub global run melos:melos exec 'flutter pub run build_runner build --delete-conflicting-outputs' && cd ../",
+      "command": "flutter pub run melos:melos exec 'flutter pub run build_runner build --delete-conflicting-outputs'",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -36,7 +36,7 @@
     },
     {
       "label": "Global pub get",
-      "command": "flutter pub get && cd pansy_libraries && flutter pub global run melos:melos exec flutter pub get && cd ../",
+      "command": "flutter pub get && flutter pub run melos:melos exec flutter pub get",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -47,7 +47,7 @@
     },
     {
       "label": "Global pub upgrade --major-versions",
-      "command": "flutter pub upgrade --major-versions && cd pansy_libraries && flutter pub global run melos:melos exec \"flutter pub upgrade --major-versions\" && cd ../",
+      "command": "flutter pub upgrade --major-versions && flutter pub run melos:melos exec \"flutter pub upgrade --major-versions\"",
       "type": "shell",
       "args": [],
       "presentation": {

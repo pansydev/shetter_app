@@ -1,11 +1,14 @@
 import 'package:shetter_app/core/infrastructure/infrastructure.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-@module
-abstract class HiveBoxFactory {
-  @preResolve
-  @singleton
-  Future<Box> createHiveBox() async {
-    return Hive.openBox(InfrastructureConstants.appId);
+class HiveBoxFactory implements Initializable {
+  late Box box;
+
+  @override
+  Future initialize() async {
+    box = await Hive.openBox(InfrastructureConstants.appId);
+  }
+
+  static Box create(ServiceProvider sp) {
+    return sp.getRequired<HiveBoxFactory>().box;
   }
 }
